@@ -21,6 +21,7 @@
 	int data = service.login(vo);
 	int abc = 0;
 	int def = 1;
+	system.out.println("안녕하세요 ");
 
 %>
 
