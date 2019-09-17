@@ -20,6 +20,7 @@
 		vo.setName(name);
 
 		int c = service.addUser(vo);
+		int a = 0;
 	%>
 	 
 
