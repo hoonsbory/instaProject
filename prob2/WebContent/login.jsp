@@ -19,6 +19,7 @@
 	vo.setPassword(pw);
 	
 	int data = service.login(vo);
+	int abc = 0;
 	
 
 %>
