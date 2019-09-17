@@ -1,3 +1,24 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@hoonsbory 
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
+
+
+2
+12javains/bit_java
+ Code Issues 0 Pull requests 0 Projects 0 Wiki Security Insights
+bit_java/.gitignore
+ user java 기본 src
+70fc78d on 12 Aug
+67 lines (54 sloc)  708 Bytes
+  
 # Compiled class file
 *.class
 
@@ -21,3 +42,58 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+
+# 컴파일 결과물 제외
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+ 
+# 로그파일 제외
+*.log
+ 
+# 운영체제에서 만드는 시스템 파일들 제외
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+ 
+# 이클립스에서 생성하는 프로젝트 정보 파일 제외
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.project
+.externalToolBuilders/
+*.launch
+.classpath
+.factorypath
+.buildpath
+.target
+
+
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
