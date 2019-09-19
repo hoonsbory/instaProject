@@ -25,7 +25,6 @@ public class UsersDAO {
 				vo.setId(rs.getInt("id"));
 				vo.setEmail(rs.getString("email"));
 				vo.setName(rs.getString("name"));
-				vo.setPassword(rs.getString("password"));
 				list.add(vo);
 			}
 		} catch (Exception e) {
@@ -97,6 +96,33 @@ public class UsersDAO {
 		}
 		
 		return result;
+	}
+	
+	public List<String> searchUserImg(int id){ //탈퇴 전 이미지 삭제 위한 검색->프사+post사진 경로 리스트
+		String sql= "select u.img as uimg, p.img as pimg from users u, posts p where u.id=? and u.id=p.user_id(+)";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<String> list=new ArrayList<String>();
+		String uimg=null;
+		try {
+			con=JDBCUtil.getConnection();
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, id);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				if(uimg==null) //프사 경로
+					uimg=rs.getString("uimg");
+				list.add(rs.getString("pimg")); //삭제 대상에 post사진 경로 추가
+			}
+			if(!uimg.equals("./userpic/default.jpg")) //프사가 디폴트 이미지가 아니면
+				list.add(uimg); //삭제 대상에 프사 경로 추가
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(con, ps, rs);
+		}
+		return list;
 	}
 	
 }
