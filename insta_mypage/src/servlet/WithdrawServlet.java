@@ -33,7 +33,7 @@ public class WithdrawServlet extends HttpServlet {
 			UsersService service = new UsersServiceImpl(dao);
 			List<String> list = service.searchUserImg(id);
 			// list.forEach(i->System.out.println(i));
-			String path = request.getRealPath("/upload/");
+			String path = request.getRealPath("/userpic/");
 			list.forEach((img) -> {
 				if (img != null) {
 					String fname = img.substring(img.lastIndexOf('/') + 1);
