@@ -9,5 +9,5 @@ public interface UsersService {
 	boolean loginUser(UsersVO vo);
 	int addUser(UsersVO vo);
 	int dropUser(int id);
-	
+	List<String> searchUserImg(int id);
 }

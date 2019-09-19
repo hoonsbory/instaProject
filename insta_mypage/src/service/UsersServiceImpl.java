@@ -37,5 +37,10 @@ public class UsersServiceImpl implements UsersService {
 		// TODO Auto-generated method stub
 		return dao.deleteUser(id);
 	}
+	@Override
+	public List<String> searchUserImg(int id) {
+		// TODO Auto-generated method stub
+		return dao.searchUserImg(id);
+	}
 
 }
