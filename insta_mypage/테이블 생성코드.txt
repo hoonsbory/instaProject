@@ -1,3 +1,9 @@
+drop table follower_map;
+drop table likes;
+drop table comments;
+drop table posts;
+drop table users;
+
 create table users (
     id number(15) primary key,
     email varchar(50) unique,
