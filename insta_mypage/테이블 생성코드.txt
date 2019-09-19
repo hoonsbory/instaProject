@@ -19,7 +19,7 @@ create table posts(
 
 
 create table comments(
-    id number(15),
+    id number(15) primary key,
     content varchar(100),
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     post_id number(15),
