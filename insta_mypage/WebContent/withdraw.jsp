@@ -46,7 +46,7 @@ section {
 			</div>
 		</aside>
 		<aside id="center">
-			<a href="withdraw.do">탈퇴하기</a>
+			<a href="withdraw.do" onclick="return confirm('탈퇴하시겠습니까?')">탈퇴하기</a>
 		</aside>
 	</section>
 </body>

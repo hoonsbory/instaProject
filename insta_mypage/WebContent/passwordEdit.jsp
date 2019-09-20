@@ -83,7 +83,7 @@ section {
 				새 비밀번호 확인 : <input type="password" id="new_pw2" name="new_pw2" class="need" required="required">
 			</div>
 			<span class="error" id="errMsg">${msg}</span><br>
-			<input type="submit" value="수정">
+			<input type="submit" value="비밀번호 변경">
 			<input type="reset" value="초기화">
 			</form>
 		</aside>
