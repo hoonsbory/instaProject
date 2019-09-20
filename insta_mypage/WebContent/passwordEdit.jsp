@@ -36,7 +36,6 @@ section {
 </style>
 <script type="text/javascript">
 	$(function() {
-		
 		$('.need').each(function(i,element){ //입력창에 키보드 입력시 에러 메시지 지우기
 			$(element).keyup(function(){
 				clearAll();

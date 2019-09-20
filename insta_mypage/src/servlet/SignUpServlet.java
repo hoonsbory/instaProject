@@ -25,9 +25,7 @@ public class SignUpServlet extends HttpServlet {
 		String email=request.getParameter("email");
 		String pw=request.getParameter("pw");
 		String hashed=BCrypt.hashpw(pw, BCrypt.gensalt(10));
-		System.out.println(pw+'/'+hashed);
 		String name=request.getParameter("name");
-		System.out.println(email+'/'+name);
 		
 		UsersDAO dao=new UsersDAO();
 		UsersService service=new UsersServiceImpl(dao);

@@ -44,7 +44,7 @@ public class ProfImgChangeServlet extends HttpServlet {
 					String fileName = p.getSubmittedFileName();
 					if (fileName != null && fileName.length() != 0
 							 || request.getParameter("delete").equals("delete")) { // 프사파일이 선택되었거나 프사 삭제버튼이 눌렸으면
-						String pastName = service.searchUserImg(id).getImg();
+						String pastName = service.searchUser(id).getImg();
 						if (!pastName.equals("./userpic/default.jpg")) {
 							String pastImg=pastName.substring(pastName.lastIndexOf('/')+1);
 							System.out.println(pastImg);

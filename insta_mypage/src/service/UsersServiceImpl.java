@@ -43,11 +43,6 @@ public class UsersServiceImpl implements UsersService {
 		return dao.searchUserAllImgs(id);
 	}
 	@Override
-	public UsersVO searchUserImg(int id) {
-		// TODO Auto-generated method stub
-		return dao.searchUserImg(id);
-	}
-	@Override
 	public UsersVO searchUser(int id) {
 		// TODO Auto-generated method stub
 		return dao.searchUser(id);
@@ -55,17 +50,17 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public int updateUserEmailName(UsersVO vo) {
 		// TODO Auto-generated method stub
-		return dao.updateUserEmailName(vo);
+		return (dao.updateUser("email",vo.getEmail(),vo.getId())*dao.updateUser("name",vo.getName(),vo.getId()));
 	}
 	@Override
 	public int updateUserPassword(UsersVO vo) {
 		// TODO Auto-generated method stub
-		return dao.updateUserPassword(vo);
+		return dao.updateUser("password",vo.getPassword(),vo.getId());
 	}
 	@Override
 	public int updateUserImg(UsersVO vo) {
 		// TODO Auto-generated method stub
-		return dao.updateUserImg(vo);
+		return dao.updateUser("img",vo.getImg(),vo.getId());
 	}
 	
 	
