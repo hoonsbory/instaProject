@@ -6,7 +6,7 @@ import vo.UsersVO;
 
 public interface UsersService {
 	List<UsersVO> searchAllUsers();
-	boolean loginUser(UsersVO vo);
+	int loginUser(UsersVO vo);
 	int addUser(UsersVO vo);
 	int dropUser(int id);
 	List<String> searchUserAllImgs(int id);

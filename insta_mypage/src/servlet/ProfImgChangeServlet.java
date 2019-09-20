@@ -1,5 +1,6 @@
 package servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -36,14 +37,31 @@ public class ProfImgChangeServlet extends HttpServlet {
 			UsersVO vo = new UsersVO();
 			int result = 0;
 			String path = request.getRealPath("/userpic/");
+
 			Collection<Part> parts = request.getParts();
 			for (Part p : parts) {
 				if (p.getContentType() != null) {
 					String fileName = p.getSubmittedFileName();
-					if (fileName != null && fileName.length() != 0) {
-						p.write(path + fileName);
+					if (fileName != null && fileName.length() != 0
+							 || request.getParameter("delete").equals("delete")) { // 프사파일이 선택되었거나 프사 삭제버튼이 눌렸으면
+						String pastName = service.searchUserImg(id).getImg();
+						if (!pastName.equals("./userpic/default.jpg")) {
+							String pastImg=pastName.substring(pastName.lastIndexOf('/')+1);
+							System.out.println(pastImg);
+							File f = new File(path + pastImg);
+							if (f.exists()) {
+								f.delete(); // 업로드된 폴더에서 기존 프사 삭제
+							}
+						}
+						String img = "";
+						if (fileName.length() != 0) { // 프사 파일이 선택되었으면 새 프사로
+							p.write(path + fileName);
+							img = "./userpic/" + fileName;
+						} else {// 프사 삭제 버튼이 눌렸으면 기본 프사로
+							img = "./userpic/default.jpg";
+						}
 						vo.setId(id);
-						vo.setImg("./userpic/" + fileName);
+						vo.setImg(img);
 						System.out.println(vo);
 						result = service.updateUserImg(vo);
 					}
@@ -55,7 +73,7 @@ public class ProfImgChangeServlet extends HttpServlet {
 				System.out.println("프사변경성공");
 
 		}
-		request.getRequestDispatcher("profileEdit.do").forward(request, response); //가능한가?
+		request.getRequestDispatcher("profile.do").forward(request, response); // 다른 서블릿으로 이동 가능한가?
 	}
 
 }

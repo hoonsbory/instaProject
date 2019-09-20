@@ -16,29 +16,9 @@ import service.UsersService;
 import service.UsersServiceImpl;
 import vo.UsersVO;
 
-@WebServlet({ "/profileEdit.do", "/profile.do" })
+@WebServlet("/profileEdit.do")
 public class ProfileEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException { //db에서 개인정보가져와서 ui로
-		response.setContentType("text/html;charset=utf-8");
-
-		HttpSession session = request.getSession();
-		if (session.getAttribute("login") != null) {
-			String login = (String) session.getAttribute("login"); // login="id/name"
-			int id = Integer.parseInt(login.substring(0, login.lastIndexOf('/')));
-			UsersDAO dao = new UsersDAO();
-			UsersService service = new UsersServiceImpl(dao);
-			UsersVO vo = new UsersVO();
-			vo = service.searchUser(id);
-			request.setAttribute("user", vo);
-			request.getRequestDispatcher("profileEdit.jsp").forward(request, response);
-		} else {
-			request.setAttribute("msg", "로그인이 필요한 서비스입니다.");
-			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-		}
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			 throws ServletException, IOException { //개인정보변경
@@ -52,6 +32,7 @@ public class ProfileEditServlet extends HttpServlet {
 		UsersService service = new UsersServiceImpl(dao);
 		UsersVO vo = new UsersVO();
 		int result=0;
+		vo.setId(id);
 		vo.setEmail(request.getParameter("email"));
 		vo.setName(request.getParameter("name"));
 		result=service.updateUserEmailName(vo);

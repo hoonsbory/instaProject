@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Instagram</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
@@ -53,7 +53,7 @@ section {
 	vertical-align: middle;
 	background-color: white;
 }
-#myfile{
+#myfile, #delete{
 	display: none;
 }
 .error{
@@ -68,7 +68,14 @@ section {
 			else
 				$('#img_change_opt').css('visibility', 'visible');
 		});
+		$('#delete').click(function() { //프사 삭제 버튼 클릭시 value변경 -> 서블릿에서 val 확인해서 프사 삭제할것임
+			if(confirm('삭제하시겠습니까?')){
+				$(this).val('delete');
+				$('#imgForm').submit();
+			}
+		});
 		$('#cancel').click(function() { //취소 버튼 클릭시 프사 편집 선택 화면 감추기
+			$('#delete').val(''); //프사 삭제 버튼 초기화
 			$('#img_change_opt').css('visibility', 'hidden');
 		});
 		$('.need').each(function(i,element){
@@ -95,15 +102,15 @@ section {
 		</aside>
 		<aside id="center">
 			<div>
-				<img src="${user.img}" alt="" id="prof_img"> ${user.email}
+				<img src="${user.img}" alt="" id="prof_img" width=100 height=100> ${user.email}
 				<button id="img_change_btn">프로필 사진 바꾸기</button>
 			</div>
-			<form action="./profileEdit.do" method="get">
+			<form action="./profileEdit.do" method="post">
 			<div>
-				이름 : <input type="text" value="${user.name}">
+				이름 : <input type="text" id="name" name="name" value="${user.name}">
 			</div>
 			<div>
-				이메일 : <input type="email" value="${user.email}">
+				이메일 : <input type="email" id="email" name="email" value="${user.email}">
 			</div>
 			<span class="error" id="errMsg">${msg}</span><br>
 			<div><input type="submit" value="수정"></div>
@@ -113,11 +120,12 @@ section {
 	<div id="img_change_opt">
 		<div> <!-- 수직 정렬 도와줘.....-->
 			<div>프로필 사진 바꾸기</div>
-			<form action="./profImgChange.do" method="post" enctype="multipart/form-data">
-			<div><label for="myfile"><input type="file" id="myfile" name="myfile" multiple="multiple">사진 업로드</label></div>
+			<form action="./profImgChange.do" method="post" enctype="multipart/form-data" id="imgForm">
+			<div><label for="myfile"><input type="file" id="myfile" name="myfile" multiple="multiple" onchange="form.submit()">사진 업로드</label></div>
+			<div><label for="delete"><input type="text" id="delete" name="delete" value="">현재 사진 삭제</label></div>
 			</form>
-			<div><button id="delete">현재 사진 삭제</button></div>
-			<div><button id="cancel">취소</button></div>
+			<button id="cancel">취소</button>
+			
 		</div>
 	</div>
 </body>

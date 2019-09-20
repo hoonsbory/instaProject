@@ -21,7 +21,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public boolean loginUser(UsersVO vo) {
+	public int loginUser(UsersVO vo) {
 		// TODO Auto-generated method stub
 		return dao.loginUser(vo);
 	}
