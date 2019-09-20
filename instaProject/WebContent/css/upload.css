@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+
+body{
+	background-color:#fafefe;
+	
+}
+
+img{
+  max-width:180px;
+}
+input, textarea {
+  outline: none;
+  border: none;
+  display: block;
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	font-family: $ptsans;
+	font-size: rem(16);
+  color: $text-color;
+  @include placeholder {
+		color: $placeholder;
+	}
+}

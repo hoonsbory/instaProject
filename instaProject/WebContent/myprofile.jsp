@@ -124,117 +124,14 @@
 		</div>
 
 	</header>
-
-
+<!-- <a href="./upload.jsp" target="popup" 
+          onclick="window.open('./upload.jsp','name','width=600,height=400')">new post</a> -->
+	
+	<div style="border:none" onclick="window.open('./upload.jsp','name','width=600,height=400')" data-mce-onclick="">
+  <button class="button"><font size=”6”>new post</font></button>
+</div>
 	<hr>
 	<section class="section1">
-		<main>
-		<div class="container">
-			<div class="gallery">
-				<div class="gallery-item">
-					<img class="gallery-image" src="https://i.imgur.com/BfW1TDz.jpg"
-						title="coloursurge.jpg" />
-					<div class="gallery-item-info">
-						<ul>
-							<li class="gallery-item-like"><span class="visually-hidden">like;</span></li>
-							<li class="gallery-item-comment"><span
-								class="visually-hidden">comments;</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="gallery-item">
-					<img class="gallery-image" src="https://i.imgur.com/BfW1TDz.jpg"
-						title="coloursurge.jpg" />
-					<div class="gallery-item-info">
-						<ul>
-							<li class="gallery-item-like"><span class="visually-hidden">like;</span></li>
-							<li class="gallery-item-comment"><span
-								class="visually-hidden">comments;</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="gallery-item">
-					<img class="gallery-image" src="https://i.imgur.com/BfW1TDz.jpg"
-						title="coloursurge.jpg" />
-					<div class="gallery-item-info">
-						<ul>
-							<li class="gallery-item-like"><span class="visually-hidden">like;</span></li>
-							<li class="gallery-item-comment"><span
-								class="visually-hidden">comments;</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="gallery-item">
-					<img class="gallery-image" src="https://i.imgur.com/BfW1TDz.jpg"
-						title="coloursurge.jpg" />
-					<div class="gallery-item-info">
-						<ul>
-							<li class="gallery-item-like"><span class="visually-hidden">like;</span></li>
-							<li class="gallery-item-comment"><span
-								class="visually-hidden">comments;</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="gallery-item">
-					<img class="gallery-image" src="https://i.imgur.com/BfW1TDz.jpg"
-						title="coloursurge.jpg" />
-					<div class="gallery-item-info">
-						<ul>
-							<li class="gallery-item-like"><span class="visually-hidden">like;</span></li>
-							<li class="gallery-item-comment"><span
-								class="visually-hidden">comments;</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="gallery-item">
-					<img class="gallery-image" src="https://i.imgur.com/BfW1TDz.jpg"
-						title="coloursurge.jpg" />
-					<div class="gallery-item-info">
-						<ul>
-							<li class="gallery-item-like"><span class="visually-hidden">like;</span></li>
-							<li class="gallery-item-comment"><span
-								class="visually-hidden">comments;</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="gallery-item">
-					<img class="gallery-image" src="https://i.imgur.com/BfW1TDz.jpg"
-						title="coloursurge.jpg" />
-					<div class="gallery-item-info">
-						<ul>
-							<li class="gallery-item-like"><span class="visually-hidden">like;</span></li>
-							<li class="gallery-item-comment"><span
-								class="visually-hidden">comments;</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="gallery-item">
-					<img class="gallery-image" src="https://i.imgur.com/BfW1TDz.jpg"
-						title="coloursurge.jpg" />
-					<div class="gallery-item-info">
-						<ul>
-							<li class="gallery-item-like"><span class="visually-hidden">like;</span></li>
-							<li class="gallery-item-comment"><span
-								class="visually-hidden">comments;</span></li>
-						</ul>
-					</div>
-				</div>
-				<div class="gallery-item">
-					<img class="gallery-image" src="https://i.imgur.com/BfW1TDz.jpg"
-						title="coloursurge.jpg" />
-					<div class="gallery-item-info">
-						<ul>
-							<li class="gallery-item-like"><span class="visually-hidden">like;</span></li>
-							<li class="gallery-item-comment"><span
-								class="visually-hidden">comments;</span></li>
-						</ul>
-					</div>
-				</div>
-
-
-			</div>
-		</div>
-		</main>
 		<footer class="footer">
 			<div class="footer_div">
 				<nav class="footer_nav">
