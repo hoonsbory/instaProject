@@ -36,7 +36,7 @@ section {
 	<section>
 		<aside id="left">
 			<div>
-				<a href="profileEdit.jsp">프로필 편집</a>
+				<a href="profile.do">프로필 편집</a>
 			</div>
 			<div>
 				<a href="passwordEdit.jsp">비밀번호 변경</a>

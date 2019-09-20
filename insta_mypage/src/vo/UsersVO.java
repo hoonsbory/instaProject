@@ -5,11 +5,17 @@ public class UsersVO {
 	String email;
 	String password;
 	String name;
+	String img;
 	
 	public UsersVO() {
 		super();
 	}
 	
+	public UsersVO(String img) {
+		super();
+		this.img = img;
+	}
+
 	public UsersVO(String email, String password) {
 		super();
 		this.email = email;
@@ -23,6 +29,15 @@ public class UsersVO {
 		this.name = name;
 	}
 	
+	public UsersVO(int id, String email, String password, String name, String img) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.img = img;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -47,10 +62,21 @@ public class UsersVO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	@Override
 	public String toString() {
-		return "UsersVO [id=" + id + ", email=" + email + ", password=" + password + ", name=" + name + "]";
+		return "UsersVO [id=" + id + ", email=" + email + ", password=" + password + ", name=" + name + ", img=" + img
+				+ "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

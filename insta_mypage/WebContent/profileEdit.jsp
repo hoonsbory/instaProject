@@ -56,11 +56,14 @@ section {
 #myfile{
 	display: none;
 }
+.error{
+	color:red;
+}
 </style>
 <script type="text/javascript">
 	$(function() {
 		$('#img_change_btn').click(function() { //프사 편집 버튼 클릭시 프사 편집 선택 화면 보이기
-			if("<c:out value='${prof_img}'/>"=="./userpic/default.jpg") //프사가 기본 이미지일 경우 바로 이미지파일 선택 창으로. 되는지 확인해야..
+			if("<c:out value='${user.img}'/>"=="./userpic/default.jpg") //프사가 기본 이미지일 경우 바로 이미지파일 선택 창으로. 되는지 확인해야..
 				$('#myfile').trigger('click');
 			else
 				$('#img_change_opt').css('visibility', 'visible');
@@ -68,15 +71,20 @@ section {
 		$('#cancel').click(function() { //취소 버튼 클릭시 프사 편집 선택 화면 감추기
 			$('#img_change_opt').css('visibility', 'hidden');
 		});
-
+		$('.need').each(function(i,element){
+			$(element).keyup(function(){ //입력창에 키보드 입력시 에러 메시지 지우기
+				$('#errMsg').html("");
+			})
+		});
 	});
+	
 </script>
 </head>
 <body>
 	<section>
 		<aside id="left">
 			<div>
-				<a href="profileEdit.jsp">프로필 편집</a>
+				<a href="profile.do">프로필 편집</a>
 			</div>
 			<div>
 				<a href="passwordEdit.jsp">비밀번호 변경</a>
@@ -87,18 +95,18 @@ section {
 		</aside>
 		<aside id="center">
 			<div>
-				<img src="${prof_img}" alt="" id="prof_img"> ${email}
+				<img src="${user.img}" alt="" id="prof_img"> ${user.email}
 				<button id="img_change_btn">프로필 사진 바꾸기</button>
 			</div>
-			<form action="" method="">
+			<form action="./profileEdit.do" method="get">
 			<div>
-				이름 : <input type="text" value="${name}">
+				이름 : <input type="text" value="${user.name}">
 			</div>
 			<div>
-				이메일 : <input type="email" value="${email}">
+				이메일 : <input type="email" value="${user.email}">
 			</div>
+			<span class="error" id="errMsg">${msg}</span><br>
 			<div><input type="submit" value="수정"></div>
-			<div><input type="reset" value="초기화"></div>
 			</form>
 		</aside>
 	</section>

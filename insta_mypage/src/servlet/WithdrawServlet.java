@@ -26,12 +26,12 @@ public class WithdrawServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 
 		HttpSession session = request.getSession();
-		if (session != null && session.getAttribute("login") != null) {
+		if (session.getAttribute("login") != null) {
 			String login = (String) session.getAttribute("login"); // login="id/name"
 			int id = Integer.parseInt(login.substring(0, login.lastIndexOf('/')));
 			UsersDAO dao = new UsersDAO();
 			UsersService service = new UsersServiceImpl(dao);
-			List<String> list = service.searchUserImg(id);
+			List<String> list = service.searchUserAllImgs(id);
 			// list.forEach(i->System.out.println(i));
 			String path = request.getRealPath("/userpic/");
 			list.forEach((img) -> {
@@ -47,8 +47,8 @@ public class WithdrawServlet extends HttpServlet {
 
 			service.dropUser(id); // 유저 삭제
 			session.invalidate(); // 세션공간에서 로그인 정보 삭제
-			response.sendRedirect("./login.jsp");
 		}
+		response.sendRedirect("./login.jsp");
 	}
 
 }

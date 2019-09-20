@@ -14,7 +14,7 @@ public class Test01 {
 		int id=Integer.parseInt(login.substring(0,login.lastIndexOf('/')));
 		UsersDAO dao=new UsersDAO();
 		UsersService service=new UsersServiceImpl(dao);
-		List<String> list=service.searchUserImg(id);
+		List<String> list=service.searchUserAllImgs(id);
 		System.out.println(list);
 		list.forEach(i->System.out.println(i));
 	}
