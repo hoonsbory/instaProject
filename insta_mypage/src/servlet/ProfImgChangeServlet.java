@@ -2,7 +2,9 @@ package servlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -47,7 +49,6 @@ public class ProfImgChangeServlet extends HttpServlet {
 						String pastName = service.searchUser(id).getImg();
 						if (!pastName.equals("./userpic/default.jpg")) {
 							String pastImg=pastName.substring(pastName.lastIndexOf('/')+1);
-							System.out.println(pastImg);
 							File f = new File(path + pastImg);
 							if (f.exists()) {
 								f.delete(); // 업로드된 폴더에서 기존 프사 삭제
@@ -55,6 +56,19 @@ public class ProfImgChangeServlet extends HttpServlet {
 						}
 						String img = "";
 						if (fileName.length() != 0) { // 프사 파일이 선택되었으면 새 프사로
+							//파일명 중복방지
+							//파일명에 날짜시간 붙인다면
+//							SimpleDateFormat df = new SimpleDateFormat ( "_yyyyMMdd_HHmmss");
+//							Date time = new Date();
+//							String time1 = df.format(time);
+//							String fileForm=fileName.substring(fileName.lastIndexOf('.'));
+//							fileName=fileName.substring(0,fileName.lastIndexOf('.'))+time1+fileForm;
+							
+							//파일명에 유저번호나 게시글번호 붙인다면(유저번호는 로그인정보로 이미 가진상태)
+							String fileForm=fileName.substring(fileName.lastIndexOf('.'));
+							String index="_"+id;
+							fileName=fileName.substring(0,fileName.lastIndexOf('.'))+index+fileForm;
+							
 							p.write(path + fileName);
 							img = "./userpic/" + fileName;
 						} else {// 프사 삭제 버튼이 눌렸으면 기본 프사로
@@ -62,7 +76,6 @@ public class ProfImgChangeServlet extends HttpServlet {
 						}
 						vo.setId(id);
 						vo.setImg(img);
-						System.out.println(vo);
 						result = service.updateUserImg(vo);
 					}
 				}

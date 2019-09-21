@@ -3,45 +3,28 @@ package vo;
 import java.sql.Date;
 
 public class InstaComment {
-	String name;
-	String img;
+	int id;
 	String content;
 	Date timestamp;
 	int post_id;
 	int user_id;
-	public InstaComment(String name, String img, String content, Date timestamp) {
+	
+	public InstaComment() {
 		super();
-		this.name = name;
-		this.img = img;
-		this.content = content;
-		this.timestamp = timestamp;
 	}
 	
-	public int getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(int user_id) {
+	public InstaComment(String content, int post_id, int user_id) {
+		super();
+		this.content = content;
+		this.post_id = post_id;
 		this.user_id = user_id;
 	}
-
-	public int getPost_id() {
-		return post_id;
+	
+	public int getId() {
+		return id;
 	}
-	public void setPost_id(int id) {
-		this.post_id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getImg() {
-		return img;
-	}
-	public void setImg(String img) {
-		this.img = img;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getContent() {
 		return content;
@@ -55,14 +38,30 @@ public class InstaComment {
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
+	public int getPost_id() {
+		return post_id;
+	}
+	public void setPost_id(int post_id) {
+		this.post_id = post_id;
+	}
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+	@Override
+	public String toString() {
+		return "InstaComment [id=" + id + ", content=" + content + ", timestamp=" + timestamp + ", post_id=" + post_id
+				+ ", user_id=" + user_id + "]";
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((content == null) ? 0 : content.hashCode());
-		result = prime * result + ((img == null) ? 0 : img.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
+		result = prime * result + id;
+		result = prime * result + post_id;
+		result = prime * result + user_id;
 		return result;
 	}
 	@Override
@@ -74,33 +73,15 @@ public class InstaComment {
 		if (getClass() != obj.getClass())
 			return false;
 		InstaComment other = (InstaComment) obj;
-		if (content == null) {
-			if (other.content != null)
-				return false;
-		} else if (!content.equals(other.content))
+		if (id != other.id)
 			return false;
-		if (img == null) {
-			if (other.img != null)
-				return false;
-		} else if (!img.equals(other.img))
+		if (post_id != other.post_id)
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (timestamp == null) {
-			if (other.timestamp != null)
-				return false;
-		} else if (!timestamp.equals(other.timestamp))
+		if (user_id != other.user_id)
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "InstaComment [name=" + name + ", img=" + img + ", content=" + content + ", timestamp=" + timestamp
-				+ "]";
-	}
+	
 	
 	
 }
