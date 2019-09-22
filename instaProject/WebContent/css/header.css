@@ -75,6 +75,7 @@ body, button, input, textarea {
     width: 100%;
     -webkit-box-align: center;
     align-items: center;
+    opacity: 1 !important;
 }
 .top_left{
     -webkit-box-flex: 1;
