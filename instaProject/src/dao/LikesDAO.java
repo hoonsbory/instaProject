@@ -31,7 +31,7 @@ public class LikesDAO {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCUtil.close(null, ps, con);
+			JDBCUtil.close(con, ps, null);
 		}
 		return result;
 	}
@@ -55,7 +55,7 @@ public class LikesDAO {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCUtil.close(null, ps, con);
+			JDBCUtil.close(con, ps, null);
 		}
 		return result;
 	}

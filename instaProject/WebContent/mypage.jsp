@@ -13,6 +13,59 @@
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
+	// 페이징 처리 스크롤 
+	let page = 1;
+	
+	$(function (){
+		getList(page);
+		page++;
+	});
+	
+	$(window).scroll(function(){
+		if($(window).scrollTop() >= $(document).height() - $(window).height()){
+			getList(page);
+			page++;
+		}
+	});
+	
+	function getList(page){
+		let id1 = "<c:out value='${id}'/>";
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			data : {id : id1},
+			url: 'mypagepost.jsp',
+			success : function(returnData) {
+				let data = returnData.rows;
+				let html = "";
+				if(page == 1){
+					$("#divmain").html("");
+				}
+				if(returnData.startNum <= returnData.totCnt){
+					if(data.length > 0){
+						// for 문을 돌면서 행을 그린다. 
+					}
+					else{
+						// 데이터가 없을 경우 출력 
+					}
+				}
+				html = html.replace(/%3/gi, " ");
+				if(page == 1){
+					$("#divmain").html(html);
+				} else {
+					$("busStopList").append(html);
+				}
+			}, error : function(e){
+				if(e.status == 300){
+					alert("데이터를 가져오는데 실패하였습니다.");
+				};
+			}
+		});
+	}
+	
+	
+	
+// 게시물 생성 함수 
 window.onload = function(){
 	self.resizeTo(1280,800);
 	const log = console.log;
@@ -23,7 +76,7 @@ window.onload = function(){
 		type : 'get',
 		dataType : 'json',
 		data : {id : id1},
-		success : ((data)=>{
+		success : ((data) >= {
 			for (i = data.length; i>0; i-=3){
 				let divmain = document.createElement('div');
 				divmain.setAttribute("id", "divmain"+i);
