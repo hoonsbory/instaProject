@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,15 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import dao.InstaDao;
-import dao.UsersDAO;
+import dao.CommentsDAO;
 import service.CommentsService;
 import service.CommentsServiceImpl;
-import service.UsersService;
-import service.UsersServiceImpl;
-import vo.InstaComment;
-import vo.UsersVO;
 
 @WebServlet("/showComment.do")
 public class ShowCommentServlet extends HttpServlet {
@@ -29,16 +27,16 @@ public class ShowCommentServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		
 		HttpSession session = request.getSession();
+		PrintWriter out=response.getWriter();
 		if (session.getAttribute("login") != null) {
 			String login = (String) session.getAttribute("login"); // login="id/name"
 			int id = Integer.parseInt(login.substring(0, login.lastIndexOf('/')));
-			InstaDao dao=new InstaDao();
+			CommentsDAO dao=new CommentsDAO();
 			CommentsService service=new CommentsServiceImpl(dao);
 			int post_id=Integer.parseInt(request.getParameter("post_id"));
 			JSONArray array=null;
 			try {
 				array=service.selectAllComments(post_id);
-				PrintWriter out=response.getWriter();
 				out.print(array);
 				out.flush();
 			} catch (Exception e) {
@@ -46,8 +44,11 @@ public class ShowCommentServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else {
-			request.setAttribute("msg", "로그인이 필요한 서비스입니다.");
-			getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+			Map<String,String> map=new HashMap<String,String>();
+			map.put("msg","로그인이 필요한 서비스입니다.");
+			JSONObject obj=new JSONObject(map);
+			out.print(obj);
+			out.flush();
 		}
 	}
 

@@ -18,9 +18,10 @@ import org.json.simple.JSONObject;
 import dao.CommentsDAO;
 import service.CommentsService;
 import service.CommentsServiceImpl;
+import vo.CommentsVO;
 
-@WebServlet("/deleteComment.do")
-public class DeleteCommentServlet extends HttpServlet {
+@WebServlet("/updateComment.do")
+public class UpdateCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,17 +34,20 @@ public class DeleteCommentServlet extends HttpServlet {
 			String login = (String) session.getAttribute("login"); // login="id/name"
 			CommentsDAO dao=new CommentsDAO();
 			CommentsService service=new CommentsServiceImpl(dao);
+			CommentsVO vo=new CommentsVO();
 			String data=request.getParameter("id");
 			int id=Integer.parseInt(data.substring(data.lastIndexOf('_')+1));
+			vo.setId(id);
+			vo.setContent(request.getParameter("content"));
 			int result=0;
 			try {
-				result=service.deleteComment(id);
+				result=service.updateComment(vo);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if(result==0) {
-				System.out.println("삭제 실패");
+				System.out.println("수정 실패");
 			}
 			int post_id=Integer.parseInt(request.getParameter("post_id"));
 			JSONArray array=null;
