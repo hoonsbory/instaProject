@@ -2,15 +2,15 @@ package service;
 
 import org.json.simple.JSONArray;
 
-import dao.InstaDao;
-import vo.InstaComment;
+import dao.CommentsDAO;
+import vo.CommentsVO;
 
 public class CommentsServiceImpl implements CommentsService{
 	
-	InstaDao dao;
+	CommentsDAO dao;
 	
 	public CommentsServiceImpl() {}
-	public CommentsServiceImpl(InstaDao dao) {
+	public CommentsServiceImpl(CommentsDAO dao) {
 		super();
 		this.dao = dao;
 	}
@@ -22,7 +22,7 @@ public class CommentsServiceImpl implements CommentsService{
 	}
 
 	@Override
-	public InstaComment selectComment(int id) throws Exception {
+	public CommentsVO selectComment(int id) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.selectComment(id);
 	}
@@ -34,13 +34,13 @@ public class CommentsServiceImpl implements CommentsService{
 	}
 
 	@Override
-	public int insertComment(InstaComment com) throws Exception {
+	public int insertComment(CommentsVO com) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.insertComment(com);
 	}
 
 	@Override
-	public int updateComment(InstaComment com) throws Exception {
+	public int updateComment(CommentsVO com) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.updateComment(com);
 	}

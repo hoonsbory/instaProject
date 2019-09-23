@@ -18,9 +18,10 @@ import org.json.simple.JSONObject;
 import dao.CommentsDAO;
 import service.CommentsService;
 import service.CommentsServiceImpl;
+import vo.CommentsVO;
 
-@WebServlet("/deleteComment.do")
-public class DeleteCommentServlet extends HttpServlet {
+@WebServlet("/insertComment.do")
+public class InsertCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,21 +32,24 @@ public class DeleteCommentServlet extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		if (session.getAttribute("login") != null) {
 			String login = (String) session.getAttribute("login"); // login="id/name"
+			int user_id=Integer.parseInt(login.substring(0,login.lastIndexOf('/')));
+			int post_id=Integer.parseInt(request.getParameter("post_id"));
 			CommentsDAO dao=new CommentsDAO();
 			CommentsService service=new CommentsServiceImpl(dao);
-			String data=request.getParameter("id");
-			int id=Integer.parseInt(data.substring(data.lastIndexOf('_')+1));
+			CommentsVO vo=new CommentsVO();
+			vo.setUser_id(user_id);
+			vo.setPost_id(post_id);
+			vo.setContent(request.getParameter("content"));
 			int result=0;
 			try {
-				result=service.deleteComment(id);
+				result=service.insertComment(vo);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if(result==0) {
-				System.out.println("삭제 실패");
+				System.out.println("추가 실패");
 			}
-			int post_id=Integer.parseInt(request.getParameter("post_id"));
 			JSONArray array=null;
 			try {
 				array=service.selectAllComments(post_id);

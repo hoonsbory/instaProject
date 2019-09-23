@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,15 +13,15 @@ $(function(){
 	showComm(); //페이지 시작하자마자 실행(테스트). 원래는 사진 있고 그거 클릭해서 사진+코멘트 열리면 실행
 });
 
-function showComm(){//data로 post id 보내줘야함 일단 임시로 2 보내기
+function showComm(){//data로 post id 보내줘야함 일단 임시로 1 보내기
 	$.ajax(
 			{
 				 url:'showComment.do',
 				 type:'get',
 				 dataType:'json',
-				 data: {post_id:2},
+				 data: {post_id:1},
 				 success:function(data){
-					if(data.msg!=undefined){ //get방식으로 보내거나 숨겨진 form으로 post방식으로 보내거나.. 결정
+					if(data.msg!=undefined){
 						location.href="login.jsp?msg="+data.msg;
 					} else
 						display(data);
@@ -41,7 +40,7 @@ function insComm(){
 				 url:'insertComment.do',
 				 type:'post',
 				 dataType:'json',
-				 data:{content:$('#comment').val(),post_id:2},
+				 data:{content:$('#comment').val(),post_id:1},
 				 success:function(data){
 					if(data.msg!=undefined){
 						location.href="login.jsp?msg="+data.msg;
@@ -63,7 +62,7 @@ function delComm(delId){
 				 url:'deleteComment.do',
 				 type:'post',
 				 dataType:'json',
-				 data: {id:delId,post_id:2},
+				 data: {id:delId,post_id:1},
 				 success:function(data){
 					if(data.msg!=undefined){
 						location.href="login.jsp?msg="+data.msg;
@@ -86,12 +85,7 @@ function display(data){
 	$(data).each((i,item)=>{
 		 tag += "<tr id='c_"+item.id+"'><td>";
 	     tag += "<img src='"+item.img+"'width=100 height=100/></td><td>"+item.name+"</td><td>"+item.content
-	     +"</td><td>"+item.timestamp;
-	     if(item.user_id=='${fn:substringBefore(login,"/")}'){
-	    	 tag+="</td><td><button class='cDels'>삭제</button>";
-	     }else{
-	    	 tag+="</td><td>";
-	     }
+	     +"</td><td>"+item.timestamp+"</td><td><button class='cDels'>삭제</button>";
 	     tag += "</td></tr>";
 	 });
 	tag+="</table>"
@@ -107,12 +101,14 @@ function display(data){
 
 </head>
 <body>
-	<h1>남의 게시글 (post_id=2 가정.. post가 자기껀지 아닌지 확인필요)</h1>
+	<h1>본인 게시글 (post_id=1 가정.. post가 자기껀지 아닌지 확인필요)</h1>
 	<div id="comment_table"></div>
 	<br>
 	<br>
 	<input type="text" id="comment">
 	<button id="insert" onclick="insComm()">게시</button>
-	
+	<br>
+	<a href="logout.do">로그아웃</a>
+	<span id="temp"></span>
 </body>
 </html>
