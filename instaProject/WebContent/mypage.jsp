@@ -13,61 +13,20 @@
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
-	// 페이징 처리 스크롤 
-	let page = 1;
 	
-	$(function (){
+
+let page = 1;	// 페이징 
+$(function(){	// 페이지를 로드하면 데이터를 가져오고 페이지를 증가시킨다. 
+	getList(page);
+	page++;
+});
+$(window).scroll(function(){	// 스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
+	if($(window).scrollTop() >= $(document).height() - $(window).height()){
 		getList(page);
 		page++;
-	});
-	
-	$(window).scroll(function(){
-		if($(window).scrollTop() >= $(document).height() - $(window).height()){
-			getList(page);
-			page++;
-		}
-	});
-	
-	function getList(page){
-		let id1 = "<c:out value='${id}'/>";
-		$.ajax({
-			type : 'post',
-			dataType : 'json',
-			data : {id : id1},
-			url: 'mypagepost.jsp',
-			success : function(returnData) {
-				let data = returnData.rows;
-				let html = "";
-				if(page == 1){
-					$("#divmain").html("");
-				}
-				if(returnData.startNum <= returnData.totCnt){
-					if(data.length > 0){
-						// for 문을 돌면서 행을 그린다. 
-					}
-					else{
-						// 데이터가 없을 경우 출력 
-					}
-				}
-				html = html.replace(/%3/gi, " ");
-				if(page == 1){
-					$("#divmain").html(html);
-				} else {
-					$("busStopList").append(html);
-				}
-			}, error : function(e){
-				if(e.status == 300){
-					alert("데이터를 가져오는데 실패하였습니다.");
-				};
-			}
-		});
 	}
-	
-	
-	
-// 게시물 생성 함수 
-window.onload = function(){
-	self.resizeTo(1280,800);
+});
+function getList(page){
 	const log = console.log;
 	let count = 0;
 	let id1 = "<c:out value='${id}'/>";
@@ -76,40 +35,51 @@ window.onload = function(){
 		type : 'get',
 		dataType : 'json',
 		data : {id : id1},
-		success : ((data) >= {
-			for (i = data.length; i>0; i-=3){
-				let divmain = document.createElement('div');
-				divmain.setAttribute("id", "divmain"+i);
-				divmain.setAttribute("class", "divmain");
-				
-				document.querySelector('#sec').appendChild(divmain);
-			for(var j = 3; j>0; j--){
-				let a = document.createElement("a");
-				let img = document.createElement("img");
-				document.querySelector("#divmain"+i).appendChild(a);
-				img.setAttribute("src", data[count].id)
-				img.setAttribute("height" , "300");
-				img.setAttribute("width" , "300");
-				img.setAttribute("alt" , "instapic");
-				img.setAttribute("class" , "mainimg");
-				a.setAttribute("href" , "www.naver.com")
-				
-				$(a).addClass("apic");
-				document.querySelector("#divmain"+i).lastElementChild.appendChild(img);
-				count++;
+		success : function(returnData){
+			let row = returnData.rows;
+			let html= "";
+			if(page == 1){	// 페이지가 1일 경우에만 id가 list인 html을 비운다.
+				$(".divmain").html(" ");
 			}
-				
+			if(returnData.startNum <= returnData.totCnt){
+				if(data.length>0){
+					((data) >= {
+							for (i = data.length; i>0; i-=3){
+								let divmain = document.createElement('div');
+								divmain.setAttribute("id", "divmain"+i);
+								divmain.setAttribute("class", "divmain"); 
+								document.querySelector('#sec').appendChild(divmain);
+							for(var j = 3; j>0; j--){
+								let a = document.createElement("a");
+								let img = document.createElement("img");
+								document.querySelector("#divmain"+i).appendChild(a);
+								img.setAttribute("src", data[count].id)
+								img.setAttribute("height" , "300");
+								img.setAttribute("width" , "300");
+								img.setAttribute("alt" , "instapic");
+								img.setAttribute("class" , "mainimg");
+								a.setAttribute("href" , "www.naver.com")
+								
+								$(a).addClass("apic");
+								document.querySelector("#divmain"+i).lastElementChild.appendChild(img);
+								count++;
+									}
+								}
+							})
+						}
+				else{
+					alert("데이터가 더이상 없습니다. ");
+				}
 			}
-			
-		}),
+			if(page != 1){
+				$(".mainimg").append(html);
+			}	
+		},
 		error : ((e)=>{
 			alert('실패'+e);			
 		})
-		
-	
-	 
-	
 	})
+};
 
 
 $("#profileImage").click(function(e) {
@@ -128,7 +98,8 @@ function fasterPreview(uploader) {
 $("#imageUpload").change(function() {
 	fasterPreview(this);
 });
-}
+
+
 
 
 </script>
@@ -242,7 +213,12 @@ $("#imageUpload").change(function() {
 		</div>
 
 	</header>
-
+	<form action="/insertPost.do" method="post" enctype="multipart/form-data">
+		<input type="text" name="id">
+		<input type="text" name="content">
+		<input type="file" name="filename" multiple="multiple">
+		<input type="submit">
+		</form>
 
 	<hr>
 	<section class="section1">
