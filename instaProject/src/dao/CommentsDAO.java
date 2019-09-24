@@ -19,7 +19,7 @@ import vo.InstaPost;
 public class CommentsDAO {
 
 	
-	public  JSONArray selectAllComments(int post_id) throws Exception {
+	public  String selectAllComments(int post_id) throws Exception {
 		String sql = "select c.id as id, u.id as user_id, u.name, u.img, c.content, c.timestamp from comments c join users u on c.user_id = u.id where post_id = ? order by timestamp";
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -46,7 +46,7 @@ public class CommentsDAO {
 		} finally {
 			JDBCUtil.close(con, ps, rs);
 		}
-		return array;
+		return JSONArray.toJSONString(array);
 	}
 	
 	public  CommentsVO selectComment(int id) throws Exception { //필요하면 쓰고 필요없으면 지우기

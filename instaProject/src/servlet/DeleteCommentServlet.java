@@ -46,10 +46,10 @@ public class DeleteCommentServlet extends HttpServlet {
 				System.out.println("삭제 실패");
 			}
 			int post_id=Integer.parseInt(request.getParameter("post_id"));
-			JSONArray array=null;
+			String data2=null;
 			try {
-				array=service.selectAllComments(post_id);
-				out.print(array);
+				data2=service.selectAllComments(post_id);
+				out.print(data2);
 				out.flush();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

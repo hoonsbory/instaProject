@@ -16,7 +16,7 @@ public class CommentsServiceImpl implements CommentsService{
 	}
 
 	@Override
-	public JSONArray selectAllComments(int post_id) throws Exception {
+	public String selectAllComments(int post_id) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.selectAllComments(post_id);
 	}

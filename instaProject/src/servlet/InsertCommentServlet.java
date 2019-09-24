@@ -50,10 +50,10 @@ public class InsertCommentServlet extends HttpServlet {
 			if(result==0) {
 				System.out.println("추가 실패");
 			}
-			JSONArray array=null;
+			String data2=null;
 			try {
-				array=service.selectAllComments(post_id);
-				out.print(array);
+				data2=service.selectAllComments(post_id);
+				out.print(data2);
 				out.flush();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
