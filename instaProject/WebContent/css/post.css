@@ -13,6 +13,7 @@ header{
 }
 .uploadimage img{
 	width:50%;
+	
 }
 
 
@@ -20,12 +21,12 @@ header{
 	vertical-align:middle;
 	display:inline;
 	float:right;
-	width:49%;
+	width:49.9%;
     border:1px solid #bbb;
 }
 .titleBox {
     background-color:#fdfdfd;
-    padding:10px;
+    padding:5px;
 }
 .titleBox label{
   color:#444;
