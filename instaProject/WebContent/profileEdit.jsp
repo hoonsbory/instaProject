@@ -12,130 +12,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
-
-
-#img_change_opt {
-	background-color: rgba(0, 0, 0, .5);
-	bottom: 0;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 1;
-	visibility: hidden;
-	vertical-align: middle;
-}
-
-#img_change_opt>div {
-	border-radius: 20px;
-	width: 450px;
-	height: 250px;
-	margin: 0 auto;
-	margin-top: 220px;
-	text-align: center;
-	vertical-align: middle;
-	background-color: white;
-}
-
-#img_change_opt>div>div {
-	padding: 30px;
-	font-size: 15pt;
-	font-weight: bold;
-}
-
-#imgForm hr {
-	margin: 0;
-}
-
-#imgForm div {
-	height: 35pt;
-	line-height: 35pt;
-}
-
-#imgForm label {
-	font-size: 12pt;
-	cursor: pointer;
-	font-weight: bold;
-}
-
-#upload_label {
-	color: #3399ff;
-}
-
-#delete_label {
-	color: #ff3300;
-}
-
-#cancel {
-	font-size: 12pt;
-	cursor: pointer;
-}
-
-#myfile, #delete {
-	display: none;
-}
-
-#prof_info {
-	width: 70%;
-	height: 20%;
-	margin: 30px auto;
-}
-
-#prof_img {
-	float: left;
-}
-
-#prof_info_sub {
-	float: right;
-	height: 100%;
-	line-height: 50px;
-	margin-right: 60px;
-	text-align: center;
-}
-
-#prof_form {
-	clear: both;
-}
-
-#prof_form table {
-	margin: 0 auto;
-	text-align: center;
-	width: 400px;
-}
-
-#prof_form tr, td {
-	height: 50px;
-	line-height: 50px;
-}
-
-#prof_form td input {
-	height: 30px;
-	width: 260px;
-}
-
-#input_name {
-	font-weight: bold;
-	float: right;
-}
-
-#aa {
-	margin: 50px;
-}
-
-#submit {
-	width: 50px;
-}
-
-#img_change_btn {
-	margin: 0;
-	cursor: pointer;
-	color: #3399ff;
-}
-
-#prof_info_sub div {
-	font-size: 12pt;
-}
-
 #profile_menu {
 	border-left: 2px solid black !important;
 }
@@ -213,21 +89,21 @@
 			<form action="./profileEdit.do" method="post" id="prof_form">
 				<table>
 					<tr>
-						<td id="input_name">이름</td>
+						<td class="input_name"><span>이름</span></td>
 						<td><input type="text" class="need" id="name" name="name"
 							value="${user.name}" required="required"></td>
 					</tr>
 					<tr>
-						<td id="input_name">이메일</td>
+						<td class="input_name"><span>이메일</span></td>
 						<td><input type="email" class="need" id="email" name="email"
 							value="${user.email}" required="required"></td>
 					</tr>
 				</table>
-				<div id="aa">
+				<div id="msg_space">
 					<span class="error" id="errMsg">${msg}</span>
 				</div>
 				<div>
-					<input type="submit" id="submit" value="수정">
+					<input type="submit" class="form_btn" value="수정">
 				</div>
 			</form>
 		</aside>

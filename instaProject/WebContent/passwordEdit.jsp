@@ -12,12 +12,11 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
-
-#password_menu{
+#password_menu {
 	border-left: 2px solid black !important;
 }
 
-#password_menu a{
+#password_menu a {
 	font-weight: bold;
 	color: #444444;
 }
@@ -47,7 +46,7 @@
 </script>
 </head>
 <body>
-<%@include file="common/header.jsp"%>
+	<%@include file="common/header.jsp"%>
 	<section id="sect">
 		<aside id="left">
 			<div id="menu">
@@ -64,24 +63,36 @@
 		</aside>
 		<aside id="center">
 			<form action="passwordEdit.do" method="post"
-				onsubmit="return check()" onreset="clearAll()">
-				<div>
-					이전 비밀번호 : <input type="password" id="past_pw" name="past_pw"
-						class="need" required="required">
+				onsubmit="return check()" onreset="clearAll()" id="password_form">
+				<table>
+					<tr>
+						<td class="input_name"><span>이전 비밀번호</span></td>
+						<td><input type="password" id="past_pw" name="past_pw"
+							class="need" required="required"></td>
+					</tr>
+					<tr>
+						<td class="input_name"><span>새 비밀번호</span></td>
+						<td><input type="password" id="new_pw" name="new_pw"
+							class="need" required="required"
+							pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,}"></td>
+					</tr>
+					<tr id="small_tr">
+						<td></td>
+						<td><span id="pattern">영문자, 숫자, 특수문자 포함 6자 이상</span></td>
+					</tr>
+					<tr>
+						<td class="input_name"><span>새 비밀번호 확인</span></td>
+						<td><input type="password" id="new_pw2" name="new_pw2"
+							class="need" required="required"></td>
+					</tr>
+				</table>
+
+				<div id="msg_space">
+					<span class="error" id="errMsg">${msg}</span>
 				</div>
-				<div>
-					새 비밀번호 : <input type="password" id="new_pw" name="new_pw"
-						class="need" required="required"
-						pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,}">
-					<span>영문자, 숫자, 특수문자 포함 6자 이상</span>
-				</div>
-				<div>
-					새 비밀번호 확인 : <input type="password" id="new_pw2" name="new_pw2"
-						class="need" required="required">
-				</div>
-				<span class="error" id="errMsg">${msg}</span><br> <input
-					type="submit" value="비밀번호 변경"> <input type="reset"
-					value="초기화">
+				<input type="submit" class="form_btn" id="submit_btn"
+					value="비밀번호 변경"> <input type="reset" class="form_btn"
+					id="reset_btn" value="초기화">
 			</form>
 		</aside>
 	</section>

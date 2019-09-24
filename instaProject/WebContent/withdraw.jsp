@@ -25,6 +25,7 @@
 #center a{
 	font-weight: bold;
 	font-size: 12pt;
+	color: #3399ff;
 }
 
 #center h4{

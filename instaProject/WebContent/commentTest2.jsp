@@ -22,7 +22,9 @@ function showComm(){//data로 post id 보내줘야함 일단 임시로 1 보내�
 				 data: {post_id:1},
 				 success:function(data){
 					if(data.msg!=undefined){
-						location.href="login.jsp?msg="+data.msg;
+						//location.href="login.jsp?msg="+data.msg;
+						$('#msg').val(data.msg);
+						$('#hidden_form').submit();
 					} else
 						display(data);
 				 },
@@ -43,7 +45,9 @@ function insComm(){
 				 data:{content:$('#comment').val(),post_id:1},
 				 success:function(data){
 					if(data.msg!=undefined){
-						location.href="login.jsp?msg="+data.msg;
+						//location.href="login.jsp?msg="+data.msg;
+						$('#msg').val(data.msg);
+						$('#hidden_form').submit();
 					} else{
 						alert('추가되었습니다.');
 						display(data);
@@ -65,7 +69,9 @@ function delComm(delId){
 				 data: {id:delId,post_id:1},
 				 success:function(data){
 					if(data.msg!=undefined){
-						location.href="login.jsp?msg="+data.msg;
+						//location.href="login.jsp?msg="+data.msg;
+						$('#msg').val(data.msg);
+						$('#hidden_form').submit();
 					} else{
 						alert('삭제되었습니다.');
 						display(data);
@@ -109,6 +115,8 @@ function display(data){
 	<button id="insert" onclick="insComm()">게시</button>
 	<br>
 	<a href="logout.do">로그아웃</a>
-	<span id="temp"></span>
+	<form style="visibility:hidden" action="login.jsp" method="post" id="hidden_form">
+		<input type="hidden" id="msg" name="msg" value="">
+	</form>
 </body>
 </html>
