@@ -54,7 +54,7 @@
 
 					<h1 class="profile-user-name">janedoe_</h1>
 
-					<button class="btn profile-edit-btn">프로필 편집</button>
+					<button class="btn follow-btn">팔로우</button>
 
 
 				</div>
@@ -62,7 +62,7 @@
 				<div class="profile-stats">
 
 					<ul>
-						<li><span class="profile-stat-count">164</span> 게시물</li>
+						<li><span class="profile-stat-count">164</span> 게시글</li>
 						<li><span class="profile-stat-count">188</span> 팔로워</li>
 						<li><span class="profile-stat-count">206</span> 팔로잉</li>
 					</ul>
@@ -85,17 +85,12 @@
 	</header>
 <!-- <a href="./upload.jsp" target="popup" 
           onclick="window.open('./upload.jsp','name','width=600,height=400')">new post</a> -->
-	<div class="newwindow">
-	<div onclick="window.open('./upload.jsp','파일업로드','width=800,height=600,top=100%,left=350%,transform=ranslate(-50%, -50%),position=absolute')" data-mce-onclick="">
-  <button class="newpost"><font size=”6”>new post</font></button> 
-</div></div>
+	
 	<div class="clickpost">
-	<div onclick="window.open('./post.jsp','파일업로드','width=800,height=600,top=100%,left=350%,transform=ranslate(-50%, -50%),position=absolute')" data-mce-onclick="">
+	<div onclick="window.open('./post.jsp','게시글선택','width=800,height=600,top=100%,left=350%,transform=ranslate(-50%, -50%),position=absolute')" data-mce-onclick="">
   <button class="newpost"><font size=”6”>post</font></button> 
 </div></div>
 	<hr>
-
-	
 	
 	<%@include file="common/footer.jsp" %>
 </body>
