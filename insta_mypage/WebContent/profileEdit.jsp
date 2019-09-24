@@ -1,75 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Instagram</title>
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/profileEdit.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
-section {
-	height: 500px;
-	width: 800px;
-	text-align: center;
-	margin: 0 auto;
+#profile_menu {
+	border-left: 2px solid black !important;
 }
 
-#left {
-	float: left;
-	border: 1px solid black;
-	width: 30%;
-	height: 100%;
+#profile_menu a {
+	font-weight: bold;
+	color: #444444;
 }
 
-#center {
-	float: left;
-	border: 1px solid black;
-	border-left: none;
-	width: 60%;
-	height: 100%;
-}
-
-#img_change_opt {
-	background-color: rgba(0, 0, 0, .5);
-	bottom: 0;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 1;
-	visibility: hidden;
-	vertical-align: middle;
-}
-
-#img_change_opt > div{
-	border: 2px solid black;
-	width: 300px;
-	height: 400px;
-	margin: 0 auto;
-	margin-top: 200px;
-	text-align: center;
-	vertical-align: middle;
-	background-color: white;
-}
-#myfile, #delete{
-	display: none;
-}
-.error{
-	color:red;
-}
 </style>
 <script type="text/javascript">
 	$(function() {
+		$(function() {
+			$('.need').each(function(i, element) {
+				$(element).keyup(function() { //입력창에 키보드 입력시 에러 메시지 지우기
+					clearAll();
+				})
+			});
+		})
+
+		function clearAll() { //에러 메시지 지우기
+			$('#errMsg').html("");
+		}
+
 		$('#img_change_btn').click(function() { //프사 편집 버튼 클릭시 프사 편집 선택 화면 보이기
-			if("<c:out value='${user.img}'/>"=="./userpic/default.jpg") //프사가 기본 이미지일 경우 바로 이미지파일 선택 창으로. 되는지 확인해야..
+			if ("<c:out value='${user.img}'/>" == "./userpic/default.jpg") //프사가 기본 이미지일 경우 바로 이미지파일 선택 창으로. 되는지 확인해야..
 				$('#myfile').trigger('click');
 			else
 				$('#img_change_opt').css('visibility', 'visible');
 		});
 		$('#delete').click(function() { //프사 삭제 버튼 클릭시 value변경 -> 서블릿에서 val 확인해서 프사 삭제할것임
-			if(confirm('삭제하시겠습니까?')){
+			if (confirm('삭제하시겠습니까?')) {
 				$(this).val('delete');
 				$('#imgForm').submit();
 			}
@@ -78,55 +52,86 @@ section {
 			$('#delete').val(''); //프사 삭제 버튼 초기화
 			$('#img_change_opt').css('visibility', 'hidden');
 		});
-		$('.need').each(function(i,element){
-			$(element).keyup(function(){ //입력창에 키보드 입력시 에러 메시지 지우기
+		$('.need').each(function(i, element) {
+			$(element).keyup(function() { //입력창에 키보드 입력시 에러 메시지 지우기
 				$('#errMsg').html("");
 			})
 		});
 	});
-	
 </script>
 </head>
 <body>
-	<section>
+	<%@include file="common/header.jsp"%>
+	<section id="sect">
 		<aside id="left">
-			<div>
-				<a href="profile.do">프로필 편집</a>
-			</div>
-			<div>
-				<a href="passwordEdit.jsp">비밀번호 변경</a>
-			</div>
-			<div>
-				<a href="withdraw.jsp">회원 탈퇴</a>
+			<div id="menu">
+				<div id="profile_menu">
+					<a href="profile.do">프로필 편집</a>
+				</div>
+				<div id="password_menu">
+					<a href="passwordEdit.jsp">비밀번호 변경</a>
+				</div>
+				<div id="withdraw_menu">
+					<a href="withdraw.jsp">회원 탈퇴</a>
+				</div>
 			</div>
 		</aside>
 		<aside id="center">
-			<div>
-				<img src="${user.img}" alt="" id="prof_img" width=100 height=100> ${user.email}
-				<button id="img_change_btn">프로필 사진 바꾸기</button>
+			<div id="prof_info">
+				<img src="${user.img}" alt="" id="prof_img" width=100 height=100>
+				<div id="prof_info_sub">
+					<div>${user.email}</div>
+					<div>
+						<h4 id="img_change_btn">프로필 사진 바꾸기</h4>
+					</div>
+				</div>
 			</div>
-			<form action="./profileEdit.do" method="post">
-			<div>
-				이름 : <input type="text" id="name" name="name" value="${user.name}">
-			</div>
-			<div>
-				이메일 : <input type="email" id="email" name="email" value="${user.email}">
-			</div>
-			<span class="error" id="errMsg">${msg}</span><br>
-			<div><input type="submit" value="수정"></div>
+			<form action="./profileEdit.do" method="post" id="prof_form">
+				<table>
+					<tr>
+						<td class="input_name"><span>이름</span></td>
+						<td><input type="text" class="need" id="name" name="name"
+							value="${user.name}" required="required"></td>
+					</tr>
+					<tr>
+						<td class="input_name"><span>이메일</span></td>
+						<td><input type="email" class="need" id="email" name="email"
+							value="${user.email}" required="required"></td>
+					</tr>
+				</table>
+				<div id="msg_space">
+					<span class="error" id="errMsg">${msg}</span>
+				</div>
+				<div>
+					<input type="submit" class="form_btn" value="수정">
+				</div>
 			</form>
 		</aside>
 	</section>
 	<div id="img_change_opt">
-		<div> <!-- 수직 정렬 도와줘.....-->
+		<div>
+			<!-- 수직 정렬 도와줘.....-->
 			<div>프로필 사진 바꾸기</div>
-			<form action="./profImgChange.do" method="post" enctype="multipart/form-data" id="imgForm">
-			<div><label for="myfile"><input type="file" id="myfile" name="myfile" multiple="multiple" onchange="form.submit()">사진 업로드</label></div>
-			<div><label for="delete"><input type="text" id="delete" name="delete" value="">현재 사진 삭제</label></div>
+			<form action="./profImgChange.do" method="post"
+				enctype="multipart/form-data" id="imgForm">
+				<hr>
+				<div>
+					<label for="myfile" id="upload_label"><input type="file"
+						id="myfile" name="myfile" multiple="multiple"
+						onchange="form.submit()">사진 업로드</label>
+				</div>
+				<hr>
+				<div>
+					<label for="delete" id="delete_label"><input type="text"
+						id="delete" name="delete" value="">현재 사진 삭제</label>
+				</div>
+				<hr>
 			</form>
-			<button id="cancel">취소</button>
-			
+			<h4 id="cancel">취소</h4>
+
 		</div>
 	</div>
+	<%@include file="common/footer.jsp"%>
 </body>
+
 </html>

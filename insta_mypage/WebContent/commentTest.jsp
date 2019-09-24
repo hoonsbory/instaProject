@@ -22,9 +22,10 @@ function showComm(){//data로 post id 보내줘야함 일단 임시로 2 보내�
 				 dataType:'json',
 				 data: {post_id:2},
 				 success:function(data){
-					if(data.msg!=undefined){
-						alert(data.msg);
-						location.href="login.jsp";
+					if(data.msg!=undefined){ //msg를 get방식으로 보내거나 숨겨진 form으로 post방식으로 보내거나.. 결정 -> 하튼 로그인페이지에서 param으로 받아야함
+						//location.href="login.jsp?msg="+data.msg;
+						$('#msg').val(data.msg);
+						$('#hidden_form').submit();
 					} else
 						display(data);
 				 },
@@ -45,8 +46,9 @@ function insComm(){
 				 data:{content:$('#comment').val(),post_id:2},
 				 success:function(data){
 					if(data.msg!=undefined){
-						alert(data.msg);
-						location.href="login.jsp";
+						//location.href="login.jsp?msg="+data.msg;
+						$('#msg').val(data.msg);
+						$('#hidden_form').submit();
 					} else{
 						alert('추가되었습니다.');
 						display(data);
@@ -67,13 +69,14 @@ function delComm(delId){
 				 dataType:'json',
 				 data: {id:delId,post_id:2},
 				 success:function(data){
-					 if(data.msg!=undefined){
-							alert(data.msg);
-							location.href="login.jsp";
-						} else{
-							alert('삭제되었습니다.');
-							display(data);
-						}
+					if(data.msg!=undefined){
+						//location.href="login.jsp?msg="+data.msg;
+						$('#msg').val(data.msg);
+						$('#hidden_form').submit();
+					} else{
+						alert('삭제되었습니다.');
+						display(data);
+					}
 				 },
 				 error:function(error){
 					 alert("error "+error.name);
@@ -110,11 +113,14 @@ function display(data){
 
 </head>
 <body>
-<h1>남의 게시글 (post_id=2 가정.. post가 자기껀지 아닌지 확인필요)</h1>
+	<h1>남의 게시글 (post_id=2 가정.. post가 자기껀지 아닌지 확인필요)</h1>
 	<div id="comment_table"></div>
 	<br>
 	<br>
 	<input type="text" id="comment">
 	<button id="insert" onclick="insComm()">게시</button>
+	<form style="visibility:hidden" action="login.jsp" method="post" id="hidden_form">
+		<input type="hidden" id="msg" name="msg" value="">
+	</form>
 </body>
 </html>
