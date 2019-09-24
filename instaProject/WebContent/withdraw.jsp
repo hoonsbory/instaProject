@@ -22,6 +22,11 @@
 	color: #444444;
 }
 
+
+#center div{
+	padding-top:50px;
+}
+
 #center a{
 	font-weight: bold;
 	font-size: 12pt;
@@ -53,10 +58,12 @@
 			</div>
 		</aside>
 		<aside id="center">
+		<div>
 		<h4>탈퇴 이후 본 계정의 모든 게시글과 댓글은 삭제됩니다.</h4>
 		<h4>탈퇴하시려면 아래의 '탈퇴하기'를 눌러주세요.</h4>
 		<br><br>
 			<a href="withdraw.do" onclick="return confirm('정말 탈퇴하시겠습니까?')">탈퇴하기</a>
+			</div>
 		</aside>
 	</section>
 	<%@include file="common/footer.jsp"%>
