@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%  request.setCharacterEncoding("utf-8"); %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,16 +13,14 @@
 
 <script type="text/javascript">
 $(function () {
-	$(.need).each(function(i,element) {
-		$(element).keyup(function() { // 입력창에 키보드로 입력시 에러 메세지 지우기
-			clearAll();
-		})
-	});
+		$('#email').keyup(function() { // 입력창에 키보드로 입력시
+			$('#errMsg').html(""); // 에러 메세지 지우기
+		});
+		$('#pw').keyup(function() { 
+			$('#errMsg').html(""); 
+		});
 })
 
-function clearAll() { // 입력창_에러메세지 지우기
-	$('.need').html("");
-}
 </script>
 
 <script type="text/javascript">
@@ -207,7 +206,7 @@ function clearAll() { // 입력창_에러메세지 지우기
 				<div class="whole-01__body">
 			  	
  
-					<input type="email" class="whole-01__body--email" id="email" name="email"  value="${email}" placeholder="E-mail" required="required"><br><br><br>
+					<input type="email" class="whole-01__body--email" id="email" name="email"  value="${email}" placeholder="E-mail" required="required" autofocus="autofocus"><br><br><br>
 
 					<input type="password" class="need" id="pw" name="pw" placeholder="Password" required="required" >	<br><br><br>
 				
