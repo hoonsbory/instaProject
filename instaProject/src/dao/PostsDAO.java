@@ -126,16 +126,15 @@ public class PostsDAO {
 		}
 		return result;
 	}
-public String showPosts(int id){
+public Map<String, String> showPosts(int id){
 		
 		String sql = "select p.id as p_id,p.content as p_content,p.img as p_img,u.id as u_id,u.img as u_img,u.name as u_name from posts p join users u on p.user_id=u.id where p.id = ? ";
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
 		
-		JSONArray array = new JSONArray();
 		
-		Map<String, String> map = new HashMap<String,String>();
+		Map<String, String> map = new HashMap<>();
 		try {
 			con = JDBCUtil.getConnection();
 			ps = con.prepareStatement(sql);
@@ -149,15 +148,13 @@ public String showPosts(int id){
 				map.put("user_img",rs.getString("u_img"));
 				map.put("user_name",rs.getString("u_name"));
 				
-				JSONObject obj = new JSONObject(map);
-				array.add(obj);
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCUtil.close(con, ps, rs);
 		}
-		return JSONArray.toJSONString(array);
+		return map;
 	}
 
 public String besidePosts(int id){
