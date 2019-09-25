@@ -21,7 +21,7 @@ public class PostsDAO {
 	public List<PostsVO> getAllPostsRec(int user_id){
 		List<PostsVO> list = new ArrayList<PostsVO>();
 		
-		String sql = "select img from posts where user_id = ?;";
+		String sql = "select img from posts where user_id = ?";
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -53,7 +53,7 @@ public class PostsDAO {
 	public int insertPosts(PostsVO vo){
 		List<PostsVO> list = new ArrayList<PostsVO>();
 		
-		String sql = "insert into posts (id, content , img, user_id) values(?,?,?,?);";
+		String sql = "insert into posts (id, content , img, user_id) values((select nvl(max(id),0)+1 from posts),?,?,?)";
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -63,10 +63,9 @@ public class PostsDAO {
 			con = JDBCUtil.getConnection();
 			ps = con.prepareStatement(sql);
 			
-			ps.setInt(1, vo.getId());
-			ps.setString(2, vo.getContent());
-			ps.setString(3, vo.getImg());
-			ps.setInt(4, vo.getUser_id());
+			ps.setString(1, vo.getContent());
+			ps.setString(2, vo.getImg());
+			ps.setInt(3, vo.getUser_id());
 			
 			result = ps.executeUpdate();	// update 는 executeUpdate
 			
@@ -80,7 +79,7 @@ public class PostsDAO {
 	public int deletePosts(int id){
 		List<PostsVO> list = new ArrayList<PostsVO>();
 		
-		String sql = "delete from posts where id = ?;";
+		String sql = "delete from posts where id = ?";
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -104,7 +103,7 @@ public class PostsDAO {
 	public int updatePosts(PostsVO vo){
 		List<PostsVO> list = new ArrayList<PostsVO>();
 		
-		String sql = "update posts set content = ? where id = ?;";
+		String sql = "update posts set content = ? where id = ?";
 		
 		Connection con = null;
 		PreparedStatement ps = null;
