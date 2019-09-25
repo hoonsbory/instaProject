@@ -5,7 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import util.JDBCUtil;
 import vo.PostsVO;
@@ -121,4 +126,42 @@ public class PostsDAO {
 		}
 		return result;
 	}
+public String showPosts(int id){
+		
+		String sql = "select p.id as p_id,p.content as p_content,p.img as p_img,u.id as u_id,u.img as u_img,u.name from posts p join users u on p.user_id=u.id where p.id = ? ";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs=null;
+		
+		JSONArray array = new JSONArray();
+		
+		Map<String, String> map = new HashMap<String,String>();
+		try {
+			con = JDBCUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				map.put("id",rs.getString("id"));
+				map.put("content",rs.getString("content"));
+				map.put("user_id",rs.getString("user_id"));
+				map.put("img",rs.getString("img"));
+				map.put("post_id",rs.getString("post_id"));
+				map.put("post_id",rs.getString("name"));
+				
+				
+				
+				JSONObject obj = new JSONObject(map);
+				array.add(obj);
+				
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(con, ps, rs);
+		}
+		return JSONArray.toJSONString(array);
+	}
+
+
 }
