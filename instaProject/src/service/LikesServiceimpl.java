@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import dao.LikesDAO;
 import vo.LikesVO;
 
@@ -22,15 +24,21 @@ public class LikesServiceimpl implements LikesService{
 	}
 
 	@Override
-	public int insertLikes(LikesVO vo) {
-		return dao.insertLikes(vo);
+	public int insertLikes(int user_id, int post_id) throws Exception {
+		return dao.insertLikes(user_id, post_id);
 	}
 
 	@Override
-	public int deleteLikes(int post_id) {
-		return dao.deleteLikes(post_id);
+	public int deleteLikes(int post_id, int user_id) throws Exception {
+		return dao.deleteLikes(post_id, user_id);
 	}
-	
+
+	@Override
+	public List<LikesVO> countLikes(int post_id) throws Exception {
+		return dao.countLikes(post_id);
+	}
+
+
 	
 	
 }
