@@ -12,29 +12,60 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="./css/upload.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/footer.css">
 <title>파일업로드</title>
 <style type="text/css">
+*, *::before, *::after {
+    box-sizing: content-box;
+}
 body{
-	background-color: white;
+	background-color:#fafafa;
 }
-
-img{
-  max-width:380px;
-  display:inline;
-  float:left;
-  top:50%;
+#border{
+	display:inline
 }
-
+#id{
+	border: dashed 1px #dbdbdb;
+	border-radius:3rem;
+	padding:10px;
+}
 #post{
-	display:inline;
-	float:left;
-	width:300px;
-	height:190px;
+	border: dashed 1px #dbdbdb;
+	border-radius:3rem;
+	width:400px;
+	height:300px;
 }
-input{
-	display:inline;
+
+
+
+.uploadpostimage{
+	margin-left:150px;
+	background-color:white;
+	max-width:400px;
+	border: dashed 1px #dbdbdb;
+	border-radius:3rem;
+    transform: scale(1);
+    -webkit-box-shadow: 0 0 0 transparent;
+    box-shadow: 0 0 0 transparent;
+    padding:50px;
 }
+.uploadpostimage img{
+	padding-left:20px;
+	max-width:400px;
+	cursor:pointer;
+}
+#postUpload{
+	display:none;
+}
+p{
+	margin:20px;
+	padding-bottom:40px;
+	text-align: center;
+	font-size:30px;
+	font-weight:200;
+}
+
 </style>
 </head>
 <script
@@ -57,21 +88,47 @@ input{
 
 <body>
 
-	<h3>이미치 첨부 및 글 작성</h3>
+<%@include file="common/header.jsp" %>
+
+<main>
+<div id="border">
 	<!-- 이미지미리보기 -->
 		<form action="insertPost.do" method="post" enctype="multipart/form-data">
-	아이디:<input type="text" name="id">
-	파일첨부:<input type='file' onchange="readURL(this);" /><br>
-	<img id="photo" src="https://i.imgur.com/WNUTE8N.jpg" alt="your image" />
-	<div class="comment-block">
+	아이디:<input type="text" name="id" id="id">
+	
+	
+	<div class="uploadpostimage">
+	<p>사진을 추가하세요</p>
+	<img id="photo" src="https://i.imgur.com/5UrUQkG.png" title="click.png"/>
+						 <input id="postUpload"
+						type="file" name="profile_photo" placeholder="Photo" >
+					<script>
+						$("#photo").click(function(e) {
+							$("#postUpload").click();
+						});
+
+						function fasterPreview(uploader) {
+							if (uploader.files && uploader.files[0]) {
+								$('#photo')
+										.attr(
+												'src',
+												window.URL
+														.createObjectURL(uploader.files[0]));
+							}
+						}
+						$("#postUpload").change(function() {
+							fasterPreview(this);
+						});
+					</script></div>
 			게시글:<textarea  name="post" id="post" 
-				placeholder="게시할 글을 작성하세요..." maxlength="100" \></textarea>
+				placeholder="    ...게시할 글을 작성하세요..." maxlength="200" \></textarea>
 				
 				<div class="buttons">
 		<input type="submit" value="등록">
 		<input type="reset" value="취소">
-				</div>
-	</div>
-		</form>
+				
+		</form></div></div>
+		</main>
+		<%@include file="common/footer.jsp" %>
 </body>
 </html>
