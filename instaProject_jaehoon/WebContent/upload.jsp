@@ -125,12 +125,12 @@ p {
 			<textarea name="content" id="content"
 				placeholder="    ...게시할 글을 작성하세요..." maxlength="200"\></textarea>
 
-			<div class="buttons">
 			<input type="hidden" value="${id}">
+			<div class="buttons">
 				<input type="submit" value="등록"> <input type="reset"
 					value="취소">
-		</form>
 	</div>
+		</form>
 	</div>
 	</main>
 	<%@include file="common/footer.jsp"%>
