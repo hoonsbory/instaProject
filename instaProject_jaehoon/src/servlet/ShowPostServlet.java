@@ -47,6 +47,7 @@ public class ShowPostServlet extends HttpServlet {
 			int post_id=Integer.parseInt(request.getParameter("post_id"));
 			try {
 				Map<String, String> show =service.showPosts(post_id);
+				Map<String, Integer> beside=service.besidePosts(post_id);
 				List<LikesVO> list = new ArrayList<LikesVO>();
 				list = lservice.countLikes(post_id);
 				int count=list.size();

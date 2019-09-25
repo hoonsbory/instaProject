@@ -157,7 +157,7 @@ public Map<String, String> showPosts(int id){
 		return map;
 	}
 
-public String besidePosts(int id){
+public Map<String, Integer> besidePosts(int id){
 	String sql = " select * from (select id, lead(id,1,'-1') over (order by timestamp) next_id, lag(id,1,'-1') over (order by timestamp) past_id from posts) where id=?";
 	
 	Connection con = null;
@@ -182,7 +182,7 @@ public String besidePosts(int id){
 	} finally {
 		JDBCUtil.close(con, ps, null);
 	}
-	return JSONObject.toJSONString(map);
+	return map;
 }
 
 

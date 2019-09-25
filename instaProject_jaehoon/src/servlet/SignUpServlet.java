@@ -32,7 +32,7 @@ public class SignUpServlet extends HttpServlet {
 		UsersVO vo=new UsersVO(email,hashed,name);
 		int result=service.addUser(vo);
 		if(result==0) {
-			request.setAttribute("msg", "이미 가입된 이메일입니다.");
+			request.setAttribute("msg2", "이미 가입된 이메일입니다.");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			return;
 		}

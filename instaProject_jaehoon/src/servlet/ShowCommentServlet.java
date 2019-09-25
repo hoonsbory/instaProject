@@ -27,7 +27,6 @@ public class ShowCommentServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
 
-		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		CommentsDAO dao = new CommentsDAO();
 		CommentsService service = new CommentsServiceImpl(dao);
