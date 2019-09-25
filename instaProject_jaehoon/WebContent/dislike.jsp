@@ -1,3 +1,4 @@
+
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.JSONArray"%>
 <%@page import="service.LikesServiceimpl"%>
@@ -7,6 +8,7 @@
     pageEncoding="UTF-8"%>
 
     <%
+    
     LikesDAO dao = new LikesDAO();
     LikesService service = new LikesServiceimpl(dao);
     

@@ -1,5 +1,8 @@
 package service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.json.simple.JSONArray;
 
 import dao.CommentsDAO;
@@ -16,11 +19,11 @@ public class CommentsServiceImpl implements CommentsService{
 	}
 
 	@Override
-	public JSONArray selectAllComments(int post_id) throws Exception {
+	public String selectAllComments(int post_id) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.selectAllComments(post_id);
 	}
-
+	
 	@Override
 	public CommentsVO selectComment(int id) throws Exception {
 		// TODO Auto-generated method stub
@@ -44,5 +47,6 @@ public class CommentsServiceImpl implements CommentsService{
 		// TODO Auto-generated method stub
 		return dao.updateComment(com);
 	}
+	
 
 }

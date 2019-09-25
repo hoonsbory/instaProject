@@ -22,35 +22,25 @@ import service.CommentsServiceImpl;
 @WebServlet("/showComment.do")
 public class ShowCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
-		
+
 		HttpSession session = request.getSession();
-		PrintWriter out=response.getWriter();
-		if (session.getAttribute("login") != null) {
-			String login = (String) session.getAttribute("login"); // login="id/name"
-			int id = Integer.parseInt(login.substring(0, login.lastIndexOf('/')));
-			CommentsDAO dao=new CommentsDAO();
-			CommentsService service=new CommentsServiceImpl(dao);
-			int post_id=Integer.parseInt(request.getParameter("post_id"));
-			JSONArray array=null;
-			try {
-				array=service.selectAllComments(post_id);
-				out.print(array);
-				out.flush();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			Map<String,String> map=new HashMap<String,String>();
-			map.put("msg","로그인이 필요한 서비스입니다.");
-			request.setAttribute("msg", "로그인이 필요한 서비스입니다.");
-			JSONObject obj=new JSONObject(map);
-			out.print(obj);
+		PrintWriter out = response.getWriter();
+		CommentsDAO dao = new CommentsDAO();
+		CommentsService service = new CommentsServiceImpl(dao);
+		int post_id = Integer.parseInt(request.getParameter("post_id"));
+		String data2 = null;
+		try {
+			data2 = service.selectAllComments(post_id);
+
+			out.print(data2);
 			out.flush();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-
 }

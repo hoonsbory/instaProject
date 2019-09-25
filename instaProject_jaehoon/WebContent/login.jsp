@@ -17,11 +17,27 @@
 
 <script type="text/javascript">
 $(function () {
-	$(.need).each(function(i,element) {
-		$(element).keyup(function() { // 입력창에 키보드로 입력시 에러 메세지 지우기
+	$('.need').each(function(i, element) {
+		$(element).keyup(function() { //입력창에 키보드 입력시 에러 메시지 지우기
 			clearAll();
 		})
 	});
+	$('#name')[0].oninvalid = function() {
+		if (!this.validity.valid && $($(this)[0]).val().length > 0) {
+			this.setCustomValidity('2자 이상 15자 이하로 입력하세요.');
+		}
+	}
+	$('#pw2')[0].oninvalid = function() {
+		if (!this.validity.valid && $($(this)[0]).val().length > 0){
+			this.setCustomValidity('영문자, 숫자, 특수문자 포함 6자 이상 15자 이하로 입력하세요.');
+		}
+	}
+	$('#name')[0].oninput= function () {
+	    this.setCustomValidity("");
+	};
+	$('#pw2')[0].oninput= function () {
+        this.setCustomValidity("");
+	};
 })
 
 function clearAll() { // 입력창_에러메세지 지우기
@@ -377,8 +393,8 @@ input {
 			<form action="login.do" id="loginform" class="w3-container" method="post">
 				<br>
 				<p>
-					<label class="idpw">EMAIL</label> <input class="w3-input" type="text"
-						id="email" name="email" required="required"  placeholder="이메일을 입력하세요">
+					<label class="idpw">EMAIL</label> <input class="w3-input" type="email"
+						id="email" name="email" required="required"  placeholder="이메일을 입력하세요" autofocus>
 				</p>
 				<p>
 					<label class="idpw">PASSWORD</label> <input class="w3-input"
@@ -400,11 +416,11 @@ input {
 			<form action="signUp.do" id="addform" class="w3-container"
 				method="post">
 
-				<label class="idpw">EMAIL</label> <input class="w3-input" type="text"
+				<label class="idpw">EMAIL</label> <input class="w3-input" type="email"
 					id="email2" name="email2" required="required" placeholder="이메일을 입력하세요"> <label class="idpw">PASSWORD</label> <input
-					class="w3-input" type="password" placeholder="영문자, 숫자, 특수문자 포함 6자 이상" pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,}"  id="pw2" name="pw2" required="required"> <label
+					class="w3-input" type="password" placeholder="영문자, 숫자, 특수문자 포함 6자 이상" pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,15}"  id="pw2" name="pw2" required="required"> <label
 					class="idpw" >NAME</label> <input class="w3-input" type="text"
-					id="name" placeholder="이름을 입력하세요" name="name" required="required"><br>
+					id="name" placeholder="이름을 입력하세요" name="name" required="required" pattern=".{2,15}"><br>
 				<button id="btn4" type="submit" class="button"
 					style="vertical-align: middle">
 					<span>가입 </span>

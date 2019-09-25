@@ -1,0 +1,161 @@
+@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);
+
+#sect {
+	height: 600px;
+	width: 900px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+#sect header{
+	float:left;
+	display:block;
+	width: 400px;
+}
+.container{
+	width:100%;
+	clear:both;
+	display:block;
+}
+.uploadimage{
+	display:inline;
+	vertical-align:middle;
+   border:none;
+   width: 50%;
+}
+.uploadimage img{
+	width:50%;
+	height: auto;
+}
+
+
+.detailBox {
+	vertical-align:middle;
+	display:inline;
+	float:right;
+	width:49%;
+    border:1px solid #bbb;
+}
+.titleBox {
+    background-color:#fdfdfd;
+    padding:10px;
+}
+.titleBox label{
+  color:#444;
+  margin:0;
+  font-weight: bold;
+}
+
+.commentBox {
+    padding:10px;
+    border-top:1px dotted #ffffff;
+}
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+    width:80%;
+}
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+    width:18%;
+}
+.actionBox .form-group * {
+    width:100%;
+}
+
+.form-group2:first-child {
+    width:80%;
+    float:left;
+	margin-left: 5px;
+}
+.form-group2:nth-child(2) {
+    width:18%;
+    float:right;
+}
+.form-group2 * {
+    width:80%;
+}
+
+.taskDescription {
+    margin-top:10px 0;
+}
+.commentList {
+    padding:0;
+    list-style:none;
+    overflow:auto;
+    -ms-overflow-style: none;
+}
+
+.commentList::-webkit-scrollbar { 
+    display: none; 
+}
+
+.commentList li {
+    margin:0;
+    margin-top:10px;
+}
+.commentList li > div {
+    display:table-cell;
+}
+.commenterImage {
+    width:30px;
+    margin-right:5px;
+    height:30px;
+    float:left;
+}
+.commenterImage img {
+    width: 30px;
+    height: 30px;
+    border-radius:50%;
+}
+
+.commentText{
+	width: 370px;
+}
+.commentText p {
+    margin:0;
+}
+.sub-text {
+    color:#aaa;
+    font-family:verdana;
+    font-size:11px;
+}
+.actionBox {
+    border-top:1px dotted #bbb;
+    border-bottom:1px dotted #bbb;
+    padding:10px;
+	max-height: 300px;
+}
+.user-name{
+	display:inline;
+	float:left;
+	font-size: 25px;
+	height: 100%;
+	line-height: 100%;
+	padding: 10px 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.userImage {
+	display:inline;
+	float:left;
+    width:50px;
+    margin:10px;
+    margin-right: 0px;
+    height:100%;
+    float:left;
+}
+.userImage img {
+    width:100%;
+    border-radius:50%;
+}
+.follow-btn{
+	text-align: center;
+	font-size: 1.0rem;
+	background-color:#0080ff;
+	color: white;
+	line-height:1.6;
+	width: 100px;
+	border:0.1rem solid #0080ff;
+	border-radius:0.3rem;
+	padding: 0 1.4rem;
+	margin:20px auto;
+	
+}
