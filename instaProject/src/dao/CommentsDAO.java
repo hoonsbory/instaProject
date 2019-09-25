@@ -49,6 +49,36 @@ public class CommentsDAO {
 		return JSONArray.toJSONString(array);
 	}
 	
+	public  List<Map<String,String>> selectAllComments_mapList(int post_id) throws Exception {
+		String sql = "select c.id as id, u.id as user_id, u.name, u.img, c.content, c.timestamp from comments c join users u on c.user_id = u.id where post_id = ? order by timestamp";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		JSONArray array=new JSONArray();
+		List<Map<String,String>> list=new ArrayList<Map<String,String>>();
+		Map<String,String> map=new HashMap<String,String>();
+		try {			
+			con = JDBCUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, post_id);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				map.put("id",rs.getString("id"));
+				map.put("user_id",rs.getString("user_id"));
+				map.put("name",rs.getString("name"));
+				map.put("img",rs.getString("img"));
+				map.put("content",rs.getString("content"));
+				map.put("timestamp",rs.getString("timestamp"));
+				list.add(map);
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			JDBCUtil.close(con, ps, rs);
+		}
+		return list;
+	}
+	
 	public  CommentsVO selectComment(int id) throws Exception { //필요하면 쓰고 필요없으면 지우기
 		String sql = "select * from comments where id = ? order by timestamp";
 		Connection con = null;
