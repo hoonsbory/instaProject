@@ -13,4 +13,5 @@ public interface PostsService {
 	int deletePosts(int id);
 	int updatePosts(PostsVO vo);
 	String showPosts(int id);
+	String besidePosts(int id);
 }

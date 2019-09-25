@@ -128,7 +128,7 @@ public class PostsDAO {
 	}
 public String showPosts(int id){
 		
-		String sql = "select p.id as p_id,p.content as p_content,p.img as p_img,u.id as u_id,u.img as u_img,u.name from posts p join users u on p.user_id=u.id where p.id = ? ";
+		String sql = "select p.id as p_id,p.content as p_content,p.img as p_img,u.id as u_id,u.img as u_img,u.name as u_name from posts p join users u on p.user_id=u.id where p.id = ? ";
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
@@ -142,18 +142,15 @@ public String showPosts(int id){
 			ps.setInt(1, id);
 			rs=ps.executeQuery();
 			while(rs.next()) {
-				map.put("id",rs.getString("id"));
-				map.put("content",rs.getString("content"));
-				map.put("user_id",rs.getString("user_id"));
-				map.put("img",rs.getString("img"));
-				map.put("post_id",rs.getString("post_id"));
-				map.put("post_id",rs.getString("name"));
-				
-				
+				map.put("post_id",rs.getString("p_id"));
+				map.put("post_content",rs.getString("p_content"));
+				map.put("post_img",rs.getString("p_img"));
+				map.put("user_id",rs.getString("u_id"));
+				map.put("user_img",rs.getString("u_img"));
+				map.put("user_name",rs.getString("u_name"));
 				
 				JSONObject obj = new JSONObject(map);
 				array.add(obj);
-				
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -162,6 +159,34 @@ public String showPosts(int id){
 		}
 		return JSONArray.toJSONString(array);
 	}
+
+public String besidePosts(int id){
+	String sql = " select * from (select id, lead(id,1,'-1') over (order by timestamp) next_id, lag(id,1,'-1') over (order by timestamp) past_id from posts) where id=?";
+	
+	Connection con = null;
+	PreparedStatement ps = null;
+	ResultSet rs=null;
+	Map<String,Integer> map=new HashMap<String, Integer>();
+	
+	try {
+		con = JDBCUtil.getConnection();
+		ps = con.prepareStatement(sql);
+		
+		ps.setInt(1, id);
+		rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			map.put("id",rs.getInt("id"));
+			map.put("past_id",rs.getInt("past_id"));
+			map.put("next_id",rs.getInt("next_id"));
+		}
+	}catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		JDBCUtil.close(con, ps, null);
+	}
+	return JSONObject.toJSONString(map);
+}
 
 
 }

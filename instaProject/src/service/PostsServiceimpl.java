@@ -45,5 +45,10 @@ public class PostsServiceimpl implements PostsService{
 	public String showPosts(int id) {
 		return dao.showPosts(id);
 	}
+	@Override
+	public String besidePosts(int id) {
+		// TODO Auto-generated method stub
+		return dao.besidePosts(id);
+	}
 	
 }
