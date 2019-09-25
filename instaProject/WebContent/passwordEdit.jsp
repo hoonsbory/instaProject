@@ -32,6 +32,14 @@
 				clearAll();
 			})
 		});
+		$('#new_pw')[0].oninvalid = function() {
+			if (!this.validity.valid && $($(this)[0]).val().length > 0){
+				this.setCustomValidity('영문자, 숫자, 특수문자 포함 6자 이상 15자 이하로 입력하세요.');
+			}
+		}
+		$('#new_pw')[0].oninput= function () {
+	        this.setCustomValidity("");
+		};
 	})
 
 	function clearAll() { //에러 메시지 지우기
@@ -77,7 +85,7 @@
 						<td class="input_name"><span>새 비밀번호</span></td>
 						<td><input type="password" id="new_pw" name="new_pw"
 							class="need" required="required"
-							pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,}"></td>
+							pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,15}"></td>
 					</tr>
 					<tr id="small_tr">
 						<td></td>

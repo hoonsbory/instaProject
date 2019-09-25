@@ -16,6 +16,8 @@
 <style type="text/css">
 .cDels {
 	float: right;
+	background-color: rgba( 255, 255, 255, 0 );
+	border: none;
 }
 
 .commentName {
@@ -25,7 +27,8 @@
 
 #like {
 	float: left;
-	margin-left: 10px; vertical-align : middle;
+	margin-left: 10px;
+	vertical-align: middle;
 	display: inline;
 	height: 30px;
 	vertical-align: middle;
@@ -64,7 +67,28 @@
 	margin-top: 40px;
 }
 
-.this_user{
+.this_user {
+	cursor: pointer;
+}
+
+#next_left{
+  -webkit-transform: scaleX(-1);
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+	left: 20px;
+}
+
+#next_right{
+	right: 20px;
+}
+
+.next{
+	width: 50px;
+	position: fixed;
+	top: 320px;
 	cursor: pointer;
 }
 
@@ -75,15 +99,25 @@ $(function(){
 	//display(${comment}); //코멘트뿌리기
 	if(${empty login}){
 		$('.form-control').attr('placeholder','로그인 후 이용 가능합니다.');
-		$('.form-control').click(function(){
-			$('#msg').val('로그인이 필요한 서비스입니다.');
-			$('#hidden_form').submit();
+		$('.form-control').focus(function(){
+			location.href("login.jsp");
 		});
+	}
+	if(){
+		
 	}
 	$('.this_user').click(function(){
 		location.href("");
 	});
+	$('#next_left').click(function(){
+		
+	});
+	$('#next_right').click(function(){
+		
+	});
 });
+
+function 
 
 
 function showComm(){//data로 post id 보내줘야함 일단 임시로 1 보내기
@@ -166,8 +200,9 @@ function display(data){
 	     tag += "<img src='"+item.img+"'/></div>";
 	     tag += "<div class='commentText' id='c_"+item.id+"'><p><span class='commentName'>";
 	     tag += item.name+"</span><span class=''>"+item.content+"</span>";
-	     if(item.user_id=='${fn:substringBefore(login,"/")}'){
-	     	tag += "<button class='cDels'>삭제</button>";
+	     let login_id='${fn:substringBefore(login,"/")}';
+	     if(item.user_id==login_id||'${post.user_id}'==login_id){
+	     	tag += "<button class='cDels'><img src='img/delete-x.png' width=6 height=6></button>";
 	     }
 		 tag += "</p><span class='date sub-text'>";
 	     tag += item.timestamp.substring(0,item.timestamp.length-4)+"</span></div></li>";
@@ -185,13 +220,12 @@ function display(data){
 </head>
 <body>
 	<%@include file="common/header.jsp"%>
+	<img class="next" id="next_left" src="img/next2.png">
 	<section id="sect">
 		<header>
-			<span class="this_user">
-				<span class="userImage">
-					<img src="http://placekitten.com/40/40" />
-				</span>
-				<span class="user-name">${name}name</span>
+			<span class="this_user"> <span class="userImage"> <img
+					src="http://placekitten.com/40/40" />
+			</span> <span class="user-name">${name}name</span>
 			</span>
 			<button class="btn follow-btn">팔로우</button>
 		</header>
@@ -233,10 +267,7 @@ function display(data){
 			</div>
 		</div>
 	</section>
-	<form style="visibility: hidden" action="login.jsp" method="post"
-		id="hidden_form">
-		<input type="hidden" id="msg" name="msg" value="">
-	</form>
+	<img class="next" id="next_right" src="img/next2.png">
 	<%@include file="common/footer.jsp"%>
 </body>
 </html>
