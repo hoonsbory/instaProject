@@ -7,7 +7,6 @@
     pageEncoding="UTF-8"%>
 
     <%
-    
     FollowDAO dao = new FollowDAO();
     FollowService service = new FollowServiceImpl(dao);
     
