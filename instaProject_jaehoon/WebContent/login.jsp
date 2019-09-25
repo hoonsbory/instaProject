@@ -11,13 +11,18 @@
 	href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
+<style type="text/css">
+.error{
+ color: red;
+ margin: 10px;
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
 </script>
 
 <script type="text/javascript">
 $(function () {
-	$('.need').each(function(i, element) {
+	$('.w3-input').each(function(i, element) {
 		$(element).keyup(function() { //입력창에 키보드 입력시 에러 메시지 지우기
 			clearAll();
 		})
@@ -41,7 +46,8 @@ $(function () {
 })
 
 function clearAll() { // 입력창_에러메세지 지우기
-	$('.need').html("");
+	$('#errMsg1').html("");
+	$('#errMsg2').html("");
 }
 </script>
 
@@ -400,6 +406,7 @@ input {
 					<label class="idpw">PASSWORD</label> <input class="w3-input"
 						type="password" id="pw" name="pw"  placeholder="비밀번호를 입력하세요" required="required">
 				</p>
+				<span class="error" id="errMsg1">${msg}</span>
 				<p>
 					<button id="btn3" type="submit" class="button"
 						style="vertical-align: middle">
@@ -421,11 +428,12 @@ input {
 					class="w3-input" type="password" placeholder="영문자, 숫자, 특수문자 포함 6자 이상" pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,15}"  id="pw2" name="pw2" required="required"> <label
 					class="idpw" >NAME</label> <input class="w3-input" type="text"
 					id="name" placeholder="이름을 입력하세요" name="name" required="required" pattern=".{2,15}"><br>
+				<span class="error" id="errMsg2">${msg2}</span>
 				<button id="btn4" type="submit" class="button"
 					style="vertical-align: middle">
 					<span>가입 </span>
 				</button>
-				</p>
+				
 			</form>
 		</div>
 </fieldset>

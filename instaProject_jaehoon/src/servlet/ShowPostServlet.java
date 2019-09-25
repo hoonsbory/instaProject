@@ -35,29 +35,36 @@ import vo.LikesVO;
 @WebServlet("/showPost.do")
 public class ShowPostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
-		
 
-			PostsDAO dao=new PostsDAO();
-			PostsService service=new PostsServiceimpl(dao);
-			LikesDAO ldao = new LikesDAO();
-			LikesService lservice = new LikesServiceimpl(ldao);
-			int post_id=Integer.parseInt(request.getParameter("post_id"));
-			try {
-				Map<String, String> show =service.showPosts(post_id);
-				Map<String, Integer> beside=service.besidePosts(post_id);
-				List<LikesVO> list = new ArrayList<LikesVO>();
-				list = lservice.countLikes(post_id);
-				int count=list.size();
-				request.setAttribute("post", show);
-				request.setAttribute("like", count);
-				request.getRequestDispatcher("post.jsp").forward(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
+		PostsDAO dao = new PostsDAO();
+		PostsService service = new PostsServiceimpl(dao);
+		LikesDAO ldao = new LikesDAO();
+		LikesService lservice = new LikesServiceimpl(ldao);
+		int post_id = Integer.parseInt(request.getParameter("post_id"));
+		try {
+			Map<String, String> show = service.showPosts(post_id);
+			int user_id=Integer.parseInt(show.get("user_id"));
+			Map<String, Integer> beside = service.besidePosts(user_id, post_id);
+			List<LikesVO> list = new ArrayList<LikesVO>();
+			list = lservice.countLikes(post_id);
+			int count = list.size();
+			int mycount = 0;
+			HttpSession session = request.getSession();
+			if (session.getAttribute("login") != null) {
+				int login_id = (int) session.getAttribute("id");
+				mycount = lservice.checkMyLike(post_id, login_id);
 			}
-		} 
+			request.setAttribute("post", show);
+			request.setAttribute("beside", beside);
+			request.setAttribute("like", count);
+			request.setAttribute("mylike", mycount);
+			request.getRequestDispatcher("post.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
-
+}

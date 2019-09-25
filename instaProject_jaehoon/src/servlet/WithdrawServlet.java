@@ -33,17 +33,26 @@ public class WithdrawServlet extends HttpServlet {
 			UsersService service = new UsersServiceImpl(dao);
 			List<String> list = service.searchUserAllImgs(id);
 			// list.forEach(i->System.out.println(i));
-			String path = request.getRealPath("/userpic/");
+			String path = request.getRealPath("/upload/");
 			list.forEach((img) -> {
 				if (img != null) {
 					String fname = img.substring(img.lastIndexOf('/') + 1);
-					// System.out.println(path+fname);
+					System.out.println(path+fname);
 					File f = new File(path + fname);
 					if (f.exists()) {
 						f.delete(); // 업로드된 폴더에서 이미지 파일 삭제
 					}
 				}
 			});
+			String uimg=service.searchUser(id).getImg();
+			if (!uimg.equals("./userpic/default.jpg")) { //디폴트 이미지가 아니면
+				String path2 = request.getRealPath("/userpic/");
+				String fname2 = uimg.substring(uimg.lastIndexOf('/') + 1);
+				File f = new File(path + fname2);
+				if (f.exists()) {
+					f.delete(); // 업로드된 폴더에서 이미지 파일 삭제
+				}
+			}
 
 			service.dropUser(id); // 유저 삭제
 			session.invalidate(); // 세션공간에서 로그인 정보 삭제

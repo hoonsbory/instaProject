@@ -38,6 +38,11 @@ public class LikesServiceimpl implements LikesService{
 		return dao.countLikes(post_id);
 	}
 
+	@Override
+	public int checkMyLike(int post_id, int user_id) throws Exception {
+		return dao.checkMyLike(post_id, user_id);
+	}
+
 
 	
 	

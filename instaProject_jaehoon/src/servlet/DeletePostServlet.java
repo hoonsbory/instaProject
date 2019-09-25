@@ -1,8 +1,7 @@
 package servlet;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,10 +14,10 @@ import service.PostsService;
 import service.PostsServiceimpl;
 import vo.PostsVO;
 
-@WebServlet("/updatePost.do")
-public class UpdatePostServlet extends HttpServlet {
+@WebServlet("/deletePost.do")
+public class DeletePostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  
+   
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
         request.setCharacterEncoding("utf-8"); 
@@ -26,17 +25,21 @@ public class UpdatePostServlet extends HttpServlet {
         HttpSession session = request.getSession();
 		if (session.getAttribute("login") != null) {
 			int user_id=(int)session.getAttribute("id");
+			String pastName=request.getParameter("img");
+			String delImg=pastName.substring(pastName.lastIndexOf('/')+1);
+			String path = request.getRealPath("/upload/");
+			File f = new File(path + delImg);
+			if (f.exists()) {
+				f.delete(); // 업로드된 폴더에서 사진 삭제
+			}	
+			
 			PostsDAO dao=new PostsDAO();
 			PostsService service=new PostsServiceimpl(dao);
-			PostsVO vo=new PostsVO();
-			int id=Integer.parseInt(request.getParameter("id"));
-			String content=request.getParameter("content");
-			vo.setId(id);
-			vo.setContent(content);
-			int result=service.updatePosts(vo);
+			int id=Integer.parseInt(request.getParameter("post_id"));
+			int result=service.deletePosts(id);
 			if(result==0)
-				System.out.println("수정 실패");
-			response.sendRedirect("showPost.do?post_id="+id);
+				System.out.println("삭제 실패");
+			response.sendRedirect("mypage.jsp");
 		}
 	}
 

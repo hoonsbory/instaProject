@@ -28,21 +28,19 @@
 #like {
 	float: left;
 	margin-left: 10px;
-	vertical-align: middle;
 	display: inline;
 	height: 30px;
-	vertical-align: middle;
 }
 
 #like img {
 	display: inline;
-	vertical-align: middle;
+	vertical-align: baseline;
 }
 
 #like span {
 	width: 100px;
 	display: inline;
-	vertical-align: middle;
+	vertical-align: 9px;
 }
 
 .form-inline {
@@ -64,7 +62,7 @@
 
 #post_info {
 	display: block;
-	margin-top: 40px;
+	margin-top: 15px;
 }
 
 .this_user {
@@ -93,9 +91,9 @@
 }
 
 #dot_menu {
-	position: relative;
-	right: -385px;
-	top: 5px;
+	position: absolute;
+	right: 20px;
+	top: 10px;
 	cursor: pointer;
 }
 
@@ -113,19 +111,18 @@
 
 #dot_menu_opt>div {
 	border-radius: 20px;
-	width: 450px;
-	height: 250px;
+	width: 300px;
+	height: 200px;
 	margin: 0 auto;
-	margin-top: 220px;
-	padding-top: 100px;
+	margin-top: 260px;
+	padding-top: 15px;
 	text-align: center;
 	vertical-align: middle;
 	background-color: white;
 }
 
-#dot_menu_opt> >hr {
-	height: 1px;
-	width: 450px;
+#dot_menu_opt>div >h4 {
+	padding: 20px;
 }
 
 #delete {
@@ -133,13 +130,33 @@
 	font-weight: bold;
 	color: #ff3300;
 	cursor: pointer;
+	border-top: 1px solid gray;
+}
+
+#update {
+	font-size: 12pt;
+	font-weight: bold;
+	color:	#3399ff;
+	cursor: pointer;
 }
 
 #cancel {
 	font-size: 12pt;
 	font-weight: bold;
 	cursor: pointer;
-	margin: 12px;
+	border-top: 1px solid gray;	
+}
+
+.like_img {
+	cursor: pointer;
+	display: none;
+}
+
+#date{
+	position: absolute;
+	right: 10px;
+	bottom: -22px;
+	color: gray;
 }
 </style>
 <script type="text/javascript">
@@ -149,76 +166,90 @@ $(function(){
 	if(${empty login}){
 		$('.form-control').attr('placeholder','로그인 후 이용 가능합니다.');
 		$('.form-control').focus(function(){
-			location.href("login.jsp");
+			location.href="login.jsp";
 		});
 	}
-	if('${past_post}'==''){
+	if('${beside.past_id}'=='-1'){
 		$('#next_left').hide();
 	}
-	if('${next_post}'==''){
+	if('${beside.next_id}'=='-1'){
 		$('#next_right').hide();
 	}
+	
 	$('.this_user').click(function(){
-		location.href("");
+		location.href="";
 	});
+	
 	$('#next_left').click(function(){
-		
+		location.href="showPost.do?post_id=${beside.past_id}";
 	});
 	$('#next_right').click(function(){
-		
+		location.href="showPost.do?post_id=${beside.next_id}";
 	});
 	$('#dot_menu').click(function(){
 		$('#dot_menu_opt').css('visibility', 'visible');
 	});
 	$('#delete').click(function() {
 		if (confirm('삭제하시겠습니까?')) {
+			location.href="deletePost.do?post_id=${post.post_id}&img=${post.post_img}";
 		}
+	});
+	$('#update').click(function() {
+		updatePost();
 	});
 	$('#cancel').click(function() {
 		$('#dot_menu_opt').css('visibility', 'hidden');
 	});
 });
 
+function updatePost(){
+	
+}
+
 function setLike(){
-	$('#dislike').click(function(){
+	$('#dislike_btn').click(function(){
+		if(${!empty login}){
 		$.ajax({
 			url : 'like.jsp',
 			type : 'get',
 			dataType : 'json',
-			data : {user_id : ${fn:substring(login,0,fn:length(timestamp)-3)},
-					post_id : post_id},
-			success : ((data)=>{
+			data : {user_id : '${id}',
+					post_id : '${post.post_id}'},
+			success : function(data){
 				if(data.insert==1){
-					 $('#like_num').html(data.count);
-					 $('#dislike').hide();
-					 $('#like').show();
+					$('#like_num').html('좋아요 '+data.count+'개');
+					 $('#dislike_btn').hide();
+					 $('#like_btn').show();
 				}
-		}),error : ((e)=>{
+			},
+			error : function(e){
 				alert('실패');	
-			})
-		})
+			}
+		});
+		}
 	});
-	$('#like').click(function(){
+	$('#like_btn').click(function(){
 		$.ajax({
 			url : 'dislike.jsp',
 			type : 'get',
 			dataType : 'json',
-			data : {user_id : user_id,
-					post_id : post_id},
-			success : ((data)=>{
-				if(data.delete1 == 1){
-					 $('#like_num').html(data.count);
-					 $('#like').hide();
-					 $('#dislike').show();
+			data : {user_id : '${id}',
+					post_id : '${post.post_id}'},
+			success : function(data){
+				if(data.delete1==1){
+					$('#like_num').html('좋아요 '+data.count+'개');
+					$('#like_btn').hide();
+					$('#dislike_btn').show();
 				}
-		}),error : ((e)=>{
+			},
+			error : function(e){
 				alert('실패');	
-			})
-		})
+			}
+		});
 	});
 }
 
-function showComm(){//data로 post id 보내줘야함 일단 임시로 1 보내기
+function showComm(){
 	$.ajax(
 			{
 				 url:'showComment.do',
@@ -238,13 +269,12 @@ function showComm(){//data로 post id 보내줘야함 일단 임시로 1 보내�
 				 }
 			 }		
 	);
-	if('${like}'==0){
-		console.log('?');
-		//$('#dislike').hide();
-		$('#like').show();
+	if('${mylike}'==0){
+		$('#like_btn').hide();
+		$('#dislike_btn').show();
 	}else{
-		//$('#like').hide();
-		 $('#dislike').show();
+		$('#dislike_btn').hide();
+		$('#like_btn').show();
 	}
 }
 
@@ -270,6 +300,7 @@ function insComm(){
 				 }
 			 }		
 	);
+	$('#form-comment').val('');
 }
 
 function delComm(delId){
@@ -331,11 +362,13 @@ function display(data){
 	<img class="next" id="next_left" src="img/next2.png">
 	<section id="sect">
 		<header>
-			<span class="this_user"> <span class="userImage"> <img
-					src="http://placekitten.com/40/40" />
+			<span class="this_user"> <span class="userImage"> <img 
+					src="${post.user_img}" width=50 height=50/>
 			</span> <span class="user-name">${post.user_name}</span>
 			</span>
+			<c:if test='${post.user_id ne id}'>
 			<button class="btn follow-btn">팔로우</button>
+			</c:if>
 		</header>
 
 		<div class="container">
@@ -345,9 +378,11 @@ function display(data){
 
 
 			<div class="detailBox">
+				<c:if test='${post.user_id eq id}'>
 				<img class="" id="dot_menu" src="img/three-dots.png" width="20">
+				</c:if>
 				<div class="commentBox">
-					<p class="taskDescription">${content}</p>
+					<p class="taskDescription">${post.post_content}</p>
 				</div>
 				<div class="titleBox">
 					<label>댓글</label>
@@ -358,14 +393,14 @@ function display(data){
 				</div>
 				<div id="post_info">
 					<div id="like">
-						<a href='like.jsp' class="like_btn" id="dislike"><img
-							class="like_img" src="https://i.imgur.com/7FQcmdR.png" width=30
-							height=25></a> <a href='dislike.jsp' class="like_btn" id="like"><img
-							class="like_img" src="https://i.imgur.com/3N1sUeC.png" width=30
-							height=25></a> <span id="like_num">좋아요 ${like}개</span>
+						<img class="like_img" id="dislike_btn"
+							src="https://i.imgur.com/7FQcmdR.png" width=30 height=25> <img
+							class="like_img" id="like_btn"
+							src="https://i.imgur.com/3N1sUeC.png" width=30 height=28> <span
+							id="like_num">좋아요 ${like}개</span>
 					</div>
 					<div id="date">
-						${fn:substring(timestamp,0,fn:length(timestamp)-3)}</div>
+						${fn:substring(post.post_timestamp,0,fn:length(post.post_timestamp)-4)}</div>
 				</div>
 				<div class="form-inline" role="form">
 					<div class="form-group2">
@@ -381,8 +416,8 @@ function display(data){
 	</section>
 	<div id="dot_menu_opt">
 		<div>
+			<h4 id="update">수정</h4>
 			<h4 id="delete">삭제</h4>
-			<hr>
 			<h4 id="cancel">취소</h4>
 		</div>
 	</div>

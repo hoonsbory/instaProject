@@ -1,7 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -53,6 +55,16 @@ public class insertPostServlet extends HttpServlet {
 			if (p.getContentType() != null) {
 				String filename = p.getSubmittedFileName();
 				if (filename != null && filename.length() != 0) {
+					//파일명_postid하고 싶었으나 지금 insert할 postid는 dao에서 sql구문으로 자동으로 들어가고있으므로
+					//postid를 알려면 db를 따로 접근해서 현재 max postid가져와야함(비효율적)
+					//따라서 다른 방법 쓰기로함
+					String fileForm=filename.substring(filename.lastIndexOf('.'));
+					String index="_"+id;
+					SimpleDateFormat df = new SimpleDateFormat("_yyyyMMdd_HHmmss");
+					Date time = new Date();
+					String time1 = df.format(time);
+					filename=filename.substring(0,filename.lastIndexOf('.'))+index+time1+fileForm;
+					//파일명_유저id_날짜_시간.확장자
 					p.write(path + filename);
 					post.setImg("./upload/" + filename);
 				}
