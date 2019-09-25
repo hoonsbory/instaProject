@@ -17,6 +17,7 @@
 window.onload = function(){
 	const log = console.log;
 	let count = 0;
+	let countdiv = 1;
 	let id1 = "<c:out value='${id}'/>";
 	$.ajax({
 		url : 'mypagepost.jsp',
@@ -27,7 +28,7 @@ window.onload = function(){
 			
 			for (i = data.length; i>0; i-=3){
 				let divmain = document.createElement('div');
-				divmain.setAttribute("id", "divmain"+i);
+				divmain.setAttribute("id", "divmain"+countdiv);
 				divmain.setAttribute("class", "divmain");
 				
 				document.querySelector('#sec').appendChild(divmain);
@@ -35,7 +36,7 @@ window.onload = function(){
 				if(data[count]!=null){
 				let a = document.createElement("a");
 				let img = document.createElement("img");
-				document.querySelector("#divmain"+i).appendChild(a);
+				document.querySelector("#divmain"+countdiv).appendChild(a);
 					
 				
 				img.setAttribute("src", data[count].id);
@@ -46,10 +47,16 @@ window.onload = function(){
 				a.setAttribute("href" , "post.do?id="+data[count].postid);
 				
 				$(a).addClass("apic");
-				document.querySelector("#divmain"+i).lastElementChild.appendChild(img);
+				document.querySelector("#divmain"+countdiv).lastElementChild.appendChild(img);
 				count++;
 				}
 			}
+				countdiv++;
+			if(data.length >= 9 && count==9){
+				break;
+				
+			}
+			
 				
 			}
 			
@@ -63,11 +70,86 @@ window.onload = function(){
 	
 	})
 	
+	  $(window).scroll(function(){
+		  if ( $(window).scrollTop() == $(document).height() - $(window).height() ) {
+			  $.ajax({
+					url : 'mypagepost.jsp',
+					type : 'get',
+					dataType : 'json',
+					data : {id : id1},
+					success : ((data)=>{
+						loop:
+						for (i = data.length-count; i>0; i-=3){
+							let divmain = document.createElement('div');
+							divmain.setAttribute("id", "divmain"+countdiv);
+							divmain.setAttribute("class", "divmain");
+							
+							document.querySelector('#sec').appendChild(divmain);
+						for(var j = 3; j>0; j--){
+							if(data[count]!=null){
+							let a = document.createElement("a");
+							let img = document.createElement("img");
+							document.querySelector("#divmain"+countdiv).appendChild(a);
+								
+							
+							img.setAttribute("src", data[count].id);
+							img.setAttribute("height" , "300");
+							img.setAttribute("width" , "300");
+							img.setAttribute("alt" , "instapic");
+							img.setAttribute("class" , "mainimg");
+							a.setAttribute("href" , "post.do?id="+data[count].postid);
+							
+							$(a).addClass("apic");
+							document.querySelector("#divmain"+countdiv).lastElementChild.appendChild(img);
+							count++;
+							}else{
+								break loop;
+							}
+							
+						}
+						countdiv++;
+						if(data.length >= 9 && count==8){
+							break;
+							
+						}
+						
+							
+						}
+						
+					}),
+					error : ((e)=>{
+						alert('실패'+e);			
+					})
+					
+				
+				 
+				
+				})
+		    }
 
+
+
+		
+		  
+		  
+	  })
+	
+	
+	
+	$('#btnEdit').click(()=>{
+			$('#frmEdit').submit();
+		
+	})
+	$('#btnEdit2').click(()=>{
+			$('#frmlogout').submit();
+		
+	})	
+	
+
+	
 $("#profileImage").click(function(e) {
 	$("#imageUpload").click();
 });
-
 function fasterPreview(uploader) {
 	if (uploader.files && uploader.files[0]) {
 		$('#profileImage')
@@ -80,14 +162,12 @@ function fasterPreview(uploader) {
 $("#imageUpload").change(function() {
 	fasterPreview(this);
 });
-
-
 let name;
 let email;
 let img;
 $('.search_input').keyup(function(){
-
 	$('.searchScroll').css('display', 'block');
+	$('.VR6_Q').css('display', 'block');
 	
 		$('.divdelete').remove();
 		$.ajax({
@@ -96,7 +176,11 @@ $('.search_input').keyup(function(){
 			dataType : 'json',
 			data : {id2 : $('.search_input').val().trim()},
 			success : ((data)=>{
-				
+				if(data.length==0){
+					$('.searchScroll').html('찾는 사용자가 없습니다.');
+				}else{
+					$('.searchScroll').html('');
+				}
 		if($('.search_input').val()!=""){
 				log(data);
 			let count2 = 0;
@@ -133,6 +217,8 @@ $('.search_input').keyup(function(){
 		if(data[count2]!=null){
 	userimg.setAttribute("src", data[count2].img);
 		}
+			
+		
 		document.querySelector('#SearchImg'+i).appendChild(userimg);
 		document.querySelector('#divName'+i).appendChild(divEmail);
 		document.querySelector('#divEmail'+i).appendChild(EmailSpan);
@@ -142,6 +228,7 @@ $('.search_input').keyup(function(){
 		}
 		}else{
 			$('.searchScroll').hide();
+			$('.VR6_Q').hide();
 		}
 		
 			}),
@@ -156,13 +243,14 @@ $('.search_input').keyup(function(){
 		
 	
 })
-
 	}
-
-
-
 </script>
 <style type="text/css">
+#btnEdit2{
+	background:  #3897f0 !important;
+	color: white !important;
+}
+
 .apic{
 	display: inline !important;
 	margin-right: 28px;
@@ -182,16 +270,48 @@ $('.search_input').keyup(function(){
 	margin-top: 30px;
 }
 .searchScroll{
+	position : relative;
+	top : 18px;
 	width : 241px;
-	height: 362px;
+	max-height: 362px;
 	background: white;
 	display: none;
+	 -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;
+    border : 1px solid #efefef;
+    color: #999;
+    font-size: 14px;
+    padding: 15px;
+    z-index: 2;
+}
+.VR6_Q {
+	display: none;
+    border: solid 1px #e6e6e6;
+    -webkit-box-shadow: 0 0 5px 1px rgba(0,0,0,.0975);
+    box-shadow: 0 0 5px 1px rgba(0,0,0,.0975);
+    height: 14px;
+    left: 0;
+    margin: auto;
+    right: 0;
+    top: 12px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 14px;
+    z-index: 1;
+    background: #fff;
+    content: ' ';
+    position: absolute;
+
 }
 .userimg{
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
 	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
 	
 }
 .aSearch{
@@ -201,6 +321,8 @@ $('.search_input').keyup(function(){
 	padding-right: 14px;
 	border-bottom: 1px solid #efefef;
 	text-decoration: none;
+	overflow-x: hidden;
+    overflow-y: auto;
 	
 }
 .aSearch:hover{
@@ -209,22 +331,32 @@ $('.search_input').keyup(function(){
 .SearchImg{
 	margin-right : 10px;
 	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
 }
 .divName{
+	position : relative;
+	top :  -15px;
 	display: inline;
 	color : black;
 	font-weight: bold;
-	font-size: 1.2em;
+	overflow-x: hidden;
+    overflow-y: auto;
 	
 }
 .EmailSpan{
-	display: inline;
 	color : gray;
 	font-size : 1.0em;
 	font-weight: normal;
+	overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+     -webkit-overflow-scrolling: none;
+     margin-left: 10px;
 }
 .divEmail{
-	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
 }
 
 </style>
@@ -232,6 +364,9 @@ $('.search_input').keyup(function(){
 </head>
 
 <body>
+
+
+
 	<nav class="header_nav">
 		<div class="header_div1"></div>
 		<div class="header_div2">
@@ -256,8 +391,10 @@ $('.search_input').keyup(function(){
 							src="https://i.imgur.com/dxQeZSn.png"></span>
 						<div class="dialog" role="dialog" tabindex="0"></div>
 						<div class="search" role="button"></div>
+						<div>
+						<div class="VR6_Q"></div>
 						<div class="searchScroll"></div>
-						
+						</div>
 						
 					</div>
 					<div class="top_right">
@@ -299,10 +436,13 @@ $('.search_input').keyup(function(){
 				<div class="profile-user-settings">
 
 					<a class="profile-user-name">${name}</a>
-
-					<button class="btn profile-edit-btn" >프로필 편집</button>
-
-
+	
+					<button class="btn profile-edit-btn" id="btnEdit">프로필 편집</button>
+					<button class="btn profile-edit-btn" id="btnEdit2">로그아웃</button>
+					<form action="profile.do" id="frmEdit" method="post">
+					</form>
+						<form action="logout.do" id="frmlogout" method="post">
+					</form>
 				</div>
 				<div class="profile-stats">
 
@@ -341,17 +481,17 @@ $('.search_input').keyup(function(){
 	<section class="section1">
 		<main>
 		<section id="sec">
-		<c:set var="size" value="${fn:length(list)}" />
-		<c:set var="count" value="0" />
-		<c:forEach var="data" items="${list}" begin="1" end="${size}" step="3">
-			<div class="divmain">	
-			<c:forEach var="data2" items="${list}" begin="0" end="2" step="1" varStatus="status">
-			<a href="" class="apic"><img class="mainimg" src="${list[count].img}" ></a>
-		<c:set var="count" value="${count+1}" />
+<%-- 		<c:set var="size" value="${fn:length(list)}" /> --%>
+<%-- 		<c:set var="count" value="0" /> --%>
+<%-- 		<c:forEach var="data" items="${list}" begin="1" end="${size}" step="3"> --%>
+<!-- 			<div class="divmain">	 -->
+<%-- 			<c:forEach var="data2" items="${list}" begin="0" end="2" step="1" varStatus="status"> --%>
+<%-- 			<a href="" class="apic"><img class="mainimg" src="${list[count].img}" ></a> --%>
+<%-- 		<c:set var="count" value="${count+1}" /> --%>
 			
-			</c:forEach>
-			</div>
-		</c:forEach>
+<%-- 			</c:forEach> --%>
+<!-- 			</div> -->
+<%-- 		</c:forEach> --%>
 
 		</section>
 		</main>

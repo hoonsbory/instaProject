@@ -49,7 +49,7 @@ public class HomeServlet extends HttpServlet {
 		  try {
 				int followernum = service3.followernum(id).size();
 				int follownum = service3.follownum(id).size();
-				
+				System.out.println(follownum);
 				request.setAttribute("follower", followernum);
 	        	request.setAttribute("follow", follownum);
 			} catch (Exception e) {

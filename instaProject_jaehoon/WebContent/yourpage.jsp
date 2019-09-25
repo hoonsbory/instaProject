@@ -145,17 +145,21 @@ let name;
 let email;
 let img;
 $('.search_input').keyup(function(){
-
 	$('.searchScroll').css('display', 'block');
+	$('.VR6_Q').css('display', 'block');
 	
 		$('.divdelete').remove();
 		$.ajax({
 			url : 'search.jsp',
 			type : 'get',
 			dataType : 'json',
-			data : {id2 : $('.search_input').val() },
+			data : {id2 : $('.search_input').val().trim()},
 			success : ((data)=>{
-				
+				if(data.length==0){
+					$('.searchScroll').html('찾는 사용자가 없습니다.');
+				}else{
+					$('.searchScroll').html('');
+				}
 		if($('.search_input').val()!=""){
 				log(data);
 			let count2 = 0;
@@ -192,6 +196,8 @@ $('.search_input').keyup(function(){
 		if(data[count2]!=null){
 	userimg.setAttribute("src", data[count2].img);
 		}
+			
+		
 		document.querySelector('#SearchImg'+i).appendChild(userimg);
 		document.querySelector('#divName'+i).appendChild(divEmail);
 		document.querySelector('#divEmail'+i).appendChild(EmailSpan);
@@ -201,6 +207,7 @@ $('.search_input').keyup(function(){
 		}
 		}else{
 			$('.searchScroll').hide();
+			$('.VR6_Q').hide();
 		}
 		
 			}),
@@ -215,14 +222,14 @@ $('.search_input').keyup(function(){
 		
 	
 })
-
-
-
-}
-
-
+	}
 </script>
 <style type="text/css">
+#btnEdit2{
+	background:  #3897f0 !important;
+	color: white !important;
+}
+
 .apic{
 	display: inline !important;
 	margin-right: 28px;
@@ -235,21 +242,55 @@ $('.search_input').keyup(function(){
 }
 .mainimg{
 	display: inline;
+	width: 300px;
+	height: 300px;
 }
 .section1{
 	margin-top: 30px;
 }
 .searchScroll{
+	position : relative;
+	top : 18px;
 	width : 241px;
-	height: 362px;
+	max-height: 362px;
 	background: white;
 	display: none;
+	 -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;
+    border : 1px solid #efefef;
+    color: #999;
+    font-size: 14px;
+    padding: 15px;
+    z-index: 2;
+}
+.VR6_Q {
+	display: none;
+    border: solid 1px #e6e6e6;
+    -webkit-box-shadow: 0 0 5px 1px rgba(0,0,0,.0975);
+    box-shadow: 0 0 5px 1px rgba(0,0,0,.0975);
+    height: 14px;
+    left: 0;
+    margin: auto;
+    right: 0;
+    top: 12px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 14px;
+    z-index: 1;
+    background: #fff;
+    content: ' ';
+    position: absolute;
+
 }
 .userimg{
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
 	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
 	
 }
 .aSearch{
@@ -259,6 +300,8 @@ $('.search_input').keyup(function(){
 	padding-right: 14px;
 	border-bottom: 1px solid #efefef;
 	text-decoration: none;
+	overflow-x: hidden;
+    overflow-y: auto;
 	
 }
 .aSearch:hover{
@@ -267,22 +310,32 @@ $('.search_input').keyup(function(){
 .SearchImg{
 	margin-right : 10px;
 	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
 }
 .divName{
+	position : relative;
+	top :  -15px;
 	display: inline;
 	color : black;
 	font-weight: bold;
-	font-size: 1.2em;
+	overflow-x: hidden;
+    overflow-y: auto;
 	
 }
 .EmailSpan{
-	display: inline;
 	color : gray;
 	font-size : 1.0em;
 	font-weight: normal;
+	overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+     -webkit-overflow-scrolling: none;
+     margin-left: 10px;
 }
 .divEmail{
-	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
 }
 
 </style>

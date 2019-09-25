@@ -30,11 +30,10 @@ public class SignUpServlet extends HttpServlet {
 		UsersDAO dao=new UsersDAO();
 		UsersService service=new UsersServiceImpl(dao);
 		UsersVO vo=new UsersVO(email,hashed,name);
-		System.out.println(121);
 		int result=service.addUser(vo);
 		if(result==0) {
 			request.setAttribute("msg", "이미 가입된 이메일입니다.");
-			request.getRequestDispatcher("signUp.jsp").forward(request, response);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 			return;
 		}
 		response.sendRedirect("./login.jsp");

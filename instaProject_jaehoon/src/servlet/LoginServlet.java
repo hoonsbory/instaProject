@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 		if(session != null) {
 			session.invalidate();
 		}
-		response.sendRedirect("./index.jsp");
+		response.sendRedirect("./login.jsp");
 		
 	}
 	

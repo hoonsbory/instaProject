@@ -91,7 +91,7 @@ public class FollowDAO {
 			ps.setInt(1, myid);
 			rs = ps.executeQuery();
 			// rs = ps.executeUpdate();
-			if(rs.next()) {
+			while(rs.next()) {
 				list.add(rs.getString(1));
 			}
 		} catch (Exception e) {
@@ -114,7 +114,7 @@ public class FollowDAO {
 			ps.setInt(1, yourid);
 			rs = ps.executeQuery();
 			// rs = ps.executeUpdate();
-			if(rs.next()) {
+			while(rs.next()) {
 				list.add(rs.getString(1));
 			}
 		} catch (Exception e) {

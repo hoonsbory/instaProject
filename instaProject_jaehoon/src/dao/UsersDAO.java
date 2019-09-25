@@ -196,6 +196,7 @@ public class UsersDAO {
 				vo.setName(rs.getString("name"));
 				vo.setImg(rs.getString("img"));
 				vo.setPassword(rs.getString("password"));
+				vo.setInfo(rs.getString("info"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -205,7 +206,7 @@ public class UsersDAO {
 		return vo;
 	}
 
-	public int updateUser(String column, String val, int id) { // 개인정보 변경. 업뎃 불가능할때는 이메일 중복일때
+	public int updateUser(String column, String val , int id) { // 개인정보 변경. 업뎃 불가능할때는 이메일 중복일때
 		String sql = "update users set "+ column +" =? where id=?";
 		Connection con = null;
 		PreparedStatement ps = null;

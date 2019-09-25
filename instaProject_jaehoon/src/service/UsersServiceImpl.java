@@ -55,9 +55,9 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public int updateUserEmailName(UsersVO vo) {
+	public int updateUserEmailNameInfo(UsersVO vo) {
 		// TODO Auto-generated method stub
-		return (dao.updateUser("email", vo.getEmail(), vo.getId()) * dao.updateUser("name", vo.getName(), vo.getId()));
+		return (dao.updateUser("email", vo.getEmail(), vo.getId()) * dao.updateUser("name", vo.getName(), vo.getId()) * dao.updateUser("info", vo.getInfo(), vo.getId()));
 	}
 
 	@Override

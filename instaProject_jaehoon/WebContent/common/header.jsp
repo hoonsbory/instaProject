@@ -40,9 +40,9 @@
 							</a>
 						</div>
 						<div class="icon">
-							<a href="">
-								<span class="profile" aria-label="프로필"><img id="profile" src="https://i.imgur.com/C0ZD1ii.png"></span>
-							</a>
+							<a href="home.do"> <span class="profile" aria-label="프로필"><img
+										id="profile" src="https://i.imgur.com/C0ZD1ii.png"></span>
+								</a>
 						</div>
 					</div>
 				</div>

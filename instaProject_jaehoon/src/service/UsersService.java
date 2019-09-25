@@ -13,7 +13,7 @@ public interface UsersService {
 	int dropUser(int id);
 	List<String> searchUserAllImgs(int id);
 	UsersVO searchUser(int id);
-	int updateUserEmailName(UsersVO vo);
+	int updateUserEmailNameInfo(UsersVO vo);
 	int updateUserPassword(UsersVO vo);
 	int updateUserImg(UsersVO vo);
 	UsersVO profileImg(int id);

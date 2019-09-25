@@ -35,7 +35,8 @@ public class ProfileEditServlet extends HttpServlet {
 		vo.setId(id);
 		vo.setEmail(request.getParameter("email"));
 		vo.setName(request.getParameter("name"));
-		result = service.updateUserEmailName(vo);
+		vo.setInfo(request.getParameter("info"));
+		result = service.updateUserEmailNameInfo(vo);
 		if (result == 0) {
 			request.setAttribute("msg", "이미 가입된 이메일입니다.");
 		}
