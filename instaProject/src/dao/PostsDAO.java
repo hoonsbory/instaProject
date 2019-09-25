@@ -127,7 +127,7 @@ public class PostsDAO {
 	}
 public Map<String, String> showPosts(int id){
 		
-		String sql = "select p.id as p_id,p.content as p_content,p.img as p_img,u.id as u_id,u.img as u_img,u.name as u_name from posts p join users u on p.user_id=u.id where p.id = ? ";
+		String sql = "select p.id as p_id,p.content as p_content,p.img as p_img,p.timestamp as p_timestamp,u.id as u_id,u.img as u_img,u.name as u_name from posts p join users u on p.user_id=u.id where p.id = ? ";
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs=null;
@@ -143,6 +143,7 @@ public Map<String, String> showPosts(int id){
 				map.put("post_id",rs.getString("p_id"));
 				map.put("post_content",rs.getString("p_content"));
 				map.put("post_img",rs.getString("p_img"));
+				map.put("post_timestamp",rs.getString("p_timestamp"));
 				map.put("user_id",rs.getString("u_id"));
 				map.put("user_img",rs.getString("u_img"));
 				map.put("user_name",rs.getString("u_name"));
