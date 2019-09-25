@@ -20,10 +20,13 @@
 	font-weight: bold;
 	color: #444444;
 }
-
 </style>
 <script type="text/javascript">
 	$(function() {
+		if(${empty login}){
+			$('#msg').val('로그인이 필요한 서비스입니다.');
+			$('#hidden_form').submit();
+		}
 		$('.need').each(function(i, element) { //입력창에 키보드 입력시 에러 메시지 지우기
 			$(element).keyup(function() {
 				clearAll();
@@ -96,6 +99,9 @@
 			</form>
 		</aside>
 	</section>
+	<form style="visibility:hidden" action="login.jsp" method="post" id="hidden_form">
+		<input type="hidden" id="msg" name="msg" value="">
+	</form>
 	<%@include file="common/footer.jsp"%>
 </body>
 </html>

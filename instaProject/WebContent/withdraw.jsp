@@ -40,6 +40,14 @@
 }
 
 </style>
+<script type="text/javascript">
+	$(function() {
+		if(${empty login}){
+			$('#msg').val('로그인이 필요한 서비스입니다.');
+			$('#hidden_form').submit();
+		}
+	})
+</script>
 </head>
 <body>
 <%@include file="common/header.jsp"%>
@@ -66,6 +74,10 @@
 			</div>
 		</aside>
 	</section>
+	<form style="visibility:hidden" action="login.jsp" method="post" id="hidden_form">
+		<input type="hidden" id="msg" name="msg" value="">
+	</form>
+	
 	<%@include file="common/footer.jsp"%>
 </body>
 </html>
