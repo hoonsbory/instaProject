@@ -20,6 +20,11 @@ window.onload = function(){
 	let countdiv = 1;
 	let id1 = "<c:out value='${id}'/>";
 	$.ajax({
+		if(data.length==0){
+			$(".default-page").show()
+		}else{
+			$(".default-page").hide()
+		}
 		url : 'mypagepost.jsp',
 		type : 'get',
 		dataType : 'json',
@@ -358,6 +363,17 @@ $('.search_input').keyup(function(){
 	overflow-x: hidden;
     overflow-y: auto;
 }
+.insert-post-a{
+	width : 35px;
+	height : 35px;
+	margin : 0 auto;
+	display : block;
+}
+.insert-post-img{
+	width : 35px;
+	height : 35px;
+	margin : 0 auto;
+}
 
 </style>
 <title>Insert title here</title>
@@ -469,14 +485,13 @@ $('.search_input').keyup(function(){
 
 	</header>
 
-<form action="insertPost.do" method="post" enctype="multipart/form-data">
+<%-- <form action="insertPost.do" method="post" enctype="multipart/form-data">
 	<input type="text" name="content">
 	<input type="file" name="img" multiple="multiple">
 	<input type="text" name="id" value="${id}">
-	
 	<input type="submit">
-
-</form>
+</form> --%>
+<a href="" class="insert-post-a"><img src="https://i.imgur.com/lOwg0em.png" class="insert-post-img"></a>
 
 	<section class="section1">
 		<main>
@@ -492,6 +507,11 @@ $('.search_input').keyup(function(){
 <%-- 			</c:forEach> --%>
 <!-- 			</div> -->
 <%-- 		</c:forEach> --%>
+	<div class="default-page">
+	<h1 style="font-size:30px; font-weight:30">게시물 업로드</h1><br>
+	<h4>친구들과 사진 및 글을 공유해 보세요!</h4><br>
+	<a href="./upload.jsp"><button class="upload-btn">업로드</button></a>
+	</div>
 
 		</section>
 		</main>
