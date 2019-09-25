@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-
 import java.util.Collection;
 
 import javax.servlet.ServletException;
@@ -31,6 +30,7 @@ public class insertPostServlet extends HttpServlet {
 		InstaDao dao = new InstaDao();
 		InstaPost post= new InstaPost();
 		
+		post.setImg(request.getParameter("img"));
 		post.setContent(request.getParameter("content"));
 		post.setUser_id(Integer.parseInt(request.getParameter("id")));
 

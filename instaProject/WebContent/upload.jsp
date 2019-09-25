@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="dao.InstaDao" %>
-<%@ page import="java.io.File" %>
-<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
-<%@page import="com.oreilly.servlet.MultipartRequest" %>
-<%@page import="java.util.Enumeration" %>
+<%@ page import="dao.InstaDao"%>
+<%@ page import="java.io.File"%>
 
 
 <!DOCTYPE html>
@@ -17,55 +14,59 @@
 <title>파일업로드</title>
 <style type="text/css">
 *, *::before, *::after {
-    box-sizing: content-box;
-}
-body{
-	background-color:#fafafa;
-}
-#border{
-	display:inline
-}
-#id{
-	border: dashed 1px #dbdbdb;
-	border-radius:3rem;
-	padding:10px;
-}
-#post{
-	border: dashed 1px #dbdbdb;
-	border-radius:3rem;
-	width:400px;
-	height:300px;
+	box-sizing: content-box;
 }
 
+body {
+	background-color: #fafafa;
+}
 
+#border {
+	display: inline
+}
 
-.uploadpostimage{
-	margin-left:150px;
-	background-color:white;
-	max-width:400px;
+#id {
 	border: dashed 1px #dbdbdb;
-	border-radius:3rem;
-    transform: scale(1);
-    -webkit-box-shadow: 0 0 0 transparent;
-    box-shadow: 0 0 0 transparent;
-    padding:50px;
+	border-radius: 3rem;
+	padding: 10px;
 }
-.uploadpostimage img{
-	padding-left:20px;
-	max-width:400px;
-	cursor:pointer;
+
+#content {
+	border: dashed 1px #dbdbdb;
+	border-radius: 3rem;
+	width: 400px;
+	height: 300px;
 }
-#postUpload{
-	display:none;
+
+.uploadpostimage {
+	margin-left: 150px;
+	background-color: white;
+	max-width: 400px;
+	border: dashed 1px #dbdbdb;
+	border-radius: 3rem;
+	transform: scale(1);
+	-webkit-box-shadow: 0 0 0 transparent;
+	box-shadow: 0 0 0 transparent;
+	padding: 50px;
 }
-p{
-	margin:20px;
-	padding-bottom:40px;
+
+.uploadpostimage img {
+	padding-left: 20px;
+	max-width: 400px;
+	cursor: pointer;
+}
+
+#postUpload {
+	display: none;
+}
+
+p {
+	margin: 20px;
+	padding-bottom: 40px;
 	text-align: center;
-	font-size:30px;
-	font-weight:200;
+	font-size: 30px;
+	font-weight: 200;
 }
-
 </style>
 </head>
 <script
@@ -88,47 +89,50 @@ p{
 
 <body>
 
-<%@include file="common/header.jsp" %>
+	<%@include file="common/header.jsp"%>
 
-<main>
-<div id="border">
-	<!-- 이미지미리보기 -->
-		<form action="insertPost.do" method="post" enctype="multipart/form-data">
-	아이디:<input type="text" name="id" id="id">
-	
-	
-	<div class="uploadpostimage">
-	<p>사진을 추가하세요</p>
-	<img id="photo" src="https://i.imgur.com/5UrUQkG.png" title="click.png"/>
-						 <input id="postUpload"
-						type="file" name="profile_photo" placeholder="Photo" >
-					<script>
-						$("#photo").click(function(e) {
-							$("#postUpload").click();
-						});
+	<main>
+	<div id="border">
+		<!-- 이미지미리보기 -->
+		<form action="insertPost.do" method="post"
+			enctype="multipart/form-data">
 
-						function fasterPreview(uploader) {
-							if (uploader.files && uploader.files[0]) {
-								$('#photo')
-										.attr(
-												'src',
-												window.URL
-														.createObjectURL(uploader.files[0]));
-							}
+			<div class="uploadpostimage">
+				<p>사진을 추가하세요</p>
+				<img id="photo" src="https://i.imgur.com/5UrUQkG.png"
+					title="click.png" /> <input id="postUpload" name="img" type="file"
+					name="profile_photo" placeholder="Photo">
+				<script>
+					$("#photo").click(function(e) {
+						$("#postUpload").click();
+					});
+
+					function fasterPreview(uploader) {
+						if (uploader.files && uploader.files[0]) {
+							$('#photo')
+									.attr(
+											'src',
+											window.URL
+													.createObjectURL(uploader.files[0]));
 						}
-						$("#postUpload").change(function() {
-							fasterPreview(this);
-						});
-					</script></div>
-			게시글:<textarea  name="post" id="post" 
-				placeholder="    ...게시할 글을 작성하세요..." maxlength="200" \></textarea>
-				
-				<div class="buttons">
-		<input type="submit" value="등록">
-		<input type="reset" value="취소">
-				
-		</form></div></div>
-		</main>
-		<%@include file="common/footer.jsp" %>
+					}
+					$("#postUpload").change(function() {
+						fasterPreview(this);
+					});
+				</script>
+			</div>
+			게시글:
+			<textarea name="content" id="content"
+				placeholder="    ...게시할 글을 작성하세요..." maxlength="200"\></textarea>
+
+			<div class="buttons">
+			<input type="hidden" value="${id}">
+				<input type="submit" value="등록"> <input type="reset"
+					value="취소">
+		</form>
+	</div>
+	</div>
+	</main>
+	<%@include file="common/footer.jsp"%>
 </body>
 </html>
