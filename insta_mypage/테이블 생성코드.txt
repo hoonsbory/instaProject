@@ -9,7 +9,8 @@ create table users (
     email varchar(50) unique,
     password varchar(100),
     name varchar(50),  
-    img   varchar(100) default './userpic/default.jpg'
+    img   varchar(200) 'https://i.imgur.com/VMumJLl.png',
+    info varchar2(200)
 );
 
 
@@ -46,10 +47,10 @@ create table follower_map(
 );
 
 
-alter table posts add constraint posts_id_fk foreign key(user_id)  references users;
-alter table comments add constraint comments_postid_fk foreign key(post_id)  references posts;
-alter table comments add constraint comments_userid_fk foreign key(user_id)  references users;
-alter table likes add constraint likes_postid_fk foreign key(post_id)  references posts;
-alter table likes add constraint likes_userid_fk foreign key(user_id)  references users;
-alter table follower_map add constraint follow_target_fk foreign key(target_id)  references users;
-alter table follower_map add constraint follow_follower_fk foreign key(follower_id)  references users;
+alter table posts add constraint posts_id_fk foreign key(user_id)  references users on delete cascade;
+alter table comments add constraint comments_postid_fk foreign key(post_id)  references posts on delete cascade;
+alter table comments add constraint comments_userid_fk foreign key(user_id)  references users on delete cascade;
+alter table likes add constraint likes_postid_fk foreign key(post_id)  references posts on delete cascade;
+alter table likes add constraint likes_userid_fk foreign key(user_id)  references users on delete cascade;
+alter table follower_map add constraint follow_target_fk foreign key(target_id)  references users on delete cascade;
+alter table follower_map add constraint follow_follower_fk foreign key(follower_id)  references users on delete cascade;
