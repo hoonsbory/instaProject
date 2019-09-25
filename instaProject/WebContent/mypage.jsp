@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="css/profile.css">
+<link rel="stylesheet" href="css/profile.css?after">
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/footer.css">
 <script
@@ -13,20 +14,7 @@
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
-	
-
-let page = 1;	// 페이징 
-$(function(){	// 페이지를 로드하면 데이터를 가져오고 페이지를 증가시킨다. 
-	getList(page);
-	page++;
-});
-$(window).scroll(function(){	// 스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
-	if($(window).scrollTop() >= $(document).height() - $(window).height()){
-		getList(page);
-		page++;
-	}
-});
-function getList(page){
+window.onload = function(){
 	const log = console.log;
 	let count = 0;
 	let id1 = "<c:out value='${id}'/>";
@@ -35,52 +23,46 @@ function getList(page){
 		type : 'get',
 		dataType : 'json',
 		data : {id : id1},
-		success : function(returnData){
-			let row = returnData.rows;
-			let html= "";
-			if(page == 1){	// 페이지가 1일 경우에만 id가 list인 html을 비운다.
-				$(".divmain").html(" ");
-			}
-			if(returnData.startNum <= returnData.totCnt){
-				if(data.length>0){
-					((data) >= {
-							for (i = data.length; i>0; i-=3){
-								let divmain = document.createElement('div');
-								divmain.setAttribute("id", "divmain"+i);
-								divmain.setAttribute("class", "divmain"); 
-								document.querySelector('#sec').appendChild(divmain);
-							for(var j = 3; j>0; j--){
-								let a = document.createElement("a");
-								let img = document.createElement("img");
-								document.querySelector("#divmain"+i).appendChild(a);
-								img.setAttribute("src", data[count].id)
-								img.setAttribute("height" , "300");
-								img.setAttribute("width" , "300");
-								img.setAttribute("alt" , "instapic");
-								img.setAttribute("class" , "mainimg");
-								a.setAttribute("href" , "www.naver.com")
-								
-								$(a).addClass("apic");
-								document.querySelector("#divmain"+i).lastElementChild.appendChild(img);
-								count++;
-									}
-								}
-							})
-						}
-				else{
-					alert("데이터가 더이상 없습니다. ");
+		success : ((data)=>{
+			
+			for (i = data.length; i>0; i-=3){
+				let divmain = document.createElement('div');
+				divmain.setAttribute("id", "divmain"+i);
+				divmain.setAttribute("class", "divmain");
+				
+				document.querySelector('#sec').appendChild(divmain);
+			for(var j = 3; j>0; j--){
+				if(data[count]!=null){
+				let a = document.createElement("a");
+				let img = document.createElement("img");
+				document.querySelector("#divmain"+i).appendChild(a);
+					
+				
+				img.setAttribute("src", data[count].id)
+				img.setAttribute("height" , "300");
+				img.setAttribute("width" , "300");
+				img.setAttribute("alt" , "instapic");
+				img.setAttribute("class" , "mainimg");
+				a.setAttribute("href" , "post.do?id="+data[count].postid);
+				
+				$(a).addClass("apic");
+				document.querySelector("#divmain"+i).lastElementChild.appendChild(img);
+				count++;
 				}
 			}
-			if(page != 1){
-				$(".mainimg").append(html);
-			}	
-		},
+				
+			}
+			
+		}),
 		error : ((e)=>{
 			alert('실패'+e);			
 		})
+		
+	
+	 
+	
 	})
-};
-
+	
 
 $("#profileImage").click(function(e) {
 	$("#imageUpload").click();
@@ -100,21 +82,151 @@ $("#imageUpload").change(function() {
 });
 
 
+let name;
+let email;
+let img;
+$('.search_input').keyup(function(){
+
+	$('.searchScroll').css('display', 'block');
+	
+		$('.divdelete').remove();
+		$.ajax({
+			url : 'search.jsp',
+			type : 'get',
+			dataType : 'json',
+			data : {id2 : $('.search_input').val().trim()},
+			success : ((data)=>{
+				
+		if($('.search_input').val()!=""){
+				log(data);
+			let count2 = 0;
+			let divSearch2 = document.createElement('div');
+		document.querySelector('.searchScroll').appendChild(divSearch2);
+	divSearch2.setAttribute("class" , "divdelete")
+		for(var i = 1; i<data.length+1; i++){
+			let aSearch = document.createElement('a');
+			let SearchImg = document.createElement('div');
+			let userimg = document.createElement('img');
+			let divName = document.createElement('div');
+			let divEmail = document.createElement('div');
+			let EmailSpan = document.createElement('span');
+	userimg.setAttribute("class" , "userimg");
+	
+	aSearch.setAttribute("class" , "aSearch");
+	aSearch.setAttribute("id" , "aSearch"+i);
+	aSearch.setAttribute("href" , "search.do?id="+data[count2].id);
+	
+	SearchImg.setAttribute("id" , "SearchImg"+i)
+	SearchImg.setAttribute("class" , "SearchImg")
+	divName.setAttribute("class" , "divName")
+	divName.setAttribute("id" , "divName"+i)
+	divEmail.setAttribute("class" , "divEmail")
+	divEmail.setAttribute("id" , "divEmail"+i)
+	EmailSpan.setAttribute("class" , "EmailSpan")
+	EmailSpan.setAttribute("id" , "EmailSpan"+i)
+		document.querySelector('.divdelete').appendChild(aSearch);
+	
+		document.querySelector('#aSearch'+i).appendChild(SearchImg);
+		
+		document.querySelector('#aSearch'+i).appendChild(divName);
+		$('#divName'+i).html(data[count2].name);
+		if(data[count2]!=null){
+	userimg.setAttribute("src", data[count2].img);
+		}
+		document.querySelector('#SearchImg'+i).appendChild(userimg);
+		document.querySelector('#divName'+i).appendChild(divEmail);
+		document.querySelector('#divEmail'+i).appendChild(EmailSpan);
+		$('#EmailSpan'+i).html(data[count2].email);
+		count2++;
+		
+		}
+		}else{
+			$('.searchScroll').hide();
+		}
+		
+			}),
+			
+					error : ((e)=>{
+					alert('실패');
+			})
+			
+			
+			
+		})
+		
+	
+})
+
+	}
+
 
 
 </script>
 <style type="text/css">
 .apic{
 	display: inline !important;
+	margin-right: 28px;
 }
 .divmain{
 	display: inline-block !important;
 	position: relative;
 	left : 20%;
+	margin-bottom: 28px;
 }
 .mainimg{
 	display: inline;
+	width: 300px;
+	height: 300px;
 }
+.section1{
+	margin-top: 30px;
+}
+.searchScroll{
+	width : 241px;
+	height: 362px;
+	background: white;
+	display: none;
+}
+.userimg{
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: inline;
+	
+}
+.aSearch{
+	padding-bottom: 8px;
+	padding-top: 8px;
+	padding-left: 14px;
+	padding-right: 14px;
+	border-bottom: 1px solid #efefef;
+	text-decoration: none;
+	
+}
+.aSearch:hover{
+	background-color: #fafafa;
+}
+.SearchImg{
+	margin-right : 10px;
+	display: inline;
+}
+.divName{
+	display: inline;
+	color : black;
+	font-weight: bold;
+	font-size: 1.2em;
+	
+}
+.EmailSpan{
+	display: inline;
+	color : gray;
+	font-size : 1.0em;
+	font-weight: normal;
+}
+.divEmail{
+	display: inline;
+}
+
 </style>
 <title>Insert title here</title>
 </head>
@@ -144,6 +256,9 @@ $("#imageUpload").change(function() {
 							src="https://i.imgur.com/dxQeZSn.png"></span>
 						<div class="dialog" role="dialog" tabindex="0"></div>
 						<div class="search" role="button"></div>
+						<div class="searchScroll"></div>
+						
+						
 					</div>
 					<div class="top_right">
 						<div class="top_right_div1">
@@ -154,7 +269,8 @@ $("#imageUpload").change(function() {
 								</a>
 							</div>
 							<div class="icon">
-								<a href=""> <span class="profile" aria-label="프로필"><img
+							
+								<a href="home.do"> <span class="profile" aria-label="프로필"><img
 										id="profile" src="https://i.imgur.com/C0ZD1ii.png"></span>
 								</a>
 							</div>
@@ -172,7 +288,7 @@ $("#imageUpload").change(function() {
 
 				<div class="profile-image">
 				
-					<img id="profileImage" src="https://i.imgur.com/VMumJLl.png"
+					<img id="profileImage" src="${img}"
 						title="default-profile.png" style="width:150px ;height:150px;"/>
 						 <input id="imageUpload"
 						type="file" name="profile_photo" placeholder="Photo" >
@@ -182,28 +298,27 @@ $("#imageUpload").change(function() {
 				<div class="profile-user">
 				<div class="profile-user-settings">
 
-					<h1 class="profile-user-name">janedoe_</h1>
+					<a class="profile-user-name">${name}</a>
 
-					<a href="./profileEdit.jsp"><button class="btn profile-edit-btn" >프로필 편집</button></a>
+					<button class="btn profile-edit-btn" >프로필 편집</button>
 
 
 				</div>
-				<br>
 				<div class="profile-stats">
 
 					<ul>
-						<li><span class="profile-stat-count">164</span> 게시글</li>
-						<li><span class="profile-stat-count">188</span> 팔로워</li>
-						<li><span class="profile-stat-count">206</span> 팔로잉</li>
+						<li><span class="profile-stat-count">${count}</span> 게시글</li>
+						<li><span class="profile-stat-count">${follower}</span> 팔로워</li>
+						<li><span class="profile-stat-count">${follow}</span> 팔로잉</li>
 					</ul>
 
 				</div>
+					<br>
 
-				<div class="profile-bio">
 
+					<div class="profile-bio">
 					<p>
-						<span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor
-						sit, amet consectetur adipisicing elit 📷✈️🏕️
+						<span class="profile-real-name">${name}</span> ${info}
 					</p>
 
 				</div>
@@ -213,18 +328,31 @@ $("#imageUpload").change(function() {
 		</div>
 
 	</header>
-	<form action="/insertPost.do" method="post" enctype="multipart/form-data">
-		<input type="text" name="id">
-		<input type="text" name="content">
-		<input type="file" name="filename" multiple="multiple">
-		<input type="submit">
-		</form>
 
-	<hr>
+<form action="insertPost.do" method="post" enctype="multipart/form-data">
+	<input type="text" name="content">
+	<input type="file" name="img" multiple="multiple">
+	<input type="text" name="id" value="${id}">
+	
+	<input type="submit">
+
+</form>
+
 	<section class="section1">
 		<main>
 		<section id="sec">
-		
+<%-- 		<c:set var="size" value="${fn:length(list)}" /> --%>
+<%-- 		<c:set var="count" value="0" /> --%>
+<%-- 		<c:forEach var="data" items="${list}" begin="1" end="${size}" step="3"> --%>
+<!-- 			<div class="divmain">	 -->
+<%-- 			<c:forEach var="data2" items="${list}" begin="0" end="2" step="1" varStatus="status"> --%>
+<%-- 			<a href="" class="apic"><img class="mainimg" src="${list[count].img}" ></a> --%>
+<%-- 		<c:set var="count" value="${count+1}" /> --%>
+			
+<%-- 			</c:forEach> --%>
+<!-- 			</div> -->
+<%-- 		</c:forEach> --%>
+
 		</section>
 		</main>
 		<footer class="footer">
