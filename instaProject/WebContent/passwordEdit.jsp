@@ -20,15 +20,26 @@
 	font-weight: bold;
 	color: #444444;
 }
-
 </style>
 <script type="text/javascript">
 	$(function() {
+		if(${empty login}){
+			$('#msg').val('로그인이 필요한 서비스입니다.');
+			$('#hidden_form').submit();
+		}
 		$('.need').each(function(i, element) { //입력창에 키보드 입력시 에러 메시지 지우기
 			$(element).keyup(function() {
 				clearAll();
 			})
 		});
+		$('#new_pw')[0].oninvalid = function() {
+			if (!this.validity.valid && $($(this)[0]).val().length > 0){
+				this.setCustomValidity('영문자, 숫자, 특수문자 포함 6자 이상 15자 이하로 입력하세요.');
+			}
+		}
+		$('#new_pw')[0].oninput= function () {
+	        this.setCustomValidity("");
+		};
 	})
 
 	function clearAll() { //에러 메시지 지우기
@@ -74,7 +85,7 @@
 						<td class="input_name"><span>새 비밀번호</span></td>
 						<td><input type="password" id="new_pw" name="new_pw"
 							class="need" required="required"
-							pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,}"></td>
+							pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,15}"></td>
 					</tr>
 					<tr id="small_tr">
 						<td></td>
@@ -96,6 +107,9 @@
 			</form>
 		</aside>
 	</section>
+	<form style="visibility:hidden" action="login.jsp" method="post" id="hidden_form">
+		<input type="hidden" id="msg" name="msg" value="">
+	</form>
 	<%@include file="common/footer.jsp"%>
 </body>
 </html>

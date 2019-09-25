@@ -20,17 +20,18 @@
 	font-weight: bold;
 	color: #444444;
 }
-
 </style>
 <script type="text/javascript">
 	$(function() {
-		$(function() {
-			$('.need').each(function(i, element) {
-				$(element).keyup(function() { //입력창에 키보드 입력시 에러 메시지 지우기
-					clearAll();
-				})
+		if(${empty login}){
+			$('#msg').val('로그인이 필요한 서비스입니다.');
+			$('#hidden_form').submit();
+		}
+		$('.need').each(function(i, element) {
+			$(element).keyup(function() { //입력창에 키보드 입력시 에러 메시지 지우기
+				clearAll();
 			});
-		})
+		});
 
 		function clearAll() { //에러 메시지 지우기
 			$('#errMsg').html("");
@@ -51,11 +52,6 @@
 		$('#cancel').click(function() { //취소 버튼 클릭시 프사 편집 선택 화면 감추기
 			$('#delete').val(''); //프사 삭제 버튼 초기화
 			$('#img_change_opt').css('visibility', 'hidden');
-		});
-		$('.need').each(function(i, element) {
-			$(element).keyup(function() { //입력창에 키보드 입력시 에러 메시지 지우기
-				$('#errMsg').html("");
-			})
 		});
 	});
 </script>
@@ -131,6 +127,9 @@
 
 		</div>
 	</div>
+	<form style="visibility:hidden" action="login.jsp" method="post" id="hidden_form">
+		<input type="hidden" id="msg" name="msg" value="">
+	</form>
 	<%@include file="common/footer.jsp"%>
 </body>
 
