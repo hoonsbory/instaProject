@@ -69,6 +69,10 @@
 	cursor: pointer;
 }
 
+.userImage, .user-name{
+	margin-top: 15px;
+}
+
 #next_left {
 	-webkit-transform: scaleX(-1);
 	-moz-transform: scaleX(-1);
@@ -210,6 +214,7 @@ $(function(){
 	setLike();
 	showUpdatePost();
 	setFollow();
+	follow();
 	
 	if(${empty login}){
 		$('.form-control').attr('placeholder','로그인 후 이용 가능합니다.');
@@ -254,12 +259,63 @@ $(function(){
 });
 
 function setFollow(){
-	let check = "<c:out value='${check}'/>";
+	let check = '${check}';
 	if(check==1){
 		$('#follow-btn').hide();
 	}else{
 		$('#follow-btn2').hide();
-	}	
+	}
+}
+
+function follow(){
+	$('#follow-btn2').click(function(){
+		$.ajax({
+			url : 'unfollow.jsp',
+			type : 'get',
+			dataType : 'json',
+			data : {yourid : ${post.user_id} ,
+					myid : ${id}
+			},
+			
+			success : ((data)=>{
+				if(data.delete1==1){
+					 $('#follower').html(data.follower);
+					 $('#follow-btn2').hide();
+					 $('#follow-btn').show();
+				}
+		}),
+			error : ((e)=>{
+				alert('실팽');
+				
+			})
+		
+		})
+	});
+	
+	$('#follow-btn').click(function(){
+		$.ajax({
+			url : 'follow.jsp',
+			type : 'get',
+			dataType : 'json',
+			data : {yourid : ${post.user_id} ,
+					myid : ${id}
+			},
+			
+			success : ((data)=>{
+				if(data.insert==1){
+					 $('#follower').html(data.follower);
+					 $('#follow-btn').hide();
+					 $('#follow-btn2').show();
+					
+				}
+		}),
+			error : ((e)=>{
+				alert(e);
+				
+			})
+		
+		})
+	});
 }
 
 function cancelButton(){
@@ -398,7 +454,6 @@ function insComm(){
 			 }		
 	);
 	$('#form-comment').val('');
-	$('#form-comment').setCustomValidity('');
 	}
 }
 
@@ -484,7 +539,8 @@ function display(data){
 			</span> <span class="user-name">${post.user_name}</span>
 			</span>
 			<c:if test='${post.user_id ne id}'>
-				<button class="btn follow-btn">팔로우</button>
+				<button class="btn profile-edit-btn" id="follow-btn" >팔로우</button>
+				<button class="btn profile-edit-btn" id="follow-btn2" >팔로잉 중</button>
 			</c:if>
 		</header>
 

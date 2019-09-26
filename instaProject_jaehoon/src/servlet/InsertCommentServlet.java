@@ -40,9 +40,7 @@ public class InsertCommentServlet extends HttpServlet {
 			vo.setUser_id(user_id);
 			vo.setPost_id(post_id);
 
-			System.out.println(request.getParameter("content"));
 			vo.setContent(request.getParameter("content"));
-			System.out.println(vo);
 			int result=0;
 			try {
 				result=service.insertComment(vo);

@@ -67,6 +67,7 @@ public class ShowPostServlet extends HttpServlet {
 				int follow = service2.follownum(user_id).size();
 				request.setAttribute("follower", follower);
 				request.setAttribute("follow", follow);
+				request.setAttribute("check", check);
 			}
 			request.setAttribute("post", show);
 			request.setAttribute("beside", beside);
