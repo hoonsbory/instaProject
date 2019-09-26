@@ -133,6 +133,7 @@ input:focus, textarea:focus {
 	width: 100%;
 	height: 35%;
 	text-align: center;
+	cursor: pointer;
 }
 
 #button-blue:hover, #button_photo-upload:hover{
