@@ -124,4 +124,54 @@ public class FollowDAO {
 		}
 		return list;
 	}
+	//팔로우 리스트 
+	public List<UsersVO> followlist(int myid) throws Exception {
+		String sql = "select u.img, u.name u.email from follower_map f join users u on u.id = f.target_id where follower_id =?";
+		List<UsersVO> list = new ArrayList<UsersVO>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, myid);
+			rs = ps.executeQuery();
+			// rs = ps.executeUpdate();
+			while(rs.next()) {
+				list.add(new UsersVO(rs.getString("img"),
+									rs.getString("name"),
+									rs.getString("email")));
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			JDBCUtil.close(con, ps, null);
+		}
+		return list;
+	}
+	//팔로워 리스트 
+	public List<UsersVO> followerlist(int myid) throws Exception {
+		String sql = "select u.img, u.name u.email from follower_map f join users u on u.id = f.follower_id where target_id =?";
+		List<UsersVO> list = new ArrayList<UsersVO>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = JDBCUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, myid);
+			rs = ps.executeQuery();
+			// rs = ps.executeUpdate();
+			while(rs.next()) {
+				list.add(new UsersVO(rs.getString("img"),
+									rs.getString("name"),
+									rs.getString("email")));
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			JDBCUtil.close(con, ps, null);
+		}
+		return list;
+	}
 }

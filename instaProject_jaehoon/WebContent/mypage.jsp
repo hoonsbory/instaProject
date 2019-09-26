@@ -167,6 +167,8 @@ function fasterPreview(uploader) {
 $("#imageUpload").change(function() {
 	fasterPreview(this);
 });
+
+
 let name;
 let email;
 let img;
@@ -248,7 +250,160 @@ $('.search_input').keyup(function(){
 		
 	
 })
-	}
+
+// 팔로우 리스트 기능 
+$('#followlist').click(function(){
+	$('.followlist_class').css('display', 'block');
+	$('.followlist_div').css('display', 'block');
+	
+		$('.divfollowlist').remove();
+		$.ajax({
+			url : 'followlist.jsp',
+			type : 'get',
+			dataType : 'json',
+			data : {id : id1},
+			success : ((data)=>{
+				if(data.length == 0){
+					$('.followlist_class').html('팔로우가 없습니다.');
+				}else{
+					$('.followlist_class').html('');
+				}
+		if($('.followlist_class').val()!=""){
+				log(data);
+			let count3 = 0;
+			let divfollowlist = document.createElement('div');
+		document.querySelector('.followlist_class').appendChild(divfollowlist);
+		divfollowlist.setAttribute("class" , "divfollowlist");
+		for(let i = 1; i < data.length + 1; i++){
+			let afollow = document.createElement('a');
+			let div_followImg = document.createElement('div');
+			let followimg = document.createElement('img');
+			let divfollowName = document.createElement('div');
+			let divfollowEmail = document.createElement('div');
+			let followEmailSpan = document.createElement('span');
+	followimg.setAttribute("class" , "followimg");
+	afollow.setAttribute("class" , "afollow");
+	afollow.setAttribute("id" , "afollow"+i);
+	afollow.setAttribute("href" , "followlist.do?id="+data[count3].id);
+	
+	div_followImg.setAttribute("id" , "div_followImg"+i)
+	div_followImg.setAttribute("class" , "div_followImg")
+	divfollowName.setAttribute("class" , "divfollowName")
+	divfollowName.setAttribute("id" , "divfollowName"+i)
+	divfollowEmail.setAttribute("class" , "divfollowEmail")
+	divfollowEmail.setAttribute("id" , "divfollowEmail"+i)
+	followEmailSpan.setAttribute("class" , "followEmailSpan")
+	followEmailSpan.setAttribute("id" , "followEmailSpan"+i)
+		document.querySelector('.divfollowlist').appendChild(afollow);
+	
+		document.querySelector('#afollow'+i).appendChild(div_followImg);
+		
+		document.querySelector('#afollow'+i).appendChild(divfollowName);
+		$('#divfollowName'+i).html(data[count3].name);
+		if(data[count3]!=null){
+			followimg.setAttribute("src", data[count3].img);
+		}
+			
+		
+		document.querySelector('#div_followImg'+i).appendChild(followimg);
+		document.querySelector('#divfollowName'+i).appendChild(divfollowEmail);
+		document.querySelector('#divfollowEmail'+i).appendChild(followEmailSpan);
+		$('#followEmailSpan'+i).html(data[count3].email);
+		count3++;
+		
+		}
+		}else{
+			$('.followlist_class').hide();
+			$('.followlist_div').hide();
+		}
+		
+			}),
+			
+					error : ((e)=>{
+					alert('실패');
+			})
+				
+		})
+	})
+	
+// 팔로워 리스트 기능 
+$('#followerlist').click(function(){
+	$('.followerlist_class').css('display', 'block');
+	$('.followerlist_div').css('display', 'block');
+	
+		$('.divfollowerlist').remove();
+		$.ajax({
+			url : 'followerlist.jsp',
+			type : 'get',
+			dataType : 'json',
+			data : {id : id1},
+			success : ((data)=>{
+				if(data.length == 0){
+					$('.followerlist_class').html('팔로워가 없습니다.');
+				}else{
+					$('.followerlist_class').html('');
+				}
+		if($('.followerlist_class').val()!=""){
+				log(data);
+			let count4 = 0;
+			let divfollowerlist = document.createElement('div');
+		document.querySelector('.followerlist_class').appendChild(divfollowerlist);
+		divfollowlist.setAttribute("class" , "divfollowerlist");
+		for(let i = 1; i < data.length + 1; i++){
+			let afollower = document.createElement('a');
+			let div_followerImg = document.createElement('div');
+			let followerimg = document.createElement('img');
+			let divfollowerName = document.createElement('div');
+			let divfollowerEmail = document.createElement('div');
+			let followerEmailSpan = document.createElement('span');
+	followerimg.setAttribute("class" , "followerimg");
+	afollower.setAttribute("class" , "afollower");
+	afollower.setAttribute("id" , "afollower"+i);
+	afollower.setAttribute("href" , "followerlist.do?id="+data[count3].id);
+	
+	div_followerImg.setAttribute("id" , "div_followerImg"+i)
+	div_followerImg.setAttribute("class" , "div_followerImg")
+	divfollowerName.setAttribute("class" , "divfollowerName")
+	divfollowerName.setAttribute("id" , "divfollowerName"+i)
+	divfollowerEmail.setAttribute("class" , "divfollowerEmail")
+	divfollowerEmail.setAttribute("id" , "divfollowerEmail"+i)
+	followerEmailSpan.setAttribute("class" , "followerEmailSpan")
+	followerEmailSpan.setAttribute("id" , "followerEmailSpan"+i)
+		document.querySelector('.divfollowerlist').appendChild(afollower);
+	
+		document.querySelector('#afollower'+i).appendChild(div_followerImg);
+		
+		document.querySelector('#afollower'+i).appendChild(divfollowerName);
+		$('#divfollowerName'+i).html(data[count3].name);
+		if(data[count3]!=null){
+			followerimg.setAttribute("src", data[count3].img);
+		}
+			
+		
+		document.querySelector('#div_followerImg'+i).appendChild(followimg);
+		document.querySelector('#divfollowerName'+i).appendChild(divfollowEmail);
+		document.querySelector('#divfollowerEmail'+i).appendChild(followEmailSpan);
+		$('#followerEmailSpan'+i).html(data[count3].email);
+		count3++;
+		
+		}
+		}else{
+			$('.followerlist_class').hide();
+			$('.followerlist_div').hide();
+		}
+		
+			}),
+			
+					error : ((e)=>{
+					alert('실패');
+			})
+				
+		})
+	})
+
+
+
+}
 </script>
 <style type="text/css">
 #btnEdit2{
@@ -363,6 +518,187 @@ $('.search_input').keyup(function(){
 	overflow-x: hidden;
     overflow-y: auto;
 }
+
+/* 팔로우 리스트 css */
+.followlist_class{
+	position : relative;
+	top : 36px;
+	width : 220px;
+	max-height: 362px;
+	background: white;
+	display: none;
+	 -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;
+    border : 1px solid #efefef;
+    color: #999;
+    font-size: 14px;
+    padding: 15px;
+    z-index: 2;
+}
+.followlist_div {
+	display: none;
+    border: solid 1px #e6e6e6;
+    -webkit-box-shadow: 0 0 5px 1px rgba(0,0,0,.0975);
+    box-shadow: 0 0 5px 1px rgba(0,0,0,.0975);
+    height: 14px;
+    left: 0;
+    margin: auto;
+    right: 0;
+    top: 30px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 14px;
+    z-index: 1;
+    background: #fff;
+    content: ' ';
+    position: absolute;
+
+}
+.followimg{
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
+	
+}
+.afollow{
+	padding-bottom: 8px;
+	padding-top: 8px;
+	padding-left: 14px;
+	padding-right: 14px;
+	border-bottom: 1px solid #efefef;
+	text-decoration: none;
+	overflow-x: hidden;
+    overflow-y: auto;
+	
+}
+.afollow:hover{
+	background-color: #fafafa;
+}
+.div_followimg{
+	margin-right : 10px;
+	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
+}
+.followName{
+	position : relative;
+	top :  -15px;
+	display: inline;
+	color : black;
+	font-weight: bold;
+	overflow-x: hidden;
+    overflow-y: auto;
+	
+}
+.followEmailSpan{
+	color : gray;
+	font-size : 1.0em;
+	font-weight: normal;
+	overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+     -webkit-overflow-scrolling: none;
+     margin-left: 10px;
+}
+.divfollowEmail{
+	overflow-x: hidden;
+    overflow-y: auto;
+}
+/* 팔로워 리스트 css */
+.followerlist_class{
+	position : relative;
+	top : 36px;
+	width : 220px;
+	max-height: 362px;
+	background: white;
+	display: none;
+	 -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;
+    border : 1px solid #efefef;
+    color: #999;
+    font-size: 14px;
+    padding: 15px;
+    z-index: 2;
+}
+.followerlist_div {
+	display: none;
+    border: solid 1px #e6e6e6;
+    -webkit-box-shadow: 0 0 5px 1px rgba(0,0,0,.0975);
+    box-shadow: 0 0 5px 1px rgba(0,0,0,.0975);
+    height: 14px;
+    left: 0;
+    margin: auto;
+    right: 0;
+    top: 30px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 14px;
+    z-index: 1;
+    background: #fff;
+    content: ' ';
+    position: absolute;
+
+}
+.followerimg{
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
+	
+}
+.afollower{
+	padding-bottom: 8px;
+	padding-top: 8px;
+	padding-left: 14px;
+	padding-right: 14px;
+	border-bottom: 1px solid #efefef;
+	text-decoration: none;
+	overflow-x: hidden;
+    overflow-y: auto;
+	
+}
+.afollower:hover{
+	background-color: #fafafa;
+}
+.div_followerimg{
+	margin-right : 10px;
+	display: inline;
+	overflow-x: hidden;
+    overflow-y: auto;
+}
+.followerName{
+	position : relative;
+	top :  -15px;
+	display: inline;
+	color : black;
+	font-weight: bold;
+	overflow-x: hidden;
+    overflow-y: auto;
+	
+}
+.followerEmailSpan{
+	color : gray;
+	font-size : 1.0em;
+	font-weight: normal;
+	overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+     -webkit-overflow-scrolling: none;
+     margin-left: 10px;
+}
+.divfollowerEmail{
+	overflow-x: hidden;
+    overflow-y: auto;
+}
 .insert-post-a{
 	width : 35px;
 	height : 35px;
@@ -465,7 +801,15 @@ $('.search_input').keyup(function(){
 					<ul>
 						<li><span class="profile-stat-count">${count}</span> 게시글</li>
 						<li><span class="profile-stat-count">${follower}</span> 팔로워</li>
+						<div>
+							<div class="followlist_class"></div>
+							<div class="followlist_div"></div>
+						</div>
 						<li><span class="profile-stat-count">${follow}</span> 팔로잉</li>
+						<div>
+							<div class="followlist_class"></div>
+							<div class="followlist_div"></div>
+						</div>
 					</ul>
 
 				</div>
