@@ -17,7 +17,7 @@ create table users (
 create table posts(
     id number(15) primary key,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    content varchar(100),
+    content varchar(500),
     user_id number(15),
     img varchar(100)
 );
@@ -27,7 +27,7 @@ create table posts(
 
 create table comments(
     id number(15) primary key,
-    content varchar(100),
+    content varchar(500),
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     post_id number(15),
     user_id number(15)
