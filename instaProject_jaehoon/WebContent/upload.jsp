@@ -22,16 +22,14 @@ body {
 }
 
 #border {
-	display: inline
+	
+	padding:150px;
 }
 
-#id {
-	border: dashed 1px #dbdbdb;
-	border-radius: 3rem;
-	padding: 10px;
-}
 
 #content {
+	margin-top:50px;
+	display:inline;
 	border: dashed 1px #dbdbdb;
 	border-radius: 3rem;
 	width: 400px;
@@ -39,21 +37,26 @@ body {
 }
 
 .uploadpostimage {
-	margin-left: 150px;
+	display:inline;
+	float:left;
+	margin: 50px;
 	background-color: white;
-	max-width: 400px;
+	width: 400px;
 	border: dashed 1px #dbdbdb;
 	border-radius: 3rem;
 	transform: scale(1);
 	-webkit-box-shadow: 0 0 0 transparent;
 	box-shadow: 0 0 0 transparent;
-	padding: 50px;
+	padding-bottom:50px;
 }
 
 .uploadpostimage img {
-	padding-left: 20px;
-	max-width: 400px;
+	display:inline;
 	cursor: pointer;
+	width: 300px;
+	border-radius:3rem;
+	margin-left:45px;
+	margin-top:50px;
 }
 
 #postUpload {
@@ -61,11 +64,17 @@ body {
 }
 
 p {
-	margin: 20px;
-	padding-bottom: 40px;
+	
 	text-align: center;
-	font-size: 30px;
-	font-weight: 200;
+	font-size: 20px;
+}
+#submit , #reset{
+	display:inline;
+	padding:5px;
+	border: dashed 1px #dbdbdb;
+	background-color:white;
+	border-radius:3rem;
+	margin:10px;
 }
 </style>
 </head>
@@ -125,12 +134,12 @@ p {
 			<textarea name="content" id="content"
 				placeholder="    ...게시할 글을 작성하세요..." maxlength="200"\></textarea>
 
-			<input type="hidden" value="${id}">
 			<div class="buttons">
-				<input type="submit" value="등록"> <input type="reset"
-					value="취소">
-	</div>
+			<input type="hidden" value="${id}">
+				<input type="submit" value="등록" id="submit"> 
+				<input type="reset"value="취소" id="reset">
 		</form>
+	</div>
 	</div>
 	</main>
 	<%@include file="common/footer.jsp"%>
