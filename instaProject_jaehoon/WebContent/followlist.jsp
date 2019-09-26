@@ -1,4 +1,4 @@
-<%@page import="dao.UsersDAO"%>
+<%@page import="dao.FollowDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
