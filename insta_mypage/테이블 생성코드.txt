@@ -9,7 +9,7 @@ create table users (
     email varchar(50) unique,
     password varchar(100),
     name varchar(50),  
-    img   varchar(200) 'https://i.imgur.com/VMumJLl.png',
+    img   varchar(200) default 'https://i.imgur.com/VMumJLl.png',
     info varchar2(200)
 );
 
