@@ -39,7 +39,7 @@ public class DeletePostServlet extends HttpServlet {
 			int result=service.deletePosts(id);
 			if(result==0)
 				System.out.println("삭제 실패");
-			response.sendRedirect("mypage.jsp");
+			response.sendRedirect("home.do");
 		}
 	}
 

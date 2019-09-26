@@ -47,9 +47,9 @@ public class PostsServiceimpl implements PostsService{
 		return dao.showPosts(id);
 	}
 	@Override
-	public Map<String, Integer> besidePosts(int id) {
+	public Map<String, Integer> besidePosts(int user_id, int post_id) {
 		// TODO Auto-generated method stub
-		return dao.besidePosts(id);
+		return dao.besidePosts(user_id, post_id);
 	}
 	
 }

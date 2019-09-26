@@ -29,8 +29,8 @@ public class UpdatePostServlet extends HttpServlet {
 			PostsDAO dao=new PostsDAO();
 			PostsService service=new PostsServiceimpl(dao);
 			PostsVO vo=new PostsVO();
-			int id=Integer.parseInt(request.getParameter("id"));
-			String content=request.getParameter("content");
+			int id=Integer.parseInt(request.getParameter("post_id"));
+			String content=request.getParameter("post_content");
 			vo.setId(id);
 			vo.setContent(content);
 			int result=service.updatePosts(vo);

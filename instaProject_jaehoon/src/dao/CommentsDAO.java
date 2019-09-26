@@ -20,7 +20,7 @@ public class CommentsDAO {
 
 	
 	public  String selectAllComments(int post_id) throws Exception {
-		String sql = "select c.id as id, u.id as user_id, u.name, u.img, c.content, c.timestamp from comments c join users u on c.user_id = u.id where post_id = ? order by timestamp";
+		String sql = "select c.id as id, u.id as user_id, u.name, u.img, nvl(c.content,' ') as content, c.timestamp from comments c join users u on c.user_id = u.id where post_id = ? order by timestamp";
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

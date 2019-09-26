@@ -157,8 +157,8 @@ public Map<String, String> showPosts(int id){
 		return map;
 	}
 
-public Map<String, Integer> besidePosts(int id){
-	String sql = " select * from (select id, lead(id,1,'-1') over (order by timestamp) next_id, lag(id,1,'-1') over (order by timestamp) past_id from posts) where id=?";
+public Map<String, Integer> besidePosts(int user_id, int post_id){
+	String sql = " select * from (select id, lead(id,1,'-1') over (order by timestamp) next_id, lag(id,1,'-1') over (order by timestamp) past_id from posts where user_id=?) where id=?";
 	
 	Connection con = null;
 	PreparedStatement ps = null;
@@ -169,7 +169,8 @@ public Map<String, Integer> besidePosts(int id){
 		con = JDBCUtil.getConnection();
 		ps = con.prepareStatement(sql);
 		
-		ps.setInt(1, id);
+		ps.setInt(1, user_id);
+		ps.setInt(2, post_id);
 		rs = ps.executeQuery();
 		
 		while(rs.next()) {

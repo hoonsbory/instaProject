@@ -13,17 +13,6 @@ import vo.LikesVO;
 import vo.PostsVO;
 
 public class LikesDAO {
-	public static void main(String[] args) {
-		LikesDAO dao=new LikesDAO();
-		int result=0;
-		try {
-			result=dao.insertLikes(1, 13);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(result);
-	}
 	public int insertLikes(int user_id, int post_id) throws Exception {
 		
 		String sql = "insert into likes(user_id, post_id) values(?,?)";

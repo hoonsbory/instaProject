@@ -14,5 +14,5 @@ public interface PostsService {
 	int deletePosts(int id);
 	int updatePosts(PostsVO vo);
 	Map<String, String> showPosts(int id);
-	Map<String, Integer> besidePosts(int id);
+	Map<String, Integer> besidePosts(int user_id, int post_id);
 }

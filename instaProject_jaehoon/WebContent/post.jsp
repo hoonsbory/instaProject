@@ -65,7 +65,7 @@
 	margin-top: 15px;
 }
 
-.this_user {
+.this_user, .commenterImage, .commentName {
 	cursor: pointer;
 }
 
@@ -109,20 +109,30 @@
 	vertical-align: middle;
 }
 
-#dot_menu_opt>div {
+#dot_menu_opt>div{
 	border-radius: 20px;
-	width: 300px;
-	height: 200px;
 	margin: 0 auto;
-	margin-top: 260px;
-	padding-top: 15px;
 	text-align: center;
 	vertical-align: middle;
 	background-color: white;
 }
 
-#dot_menu_opt>div >h4 {
-	padding: 20px;
+#optBox {
+	width: 300px;
+	height: 200px;
+	margin-top: 260px !important;
+}
+
+#updateBox {
+	width: 450px;
+	height: 250px;
+	margin-top: 220px !important;
+	display: none;
+	cursor: pointer;
+}
+
+#optBox>h4 {
+	padding: 25px;
 }
 
 #delete {
@@ -136,7 +146,7 @@
 #update {
 	font-size: 12pt;
 	font-weight: bold;
-	color:	#3399ff;
+	color: #3399ff;
 	cursor: pointer;
 }
 
@@ -144,7 +154,36 @@
 	font-size: 12pt;
 	font-weight: bold;
 	cursor: pointer;
-	border-top: 1px solid gray;	
+	border-top: 1px solid gray;
+}
+
+#updateBox>div {
+	border-top: 1px solid gray;
+	margin-top: 19px;
+	margin-bottom: 20px;
+	display: block;
+}
+
+#updateBox>div>h4{
+	display: inline;
+	width: 50%;
+	float: left;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	font-size: 12pt;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+#up_submit{
+	border-right: 1px solid gray;
+	color: #3399ff;
+}
+
+#post_content{
+	margin-top: 20px;
+	height: 130px;
+	width: 80%;
 }
 
 .like_img {
@@ -152,17 +191,26 @@
 	display: none;
 }
 
-#date{
+#date {
 	position: absolute;
 	right: 10px;
 	bottom: -22px;
 	color: gray;
+}
+
+#form_button {
+	padding: 5px;
+	color: #3399ff;
+	font-weight: bold;
 }
 </style>
 <script type="text/javascript">
 $(function(){
 	showComm();
 	setLike();
+	showUpdatePost();
+	setFollow();
+	
 	if(${empty login}){
 		$('.form-control').attr('placeholder','로그인 후 이용 가능합니다.');
 		$('.form-control').focus(function(){
@@ -176,9 +224,7 @@ $(function(){
 		$('#next_right').hide();
 	}
 	
-	$('.this_user').click(function(){
-		location.href="";
-	});
+	$('.this_user').click(thisUserPage);
 	
 	$('#next_left').click(function(){
 		location.href="showPost.do?post_id=${beside.past_id}";
@@ -194,16 +240,64 @@ $(function(){
 			location.href="deletePost.do?post_id=${post.post_id}&img=${post.post_img}";
 		}
 	});
-	$('#update').click(function() {
-		updatePost();
+	$('#update').click(function(){
+		$('#updateBox').css('display', 'block');
+		$('#optBox').css('display', 'none');
 	});
-	$('#cancel').click(function() {
-		$('#dot_menu_opt').css('visibility', 'hidden');
-	});
+	
+	$('.cancel').click(cancelButton);
+	
+	$('#up_submit').click(updatePost);
+	
+	$('#post_content').keyup(countPost);
+	
 });
 
+function setFollow(){
+	let check = "<c:out value='${check}'/>";
+	if(check==1){
+		$('#follow-btn').hide();
+	}else{
+		$('#follow-btn2').hide();
+	}	
+}
+
+function cancelButton(){
+	$('#dot_menu_opt').css('visibility', 'hidden');
+	$('#updateBox').css('display', 'none');
+	$('#optBox').css('display', 'block');
+	showUpdatePost();
+    $('#textCount').text($('#post_content').val().length+'/150');
+}
+
+function thisUserPage(){
+	if('${post.user_id}'=='${id}'){
+    	location.href="home.do";
+     }
+     else{
+	 	 location.href="search.do?id=${post.user_id}";
+     }
+}
+
 function updatePost(){
-	
+	let str = $("#post_content").val();
+	str = str.replace(/(?:\r\n|\r|\n)/g, '<br />'); //엔터 처리
+    $("#post_content").val(str);
+	$('#updateForm').submit();
+}
+
+function showUpdatePost(){
+	let str = '${post.post_content}';
+	str = str.replace(/<br\s*\/?>/img, '\n');
+	$("#post_content").val(str);
+}
+
+function countPost(){
+	 let textLength = $(this).val().length;
+     $('#textCount').text(textLength+'/150');
+     if (textLength > 150) {
+         $(this).val($(this).val().substr(0, 150));
+     }
 }
 
 function setLike(){
@@ -279,6 +373,9 @@ function showComm(){
 }
 
 function insComm(){
+	if($('#form-comment').val().length>100){
+		alert('100자 이하로 입력하세요');
+	} else{
 	$.ajax(
 			{
 				 url:'insertComment.do',
@@ -301,6 +398,8 @@ function insComm(){
 			 }		
 	);
 	$('#form-comment').val('');
+	$('#form-comment').setCustomValidity('');
+	}
 }
 
 function delComm(delId){
@@ -329,23 +428,41 @@ function delComm(delId){
 
 function display(data){
 	let tag = "";
+	let login_id='${fn:substringBefore(login,"/")}';
 	$(data).each((i,item)=>{
-		 tag += "<li><div class='commenterImage'>";
+		 tag += "<li id='c_"+item.id+"'><div class='commenterImage' id='i_"+item.id+"'>";
 	     tag += "<img src='"+item.img+"'/></div>";
-	     tag += "<div class='commentText' id='c_"+item.id+"'><p><span class='commentName'>";
+	     tag += "<div class='commentText'><p><span class='commentName' id='n_"+item.id+"'>";
 	     tag += item.name+"</span><span class=''>"+item.content+"</span>";
-	     let login_id='${fn:substringBefore(login,"/")}';
 	     if(item.user_id==login_id||'${post.user_id}'==login_id){
 	     	tag += "<button class='cDels'><img src='img/delete-x.png' width=6 height=6></button>";
 	     }
 		 tag += "</p><span class='date sub-text'>";
-	     tag += item.timestamp.substring(0,item.timestamp.length-4)+"</span></div></li>";
-	
+	     tag += item.timestamp.substring(0,item.timestamp.length-4)+"</span></div></li>";	 	
+	     	
 	});
 	$('.commentList').html(tag);
+	$(data).each((i,item)=>{
+		if(item.user_id==login_id){
+	    	$('#i_'+item.id).click(function(){
+	    		location.href="home.do";
+	 	 	});	 	
+	 	 	$('#n_'+item.id).click(function(){
+	 	 		location.href="home.do";
+	 	 	});
+	     }
+	     else{
+	    	 $('#i_'+item.id).click(function(){
+		 	 	location.href="search.do?id="+item.user_id;
+		 	 });	 	
+		 	 $('#n_'+item.id).click(function(){
+		 	 	location.href="search.do?id="+item.user_id;
+		 	 });
+	     }
+	});
 	$('.cDels').each((i,item)=>{
 		$(item).click(function(){
-			delComm($(item.parentNode.parentNode).attr('id'));
+			delComm($(item.parentNode.parentNode.parentNode).attr('id'));
 		});
 	});
 	$(".commentList").scrollTop($(".commentList")[0].scrollHeight);
@@ -362,12 +479,12 @@ function display(data){
 	<img class="next" id="next_left" src="img/next2.png">
 	<section id="sect">
 		<header>
-			<span class="this_user"> <span class="userImage"> <img 
-					src="${post.user_img}" width=50 height=50/>
+			<span class="this_user"> <span class="userImage"> <img
+					src="${post.user_img}" width=50 height=50 />
 			</span> <span class="user-name">${post.user_name}</span>
 			</span>
 			<c:if test='${post.user_id ne id}'>
-			<button class="btn follow-btn">팔로우</button>
+				<button class="btn follow-btn">팔로우</button>
 			</c:if>
 		</header>
 
@@ -379,7 +496,7 @@ function display(data){
 
 			<div class="detailBox">
 				<c:if test='${post.user_id eq id}'>
-				<img class="" id="dot_menu" src="img/three-dots.png" width="20">
+					<img class="" id="dot_menu" src="img/three-dots.png" width="20">
 				</c:if>
 				<div class="commentBox">
 					<p class="taskDescription">${post.post_content}</p>
@@ -402,23 +519,35 @@ function display(data){
 					<div id="date">
 						${fn:substring(post.post_timestamp,0,fn:length(post.post_timestamp)-4)}</div>
 				</div>
-				<div class="form-inline" role="form">
+				<div class="form-inline">
 					<div class="form-group2">
 						<input class="form-control" id="form-comment" type="text"
-							placeholder="Your comments" />
+							placeholder="Your comments" pattern=".{,100}" />
 					</div>
 					<div class="form-group2">
-						<button class="btn btn-default" onclick="insComm()">등록</button>
+						<button class="btn btn-default" id="form_button"
+							onclick="insComm()">등록</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 	<div id="dot_menu_opt">
-		<div>
+		<div id="optBox">
 			<h4 id="update">수정</h4>
 			<h4 id="delete">삭제</h4>
-			<h4 id="cancel">취소</h4>
+			<h4 class="cancel" id="cancel">취소</h4>
+		</div>
+		<div id="updateBox">
+			<form action="updatePost.do" method="post" id="updateForm">
+				<textarea form="updateForm" id="post_content" name="post_content"></textarea>
+				<span id="textCount">${fn:length(post.post_content)}/150</span>
+				<input type="hidden" name="post_id" value="${post.post_id}">
+			</form>
+			<div>
+				<h4 id="up_submit">확인</h4>
+				<h4 class="cancel" id="up_cancel">취소</h4>
+			</div>
 		</div>
 	</div>
 	<form style="visibility: hidden" action="login.jsp" method="post"

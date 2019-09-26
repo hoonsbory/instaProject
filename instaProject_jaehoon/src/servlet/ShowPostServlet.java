@@ -44,6 +44,10 @@ public class ShowPostServlet extends HttpServlet {
 		PostsService service = new PostsServiceimpl(dao);
 		LikesDAO ldao = new LikesDAO();
 		LikesService lservice = new LikesServiceimpl(ldao);
+		
+		FollowDAO dao2 = new FollowDAO();
+		FollowService service2 = new FollowServiceImpl(dao2);
+		
 		int post_id = Integer.parseInt(request.getParameter("post_id"));
 		try {
 			Map<String, String> show = service.showPosts(post_id);
@@ -53,10 +57,16 @@ public class ShowPostServlet extends HttpServlet {
 			list = lservice.countLikes(post_id);
 			int count = list.size();
 			int mycount = 0;
+			int check=0;
 			HttpSession session = request.getSession();
 			if (session.getAttribute("login") != null) {
 				int login_id = (int) session.getAttribute("id");
 				mycount = lservice.checkMyLike(post_id, login_id);
+				check = service2.checkFollow(login_id, user_id);
+				int follower = service2.followernum(user_id).size();
+				int follow = service2.follownum(user_id).size();
+				request.setAttribute("follower", follower);
+				request.setAttribute("follow", follow);
 			}
 			request.setAttribute("post", show);
 			request.setAttribute("beside", beside);
