@@ -14,4 +14,4 @@
 	
     %>
     
-     <%=service.followList(myid)%>
+     <%=service.followerList(myid)%>

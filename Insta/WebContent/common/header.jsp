@@ -16,7 +16,7 @@
 		<div class="header_div3">
 			<div class="top_menu">
 				<div class="top_left">
-					<a class="top_left_a" href="./">
+					<a class="top_left_a" href="home.do">
 						<div class="top_left_div1">
 							<span class="top_left_icon1" aria-label="Instagram"><img id="instaicon" src="https://i.imgur.com/Hp5O9oV.png"></span>
 							<div class="top_left_div2"></div>

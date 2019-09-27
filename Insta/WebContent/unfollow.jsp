@@ -10,7 +10,7 @@
     FollowService service = new FollowServiceImpl(dao);
     
     
-    int myid = Integer.parseInt(request.getParameter("myid"));
+    int myid = (int)session.getAttribute("id");
     int yourid = Integer.parseInt(request.getParameter("yourid"));
     
    

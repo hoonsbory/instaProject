@@ -175,7 +175,7 @@ public JSONArray selectFollow(int id){
 	}
 //팔로우 리스트 
 	public JSONArray followlist(int myid) throws Exception {
-		String sql = "select u.img, u.name, u.email, u.id from follower_map f join users u on u.id = f.target_id where f.follower_id =?";
+		String sql = "select u.img, u.name, u.email, u.id from follower_map f join users u on u.id = f.follower_id where f.target_id =?";
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -204,7 +204,7 @@ public JSONArray selectFollow(int id){
 	}
 	//팔로워 리스트 
 	public JSONArray followerlist(int myid) throws Exception {
-		String sql = "select u.img, u.name, u.email, u.id from follower_map f join users u on u.id = f.target_id where f.target_id =?";
+		String sql = "select u.img, u.name, u.email, u.id from follower_map f join users u on u.id = f.target_id where f.follower_id =?";
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

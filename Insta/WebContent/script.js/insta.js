@@ -198,52 +198,82 @@ $('#btnEdit').click(()=>{
 		
 	})	
 	
-	// 팔로우 리스트 기능 
-$('#followlist').click(function(){
-	$('.followerlist_class').css('display', 'block');
-	$('.followerlist_div').css('display', 'block');
 	
-		$('#divdelete_mid').remove();
+	
+	
+	$('#followlist').click(function(){
+		let idnum2;
+	$('#backfollow').css('display', 'block');
 		$.ajax({
-			url : 'followerlist.jsp',
+			url : 'followlist.jsp',
 			type : 'get',
 			dataType : 'json',
 			success : ((data)=>{
 				if(data.length==0){
-					$('.followerlist_class').html('찾는 사용자가 없습니다.');
+					$('.followlist_class').html('찾는 사용자가 없습니다.');
 				}
+				let tag="";
+				tag= "<div class= 'headdiv'><div class='leftdiv'></div>" +
+						"<h1 class='headmain'><div class='headfont'>팔로잉" +
+						"</div></h1>" +
+						"<div class='rightdiv'>" +
+						"<button class='realbtn'><span class='lastspan' aria-lable='닫기'></span></button></div></div>";
+				$('.followlist_class').html(tag);
+				
+				$('.realbtn').click(()=>{
+					$('#backfollow').css('display', 'none');
+					
+					
+				})
 			let count2 = 0;
-			let divSearch2 = document.createElement('div');
-		document.querySelector('.followerlist_class').appendChild(divSearch2);
-	divSearch2.setAttribute("class" , "divdelete")
-	divSearch2.setAttribute("id" , "divdelete_mid")
 		for(var i = 1; i<data.length+1; i++){
 			let aSearch = document.createElement('a');
+			let centerdiv = document.createElement('div');
 			let SearchImg = document.createElement('div');
 			let userimg = document.createElement('img');
 			let divName = document.createElement('div');
 			let divEmail = document.createElement('div');
 			let EmailSpan = document.createElement('span');
+			let fbtn2 = document.createElement('button');
+			let fbtn1 = document.createElement('button');
 	userimg.setAttribute("class" , "userimg");
+	fbtn2.setAttribute("class" , "profile-edit-btn2");
+	fbtn2.setAttribute("id" , "follow-btn0"+i);
+	fbtn2.setAttribute("onclick" , "ufbtn2("+data[count2].id+","+i+")");
+	fbtn1.setAttribute("class" , "profile-edit-btn3");
+	fbtn1.setAttribute("id" , "follow-btn1"+i);
+	fbtn1.setAttribute("onclick" , "fbtn2("+data[count2].id+","+i+")");
+	fbtn1.setAttribute("style" , "display:none");
+	fbtn2.setAttribute("style" , "display:none");
 	
-	aSearch.setAttribute("class" , "aSearch");
+	
+	centerdiv.setAttribute("class" , "centerdiv");
+	centerdiv.setAttribute("id" , "centerdiv"+i);
+	aSearch.setAttribute("class" , "aSearchf");
 	aSearch.setAttribute("id" , "aSearch"+i);
-	aSearch.setAttribute("href" , "search.do?id="+data[count2].id);
+	
 	
 	SearchImg.setAttribute("id" , "SearchImg"+i)
 	SearchImg.setAttribute("class" , "SearchImg")
 	divName.setAttribute("class" , "divName")
+	divName.setAttribute("onclick" , "location.href='search.do?id="+data[count2].id+"'");
+
 	divName.setAttribute("id" , "divName"+i)
 	divEmail.setAttribute("class" , "divEmail")
 	divEmail.setAttribute("id" , "divEmail"+i)
 	EmailSpan.setAttribute("class" , "EmailSpan")
 	EmailSpan.setAttribute("id" , "EmailSpan"+i)
-		document.querySelector('#divdelete_mid').appendChild(aSearch);
+		document.querySelector('.followlist_class').appendChild(centerdiv);
 	
+	document.querySelector('#centerdiv'+i).appendChild(aSearch);
+	document.querySelector('#centerdiv'+i).appendChild(fbtn2);
+	document.querySelector('#centerdiv'+i).appendChild(fbtn1);
 		document.querySelector('#aSearch'+i).appendChild(SearchImg);
 		
 		document.querySelector('#aSearch'+i).appendChild(divName);
 		$('#divName'+i).html(data[count2].name);
+		$('.profile-edit-btn2').html('팔로잉');
+		$('.profile-edit-btn3').html('팔로우');
 		if(data[count2]!=null){
 	userimg.setAttribute("src", data[count2].img);
 		}
@@ -253,10 +283,34 @@ $('#followlist').click(function(){
 		document.querySelector('#divName'+i).appendChild(divEmail);
 		document.querySelector('#divEmail'+i).appendChild(EmailSpan);
 		$('#EmailSpan'+i).html(data[count2].email);
+		
+		
+			
+		
+		
+		idnum2 = data[count2].id;
 		count2++;
+		$.ajax({
+			url : 'followcheck.jsp',
+			type : 'get',
+			dataType : 'json',
+			data : {"yourid" : idnum2},
+			success : ((data2)=>{
+				if(data2==1){
+					$('#follow-btn3'+i).hide();
+				}else{
+					$('#follow-btn2'+i).hide();
+				}
+			}),
+			error : ((e)=>{
+				
+			})
+
+			})
 		
 		}
 		
+
 			}),
 			
 					error : ((e)=>{
@@ -266,15 +320,12 @@ $('#followlist').click(function(){
 			
 			
 		})
-	})
+		
 	
-// 팔로워 리스트 기능 
+})
 $('#followerlist').click(function(){
-	$('body').css('background' , 'gray');
-	$('.followerlist_class').css('display', 'block');
-	$('.followerlist_div').css('display', 'block');
-	
-		$('#divdelete_mid').remove();
+		let idnum;
+	$('#backfollower').css('display', 'block');
 		$.ajax({
 			url : 'followerlist.jsp',
 			type : 'get',
@@ -283,38 +334,68 @@ $('#followerlist').click(function(){
 				if(data.length==0){
 					$('.followerlist_class').html('찾는 사용자가 없습니다.');
 				}
+				let tag="";
+				tag= "<div class= 'headdiv'><div class='leftdiv'></div>" +
+						"<h1 class='headmain'><div class='headfont'>팔로워" +
+						"</div></h1>" +
+						"<div class='rightdiv'>" +
+						"<button class='realbtn'><span class='lastspan' aria-lable='닫기'></span></button></div></div>";
+				$('.followerlist_class').html(tag);
+				
+				$('.realbtn').click(()=>{
+					$('#backfollower').css('display', 'none');
+					
+					
+				})
 			let count2 = 0;
-			let divSearch2 = document.createElement('div');
-		document.querySelector('.followerlist_class').appendChild(divSearch2);
-	divSearch2.setAttribute("class" , "divdelete")
-	divSearch2.setAttribute("id" , "divdelete_mid")
 		for(var i = 1; i<data.length+1; i++){
 			let aSearch = document.createElement('a');
+			let centerdiv = document.createElement('div');
 			let SearchImg = document.createElement('div');
 			let userimg = document.createElement('img');
 			let divName = document.createElement('div');
 			let divEmail = document.createElement('div');
 			let EmailSpan = document.createElement('span');
+			let fbtn2 = document.createElement('button');
+			let fbtn1 = document.createElement('button');
 	userimg.setAttribute("class" , "userimg");
+	fbtn2.setAttribute("class" , "profile-edit-btn2");
+	fbtn2.setAttribute("id" , "follow-btn2"+i);
+	fbtn2.setAttribute("onclick" , "ufbtn("+data[count2].id+","+i+")");
+	fbtn1.setAttribute("class" , "profile-edit-btn3");
+	fbtn1.setAttribute("id" , "follow-btn3"+i);
+	fbtn1.setAttribute("onclick" , "fbtn("+data[count2].id+","+i+")");
+	fbtn1.setAttribute("style" , "display:none");
+	fbtn2.setAttribute("style" , "display:none");
 	
-	aSearch.setAttribute("class" , "aSearch");
+	
+	centerdiv.setAttribute("class" , "centerdiv");
+	centerdiv.setAttribute("id" , "centerdiv"+i);
+	aSearch.setAttribute("class" , "aSearchf");
 	aSearch.setAttribute("id" , "aSearch"+i);
-	aSearch.setAttribute("href" , "search.do?id="+data[count2].id);
+	
 	
 	SearchImg.setAttribute("id" , "SearchImg"+i)
 	SearchImg.setAttribute("class" , "SearchImg")
 	divName.setAttribute("class" , "divName")
+	divName.setAttribute("onclick" , "location.href='search.do?id="+data[count2].id+"'");
+
 	divName.setAttribute("id" , "divName"+i)
 	divEmail.setAttribute("class" , "divEmail")
 	divEmail.setAttribute("id" , "divEmail"+i)
 	EmailSpan.setAttribute("class" , "EmailSpan")
 	EmailSpan.setAttribute("id" , "EmailSpan"+i)
-		document.querySelector('#divdelete_mid').appendChild(aSearch);
+		document.querySelector('.followerlist_class').appendChild(centerdiv);
+		document.querySelector('#centerdiv'+i).appendChild(aSearch);
 	
+	document.querySelector('#centerdiv'+i).appendChild(fbtn1);
+	document.querySelector('#centerdiv'+i).appendChild(fbtn2);
 		document.querySelector('#aSearch'+i).appendChild(SearchImg);
 		
 		document.querySelector('#aSearch'+i).appendChild(divName);
 		$('#divName'+i).html(data[count2].name);
+		$('.profile-edit-btn2').html('팔로잉');
+		$('.profile-edit-btn3').html('팔로우');
 		if(data[count2]!=null){
 	userimg.setAttribute("src", data[count2].img);
 		}
@@ -324,10 +405,36 @@ $('#followerlist').click(function(){
 		document.querySelector('#divName'+i).appendChild(divEmail);
 		document.querySelector('#divEmail'+i).appendChild(EmailSpan);
 		$('#EmailSpan'+i).html(data[count2].email);
+		
+		
+			
+		
+		
+		idnum = data[count2].id;
 		count2++;
+		$.ajax({
+			url : 'followcheck.jsp',
+			type : 'get',
+			dataType : 'json',
+			data : {"yourid" : idnum},
+			success : ((data1)=>{
+				if(data1==1){
+					$('.profile-edit-btn3').hide();
+					$('.profile-edit-btn2').show();
+				}else{
+					$('.profile-edit-btn2').hide();
+					$('.profile-edit-btn3').show();
+				}
+			}),
+			error : ((e)=>{
+				
+			})
+
+			})
 		
 		}
 		
+
 			}),
 			
 					error : ((e)=>{
@@ -337,4 +444,102 @@ $('#followerlist').click(function(){
 			
 			
 		})
+		
+	
+})
+
+	function fbtn(va,num){
+			$.ajax({
+				url : 'follow2.jsp',
+				type : 'get',
+				dataType : 'json',
+				data : {yourid : va ,
+						
+				},
+				
+				success : ((data)=>{
+					if(data.insert==1){
+						 $('#follower').html(data.follow);
+						 $('#follow-btn3'+num).hide();
+						 $('#follow-btn2'+num).show();
+						
+					}
+			}),
+				error : ((e)=>{
+					alert(e);
+					
+				})
+			
+			})
+}
+function ufbtn(va,num){
+	$.ajax({
+			url : 'unfollow2.jsp',
+			type : 'get',
+			dataType : 'json',
+			data : {yourid : va
+					
+			},
+			
+			success : ((data)=>{
+				if(data.delete1==1){
+					 $('#follower').html(data.follow);
+					 $('#follow-btn2'+num).hide();
+					 $('#follow-btn3'+num).show();
+				}
+		}),
+			error : ((e)=>{
+				alert('실팽');
+				
+			})
+		
+		})
+}
+function fbtn2(va,num){
+	$.ajax({
+		url : 'follow2.jsp',
+		type : 'get',
+		dataType : 'json',
+		data : {yourid : va ,
+				
+		},
+		
+		success : ((data)=>{
+			if(data.insert==1){
+				 $('#follower').html(data.follow);
+				 $('#follow-btn1'+num).hide();
+				 $('#follow-btn0'+num).show();
+				
+			}
+	}),
+		error : ((e)=>{
+			alert(e);
+			
+		})
+	
 	})
+}
+function ufbtn2(va,num){
+$.ajax({
+	url : 'unfollow2.jsp',
+	type : 'get',
+	dataType : 'json',
+	data : {yourid : va
+			
+	},
+	
+	success : ((data)=>{
+		if(data.delete1==1){
+			 $('#follower').html(data.follow);
+			 $('#follow-btn0'+num).hide();
+			 $('#follow-btn1'+num).show();
+		}
+}),
+	error : ((e)=>{
+		alert('실팽');
+		
+	})
+
+})
+}
+	

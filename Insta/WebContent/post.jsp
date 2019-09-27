@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="./css/post.css">
 <link rel="stylesheet" href="./css/header.css">
 <link rel="stylesheet" href="./css/footer.css">
+<link rel="stylesheet" href="css/search&like.css">
 <title>Insert title here</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -19,60 +20,49 @@
 	background-color: rgba(255, 255, 255, 0);
 	border: none;
 }
-
 .commentName {
 	font-weight: bold;
 	margin: 5px;
 }
-
 #like {
 	float: left;
 	margin-left: 10px;
 	display: inline;
 	height: 30px;
 }
-
 #like img {
 	display: inline;
 	vertical-align: baseline;
 }
-
 #like span {
 	width: 100px;
 	display: inline;
 	vertical-align: 9px;
 }
-
 .form-inline {
 	clear: both;
 	text-align: center;
 	display: block;
 	margin: 0 auto;
 }
-
 .form-group2 {
 	display: inline;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-
 .form-control {
 	width: 100% !important;
 }
-
 #post_info {
 	display: block;
 	margin-top: 15px;
 }
-
 .this_user, .commenterImage, .commentName {
 	cursor: pointer;
 }
-
 .userImage, .user-name{
 	margin-top: 15px;
 }
-
 #next_left {
 	-webkit-transform: scaleX(-1);
 	-moz-transform: scaleX(-1);
@@ -82,25 +72,21 @@
 	-ms-filter: "FlipH";
 	left: 20px;
 }
-
 #next_right {
 	right: 20px;
 }
-
 .next {
 	width: 50px;
 	position: fixed;
 	top: 320px;
 	cursor: pointer;
 }
-
 #dot_menu {
 	position: absolute;
 	right: 20px;
 	top: 10px;
 	cursor: pointer;
 }
-
 #dot_menu_opt {
 	background-color: rgba(0, 0, 0, .5);
 	bottom: 0;
@@ -112,7 +98,6 @@
 	visibility: hidden;
 	vertical-align: middle;
 }
-
 #dot_menu_opt>div{
 	border-radius: 20px;
 	margin: 0 auto;
@@ -120,25 +105,21 @@
 	vertical-align: middle;
 	background-color: white;
 }
-
 #optBox {
 	width: 300px;
 	height: 200px;
-	margin-top: 260px !important;
+	margin-top: 18% !important;
 }
-
 #updateBox {
 	width: 450px;
 	height: 250px;
-	margin-top: 220px !important;
+	margin-top: 17% !important;
 	display: none;
 	cursor: pointer;
 }
-
 #optBox>h4 {
 	padding: 25px;
 }
-
 #delete {
 	font-size: 12pt;
 	font-weight: bold;
@@ -146,28 +127,24 @@
 	cursor: pointer;
 	border-top: 1px solid gray;
 }
-
 #update {
 	font-size: 12pt;
 	font-weight: bold;
 	color: #3399ff;
 	cursor: pointer;
 }
-
 #cancel {
 	font-size: 12pt;
 	font-weight: bold;
 	cursor: pointer;
 	border-top: 1px solid gray;
 }
-
 #updateBox>div {
 	border-top: 1px solid gray;
-	margin-top: 19px;
-	margin-bottom: 20px;
+	margin-top: 5.9%;
+	margin-bottom: 5%;
 	display: block;
 }
-
 #updateBox>div>h4{
 	display: inline;
 	width: 50%;
@@ -178,30 +155,27 @@
 	font-weight: bold;
 	cursor: pointer;
 }
-
 #up_submit{
 	border-right: 1px solid gray;
 	color: #3399ff;
 }
-
 #post_content{
-	margin-top: 20px;
+	margin-top: 6.8%;
+	margin-bottom: 0;
+	margin-right: 1%;
 	height: 130px;
 	width: 80%;
 }
-
 .like_img {
 	cursor: pointer;
 	display: none;
 }
-
 #date {
 	position: absolute;
 	right: 10px;
 	bottom: -22px;
 	color: gray;
 }
-
 #form_button {
 	padding: 5px;
 	color: #3399ff;
@@ -257,7 +231,6 @@ $(function(){
 	$('#post_content').keyup(countPost);
 	
 });
-
 function setFollow(){
 	let check = '${check}';
 	if(check==1){
@@ -266,7 +239,6 @@ function setFollow(){
 		$('#follow-btn2').hide();
 	}
 }
-
 function follow(){
 	$('#follow-btn2').click(function(){
 		$.ajax({
@@ -317,7 +289,6 @@ function follow(){
 		})
 	});
 }
-
 function cancelButton(){
 	$('#dot_menu_opt').css('visibility', 'hidden');
 	$('#updateBox').css('display', 'none');
@@ -325,7 +296,6 @@ function cancelButton(){
 	showUpdatePost();
     $('#textCount').text($('#post_content').val().length+'/150');
 }
-
 function thisUserPage(){
 	if('${post.user_id}'=='${id}'){
     	location.href="home.do";
@@ -334,20 +304,17 @@ function thisUserPage(){
 	 	 location.href="search.do?id=${post.user_id}";
      }
 }
-
 function updatePost(){
 	let str = $("#post_content").val();
 	str = str.replace(/(?:\r\n|\r|\n)/g, '<br />'); //엔터 처리
     $("#post_content").val(str);
 	$('#updateForm').submit();
 }
-
 function showUpdatePost(){
 	let str = '${post.post_content}';
 	str = str.replace(/<br\s*\/?>/img, '\n');
 	$("#post_content").val(str);
 }
-
 function countPost(){
 	 let textLength = $(this).val().length;
      $('#textCount').text(textLength+'/150');
@@ -355,7 +322,6 @@ function countPost(){
          $(this).val($(this).val().substr(0, 150));
      }
 }
-
 function setLike(){
 	$('#dislike_btn').click(function(){
 		if(${!empty login}){
@@ -398,7 +364,6 @@ function setLike(){
 		});
 	});
 }
-
 function showComm(){
 	$.ajax(
 			{
@@ -427,7 +392,6 @@ function showComm(){
 		$('#like_btn').show();
 	}
 }
-
 function insComm(){
 	if($('#form-comment').val().length>100){
 		alert('100자 이하로 입력하세요');
@@ -456,7 +420,6 @@ function insComm(){
 	$('#form-comment').val('');
 	}
 }
-
 function delComm(delId){
 	$.ajax(
 			{
@@ -480,7 +443,6 @@ function delComm(delId){
 			 }		
 	);
 }
-
 function display(data){
 	let tag = "";
 	let login_id='${fn:substringBefore(login,"/")}';
@@ -524,9 +486,6 @@ function display(data){
 	
 	
 }
-
-
-
 </script>
 </head>
 <body>
@@ -612,5 +571,6 @@ function display(data){
 	</form>
 	<img class="next" id="next_right" src="img/next2.png">
 	<%@include file="common/footer.jsp"%>
+<script src="./script.js/insta.js"></script>
 </body>
 </html>

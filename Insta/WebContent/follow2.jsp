@@ -17,10 +17,10 @@
     
  
    int insert = service.insertFollow(myid, yourid);
-    int follower = service.followernum(yourid).size();
+    int follow = service.follownum(myid).size();
    
    JSONObject obj = new JSONObject();
-	obj.put("follower", follower);
+	obj.put("follow", follow);
 	obj.put("insert", insert);
    
     %>

@@ -327,10 +327,10 @@ input {
 	border: none;
 	color: #FFFFFF;
 	text-align: center;
-	font-size: 28px;
 	padding: 20px;
 	width: 200px;
 	transition: all 0.5s;
+	font-size: 28px;
 	cursor: pointer;
 	margin: 5px;
 	height: 70px;

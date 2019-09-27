@@ -39,21 +39,24 @@ public class ProfImgChangeServlet extends HttpServlet {
 			UsersVO vo = new UsersVO();
 			int result = 0;
 			String path = request.getRealPath("/userpic/");
-
+			System.out.println(1);
 			Collection<Part> parts = request.getParts();
 			for (Part p : parts) {
 				if (p.getContentType() != null) {
 					String fileName = p.getSubmittedFileName();
+					System.out.println(2);
 					if (fileName != null && fileName.length() != 0
 							 || request.getParameter("delete").equals("delete")) { // 프사파일이 선택되었거나 프사 삭제버튼이 눌렸으면
 						String pastName = service.searchUser(id).getImg();
-						if (!pastName.equals("./userpic/default.jpg")) {
+						if (!pastName.equals("./userpic/default.png")) {
 							String pastImg=pastName.substring(pastName.lastIndexOf('/')+1);
 							File f = new File(path + pastImg);
+							System.out.println(3);
 							if (f.exists()) {
 								f.delete(); // 업로드된 폴더에서 기존 프사 삭제
 							}
 						}
+						System.out.println(4);
 						String img = "";
 						if (fileName.length() != 0) { // 프사 파일이 선택되었으면 새 프사로
 							//파일명 중복방지
@@ -72,7 +75,7 @@ public class ProfImgChangeServlet extends HttpServlet {
 							p.write(path + fileName);
 							img = "./userpic/" + fileName;
 						} else {// 프사 삭제 버튼이 눌렸으면 기본 프사로
-							img = "./userpic/default.jpg";
+							img = "./userpic/default.png";
 						}
 						vo.setId(id);
 						vo.setImg(img);

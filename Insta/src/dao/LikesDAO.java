@@ -122,7 +122,7 @@ public class LikesDAO {
 		return count;
 	}
 	public JSONArray selectLikes(int id) throws Exception {
-		String sql = "select u2.img , u2.name, l.timestamp , u2.id , p.img from likes l join posts p on l.post_id = p.id join users u on p.user_id = u.id join users u2 on l.user_id = u2.id where u.id = ? union select u3.img , u3.name, f.timestamp, u3.id , f.fcheck from follower_map f join users u3 on f.target_id = u3.id where f.follower_id = ? order by 3 desc";
+		String sql = "select u2.img , u2.name, l.timestamp , u2.id , p.img from likes l join posts p on l.post_id = p.id join users u on p.user_id = u.id join users u2 on l.user_id = u2.id where u2.id !=? and u.id = ? union select u3.img , u3.name, f.timestamp, u3.id , f.fcheck from follower_map f join users u3 on f.target_id = u3.id where f.follower_id = ? order by 3 desc";
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -136,6 +136,7 @@ public class LikesDAO {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, id);
 			ps.setInt(2, id);
+			ps.setInt(3, id);
 			
 			rs = ps.executeQuery();	// select 는 executeQuery
 			

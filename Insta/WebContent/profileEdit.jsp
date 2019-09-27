@@ -39,7 +39,7 @@
 		}
 
 		$('#img_change_btn').click(function() { //프사 편집 버튼 클릭시 프사 편집 선택 화면 보이기
-			if ("<c:out value='${user.img}'/>" == "./userpic/default.jpg") //프사가 기본 이미지일 경우 바로 이미지파일 선택 창으로. 되는지 확인해야..
+			if ("<c:out value='${user.img}'/>" == "./userpic/default.png") //프사가 기본 이미지일 경우 바로 이미지파일 선택 창으로. 되는지 확인해야..
 				$('#myfile').trigger('click');
 			else
 				$('#img_change_opt').css('visibility', 'visible');
@@ -125,8 +125,8 @@
 				<hr>
 				<div>
 					<label for="myfile" id="upload_label"><input type="file"
-						id="myfile" name="myfile" multiple="multiple"
-						onchange="form.submit()">사진 업로드</label>
+						id="myfile" name="myfile" multiple="multiple" accept="image/*"
+						onchange="form.submit()" >사진 업로드</label>
 				</div>
 				<hr>
 				<div>

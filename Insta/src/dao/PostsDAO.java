@@ -25,7 +25,7 @@ public class PostsDAO {
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		Statement st = null;
-		String sql = "select img,id from posts where user_id = ? order by timestamp";
+		String sql = "select img,id from posts where user_id = ? order by timestamp desc";
 		JSONArray list = new JSONArray();
 		try {
 			con = JDBCUtil.getConnection();
@@ -191,7 +191,7 @@ public Map<String, String> showPosts(int id){
 	}
 
 public Map<String, Integer> besidePosts(int user_id, int post_id){
-	String sql = " select * from (select id, lead(id,1,'-1') over (order by timestamp) next_id, lag(id,1,'-1') over (order by timestamp) past_id from posts where user_id=?) where id=?";
+	String sql = " select * from (select id, lead(id,1,'-1') over (order by timestamp desc) next_id, lag(id,1,'-1') over (order by timestamp desc) past_id from posts where user_id=?) where id=?";
 	
 	Connection con = null;
 	PreparedStatement ps = null;
