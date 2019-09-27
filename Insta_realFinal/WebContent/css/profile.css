@@ -145,7 +145,23 @@ hr{
 	border:0.5px solid #d2d2d2;
 }
 
+.upload-btn{
+	text-align: center;
+    width: 80px;
+    margin: 0 auto;
+    font-weight: bold;
+    border: 1px solid #3399ff;
+    background-color: rgba(0,0,0,0);
+    color: #3399ff;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
+.upload-btn:hover{
+	background-color: #3399ff;
+	color: white;
+}
 
 @media screen and (max-width:40rem){
 	.profile{
