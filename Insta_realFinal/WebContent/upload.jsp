@@ -6,7 +6,6 @@
 <%@ page import="java.io.File"%>
 
 <!DOCTYPE html>
-
 <html>
 
 <head>
@@ -124,6 +123,10 @@ position:relative;
 		$('#up_submit').click(insertPost);
 
 		$('#content').keyup(countPost);
+		
+		$("#myfile").change(function() {
+	        readURL(this);
+		});
 
 	});
 
@@ -152,6 +155,18 @@ position:relative;
 		}
 
 	};
+	
+	 function readURL(input) {
+	        if (input.files && input.files[0]) {
+	            var reader = new FileReader();
+	            reader.onload = function(e) {
+	                $('#img_preview').attr('src', e.target.result);
+	            }
+	            reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+
+	
 </script>
 
 
@@ -168,7 +183,7 @@ position:relative;
 				<label for="myfile" id="upload_label"><input type="file"
 					id="myfile" name="myfile" multiple="multiple" accept="image/*">
 					<p>사진을 추가하세요.</p>
-					<img src="https://i.imgur.com/yXQ2AEu.png" title="images.png"/> </label>
+					<img id="img_preview" src="https://i.imgur.com/yXQ2AEu.png" title="images.png"/> </label>
 			</div>
 			<textarea form="insertForm" id="content" name="content"
 				placeholder="    ...게시할 글을 작성하세요..." maxlength="150"></textarea>
