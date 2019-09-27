@@ -124,13 +124,13 @@
 #optBox {
 	width: 300px;
 	height: 200px;
-	margin-top: 260px !important;
+	margin-top: 18% !important;
 }
 
 #updateBox {
 	width: 450px;
 	height: 250px;
-	margin-top: 220px !important;
+	margin-top: 17% !important;
 	display: none;
 	cursor: pointer;
 }
@@ -163,8 +163,8 @@
 
 #updateBox>div {
 	border-top: 1px solid gray;
-	margin-top: 19px;
-	margin-bottom: 20px;
+	margin-top: 5.9%;
+	margin-bottom: 5%;
 	display: block;
 }
 
@@ -185,7 +185,9 @@
 }
 
 #post_content{
-	margin-top: 20px;
+	margin-top: 6.8%;
+	margin-bottom: 0;
+	margin-right: 1%;
 	height: 130px;
 	width: 80%;
 }
