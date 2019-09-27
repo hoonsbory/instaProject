@@ -95,6 +95,7 @@ img {
 .profile-edit{
 	margin-left: 15px;
 }
+
 .profile-edit-btn {
 	position : relative;
 	left : 30%;
@@ -105,6 +106,18 @@ img {
     border-radius: 0.3rem;
     padding: 0 2.4rem;
     margin-left: 2rem;
+}
+
+#follow-btn{
+    background-color: rgba(0,0,0,0);
+    border: 1px solid #3399ff;
+    color: #3399ff;
+}
+
+#follow-btn2{
+    background-color: #3399ff;
+	color: white;
+    border: 1px solid #3399ff;
 }
 .follow-btn{
 	font-size: 1.6rem;
