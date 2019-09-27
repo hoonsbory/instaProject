@@ -45,8 +45,7 @@ create table follower_map(
     target_id number(15),
     follower_id number(15),
 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-   fcheck varchar(10) default 'f';
-  	
+   fcheck varchar(10) default 'f'
 );
 
 

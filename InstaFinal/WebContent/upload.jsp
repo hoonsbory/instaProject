@@ -3,8 +3,6 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@ page import="dao.InstaDao"%>
-
 <%@ page import="java.io.File"%>
 
 <!DOCTYPE html>
@@ -35,6 +33,7 @@ body {
 	width: 400px;
 	padding: 20px;
 	height: 360px;
+	font-size: 15pt;
 }
 
 .uploadpostimage {
@@ -167,7 +166,7 @@ position:relative;
 			enctype="multipart/form-data">
 			<div class='uploadpostimage'>
 				<label for="myfile" id="upload_label"><input type="file"
-					id="myfile" name="myfile" multiple="multiple">
+					id="myfile" name="myfile" multiple="multiple" accept="image/*">
 					<p>사진을 추가하세요.</p>
 					<img src="https://i.imgur.com/yXQ2AEu.png" title="images.png"/> </label>
 			</div>

@@ -125,7 +125,7 @@
 				<hr>
 				<div>
 					<label for="myfile" id="upload_label"><input type="file"
-						id="myfile" name="myfile" multiple="multiple"
+						id="myfile" name="myfile" multiple="multiple" accept="image/*
 						onchange="form.submit()">사진 업로드</label>
 				</div>
 				<hr>
