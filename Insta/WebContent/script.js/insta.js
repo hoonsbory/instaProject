@@ -202,7 +202,7 @@ $('#btnEdit').click(()=>{
 	
 	
 	$('#followlist').click(function(){
-		let idnum2;
+		let idnum;
 	$('#backfollow').css('display', 'block');
 		$.ajax({
 			url : 'followlist.jsp',
@@ -288,18 +288,20 @@ $('#btnEdit').click(()=>{
 			
 		
 		
-		idnum2 = data[count2].id;
+		idnum = data[count2].id;
 		count2++;
 		$.ajax({
 			url : 'followcheck.jsp',
 			type : 'get',
 			dataType : 'json',
-			data : {"yourid" : idnum2},
-			success : ((data2)=>{
-				if(data2==1){
-					$('#follow-btn3'+i).hide();
+			data : {"yourid" : idnum},
+			success : ((data1)=>{
+				if(data1==1){
+					$('.profile-edit-btn3').hide();
+					$('.profile-edit-btn2').show();
 				}else{
-					$('#follow-btn2'+i).hide();
+					$('.profile-edit-btn2').hide();
+					$('.profile-edit-btn3').show();
 				}
 			}),
 			error : ((e)=>{
@@ -350,7 +352,6 @@ $('#followerlist').click(function(){
 			let count2 = 0;
 		for(var i = 1; i<data.length+1; i++){
 			let aSearch = document.createElement('a');
-			let centerdiv = document.createElement('div');
 			let SearchImg = document.createElement('div');
 			let userimg = document.createElement('img');
 			let divName = document.createElement('div');
@@ -369,31 +370,27 @@ $('#followerlist').click(function(){
 	fbtn2.setAttribute("style" , "display:none");
 	
 	
-	centerdiv.setAttribute("class" , "centerdiv");
-	centerdiv.setAttribute("id" , "centerdiv"+i);
-	aSearch.setAttribute("class" , "aSearchf");
-	aSearch.setAttribute("id" , "aSearch"+i);
+	aSearch.setAttribute("class" , "aSearch");
+	aSearch.setAttribute("id" , "aSearch2"+i);
+	aSearch.setAttribute("href" , "search.do?id="+data[count2].id);
 	
-	
-	SearchImg.setAttribute("id" , "SearchImg"+i)
+	SearchImg.setAttribute("id" , "SearchImg2"+i)
 	SearchImg.setAttribute("class" , "SearchImg")
 	divName.setAttribute("class" , "divName")
-	divName.setAttribute("onclick" , "location.href='search.do?id="+data[count2].id+"'");
-
-	divName.setAttribute("id" , "divName"+i)
+	divName.setAttribute("id" , "divName2"+i)
 	divEmail.setAttribute("class" , "divEmail")
-	divEmail.setAttribute("id" , "divEmail"+i)
+	divEmail.setAttribute("id" , "divEmail2"+i)
 	EmailSpan.setAttribute("class" , "EmailSpan")
-	EmailSpan.setAttribute("id" , "EmailSpan"+i)
-		document.querySelector('.followerlist_class').appendChild(centerdiv);
-		document.querySelector('#centerdiv'+i).appendChild(aSearch);
+	EmailSpan.setAttribute("id" , "EmailSpan2"+i)
+		document.querySelector('.followerlist_class').appendChild(aSearch);
 	
-	document.querySelector('#centerdiv'+i).appendChild(fbtn1);
-	document.querySelector('#centerdiv'+i).appendChild(fbtn2);
-		document.querySelector('#aSearch'+i).appendChild(SearchImg);
+	document.querySelector('.followerlist_class').appendChild(fbtn2);
+	document.querySelector('.followerlist_class').appendChild(fbtn1);
 		
-		document.querySelector('#aSearch'+i).appendChild(divName);
-		$('#divName'+i).html(data[count2].name);
+		document.querySelector('#aSearch2'+i).appendChild(SearchImg);
+		
+		document.querySelector('#aSearch2'+i).appendChild(divName);
+		$('#divName2'+i).html(data[count2].name);
 		$('.profile-edit-btn2').html('팔로잉');
 		$('.profile-edit-btn3').html('팔로우');
 		if(data[count2]!=null){
@@ -401,10 +398,10 @@ $('#followerlist').click(function(){
 		}
 			
 		
-		document.querySelector('#SearchImg'+i).appendChild(userimg);
-		document.querySelector('#divName'+i).appendChild(divEmail);
-		document.querySelector('#divEmail'+i).appendChild(EmailSpan);
-		$('#EmailSpan'+i).html(data[count2].email);
+		document.querySelector('#SearchImg2'+i).appendChild(userimg);
+		document.querySelector('#divName2'+i).appendChild(divEmail);
+		document.querySelector('#divEmail2'+i).appendChild(EmailSpan);
+		$('#EmailSpan2'+i).html(data[count2].email);
 		
 		
 			
@@ -423,7 +420,7 @@ $('#followerlist').click(function(){
 					$('.profile-edit-btn2').show();
 				}else{
 					$('.profile-edit-btn2').hide();
-					$('.profile-edit-btn3').show();
+					$('.profile-edit-btn').show();
 				}
 			}),
 			error : ((e)=>{
@@ -542,4 +539,3 @@ $.ajax({
 
 })
 }
-	

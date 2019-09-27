@@ -18,7 +18,7 @@
 	<script type="text/javascript">
 	
 window.onload = function(){
-
+	var myid = <%=(int)session.getAttribute("id")%>;
 	let check = "<c:out value='${check}'/>";
 	if(check==1){
 		$('#follow-btn').hide();
@@ -27,17 +27,25 @@ window.onload = function(){
 	}
 	const log = console.log;
 	let count = 0;
+	let countdiv = 1;
+	let pagecount = 1;
 	let id1 = "<c:out value='${id}'/>";
-		var myid = <%=(int)session.getAttribute("id")%>;
-	 $.ajax({
+	
+	$.ajax({
 		url : 'mypagepost.jsp',
 		type : 'get',
 		dataType : 'json',
 		data : {id : id1},
 		success : ((data)=>{
+			
+		if(data.length==0){
+			$(".default-page").show()
+		}else{
+			$(".default-page").hide()
+		}
 			for (i = data.length; i>0; i-=3){
 				let divmain = document.createElement('div');
-				divmain.setAttribute("id", "divmain"+i);
+				divmain.setAttribute("id", "divmain"+countdiv);
 				divmain.setAttribute("class", "divmain");
 				
 				document.querySelector('#sec').appendChild(divmain);
@@ -45,10 +53,10 @@ window.onload = function(){
 				if(data[count]!=null){
 				let a = document.createElement("a");
 				let img = document.createElement("img");
-				document.querySelector("#divmain"+i).appendChild(a);
+				document.querySelector("#divmain"+countdiv).appendChild(a);
 					
 				
-				img.setAttribute("src", data[count].id)
+				img.setAttribute("src", data[count].id);
 				img.setAttribute("height" , "300");
 				img.setAttribute("width" , "300");
 				img.setAttribute("alt" , "instapic");
@@ -56,10 +64,16 @@ window.onload = function(){
 				a.setAttribute("href" , "showPost.do?post_id="+data[count].postid);
 				
 				$(a).addClass("apic");
-				document.querySelector("#divmain"+i).lastElementChild.appendChild(img);
+				document.querySelector("#divmain"+countdiv).lastElementChild.appendChild(img);
 				count++;
 				}
 			}
+				countdiv++;
+			if(data.length >= 9 && count==9){
+				break;
+				
+			}
+			
 				
 			}
 			
@@ -71,7 +85,71 @@ window.onload = function(){
 	
 	 
 	
-	}) 
+	})
+	
+	  $(window).scroll(function(){
+		  if ( $(window).scrollTop() == $(document).height() - $(window).height() ) {
+			  pagecount++;	
+			  $.ajax({
+					url : 'mypagepost.jsp',
+					type : 'get',
+					dataType : 'json',
+					data : {id : id1},
+					success : ((data)=>{
+						loop:
+						for (i = data.length-count; i>0; i-=3){
+							let divmain = document.createElement('div');
+							divmain.setAttribute("id", "divmain"+countdiv);
+							divmain.setAttribute("class", "divmain");
+							
+							document.querySelector('#sec').appendChild(divmain);
+						for(var j = 3; j>0; j--){
+							if(data[count]!=null){
+							let a = document.createElement("a");
+							let img = document.createElement("img");
+							document.querySelector("#divmain"+countdiv).appendChild(a);
+								
+							
+							img.setAttribute("src", data[count].id);
+							img.setAttribute("height" , "300");
+							img.setAttribute("width" , "300");
+							img.setAttribute("alt" , "instapic");
+							img.setAttribute("class" , "mainimg");
+							a.setAttribute("href" , "showPost.do?id="+data[count].postid);
+							
+							$(a).addClass("apic");
+							document.querySelector("#divmain"+countdiv).lastElementChild.appendChild(img);
+							count++;
+							}else{
+								break loop;
+							}
+							
+						}
+						countdiv++;
+						if(data.length >= 9*pagecount && count==9*pagecount){
+							break;
+							
+						}
+						
+						}
+						
+					}),
+					error : ((e)=>{
+						alert('실패'+e);			
+					})
+					
+				
+				 
+				
+				})
+		    }
+
+
+
+		
+		  
+		  
+	  })
 	
 	
 	$('#follow-btn2').click(function(){

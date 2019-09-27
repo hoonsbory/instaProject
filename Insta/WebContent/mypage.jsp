@@ -411,8 +411,27 @@ a:hover{
 	right: 0;
 	z-index: 1;
 }
+.profile-edit-btn3{
+	right: 0;
+	position: absolute;
+	bottom: 17%;
+	text-align: center;
+	font-size: 1.0rem;
+	font-weight: bold;
+	line-height: 1.6;
+	width: 100px;
+	border-radius: 0.3rem;
+	padding: 0 0.8rem;
+	margin: 20px auto;
+	border: 1px solid #3399ff;
+	padding: 5px;
+	background-color: #3399ff;
+	color: white;
+	float: left;
+	z-index: 1;
 
-.profile-edit-btn3, .profile-edit-btn1, .profile-edit-btn0 {
+}
+.profile-edit-btn1, .profile-edit-btn0 {
 	right: 0;
 	position: absolute;
 	bottom: 17%;
